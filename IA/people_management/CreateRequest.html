@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Request - HR Platform</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Monochrome Wireframe Design System */
+        :root {
+            --primary: #09090b;
+            --primary-hover: #27272a;
+            --primary-active: #18181b;
+            --primary-light: #f4f4f5;
+            --primary-subtle: #e4e4e7;
+            --primary-border: #71717a;
+
+            --bg-app: #fafafa;
+            --bg-card: #ffffff;
+            --bg-hover: #f4f4f5;
+
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --text-light: #a1a1aa;
+
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --border-dashed: #d4d4d8;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+
+            --shadow-wireframe: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--primary);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-item {
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+
+        .menu-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-muted);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.15s ease;
+        }
+
+        .menu-item:hover {
+            background: var(--primary-light);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        .menu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .menu-item.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-color: var(--primary);
+        }
+
+        .menu-item.active svg {
+            stroke: white;
+        }
+
+        /* Submenu Styling */
+        .submenu {
+            list-style: none;
+            padding-left: 20px;
+            margin: 4px 0 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            position: relative;
+        }
+
+        .submenu::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            bottom: 4px;
+            width: 1.5px;
+            background: var(--border-color);
+        }
+
+        .submenu-item {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .submenu-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .submenu-item:hover {
+            color: var(--text-main);
+            background: var(--primary-light);
+        }
+
+        .submenu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .submenu-item.active {
+            color: var(--text-main);
+            font-weight: 700;
+            background: var(--primary-light);
+            border-left: 2px solid var(--primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .submenu-item.active svg {
+            stroke: var(--text-main);
+        }
+
+        .dropdown-chevron {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            transition: transform 0.2s ease;
+            margin-left: auto;
+        }
+
+        .menu-item.collapsed .dropdown-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .submenu.hidden {
+            display: none;
+        }
+
+        /* Sidebar Footer Profile Bar */
+        .sidebar-footer {
+            position: relative;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-profile-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: var(--bg-card);
+        }
+
+        .user-profile-bar:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 10.5px;
+            color: var(--text-muted);
+        }
+
+        .dropdown-chevron {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .user-popup {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-hover);
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            z-index: 100;
+            transition: all 0.15s ease;
+        }
+
+        .user-popup.hidden {
+            display: none;
+        }
+
+        .popup-item {
+            width: 100%;
+            padding: 8px 10px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            transition: background 0.12s ease;
+        }
+
+        .popup-item svg {
+            width: 15px;
+            height: 15px;
+            stroke: var(--text-main);
+        }
+
+        .popup-item:hover {
+            background: var(--primary-light);
+        }
+
+        .popup-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 4px 0;
+        }
+
+        .popup-item.logout-item {
+            color: #dc2626;
+        }
+
+        .popup-item.logout-item svg {
+            stroke: #dc2626;
+        }
+
+        .popup-item.logout-item:hover {
+            background: #fef2f2;
+        }
+
+        /* Header */
+        .header {
+            height: 80px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .welcome-text {
+            font-size: 30px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 20px;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .welcome-text strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0 16px 0 38px;
+            font-size: 13px;
+            outline: none;
+            background: var(--bg-app);
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+
+        .search:focus {
+            border-color: var(--border-strong);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 2px var(--primary-subtle);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            stroke: var(--text-muted);
+            pointer-events: none;
+            width: 16px;
+            height: 16px;
+        }
+
+        .profile {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            margin-right: 40px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.15s ease;
+            color: var(--text-main);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .avatar:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main View */
+        .main {
+            padding: 32px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-main);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            transition: all 0.15s ease;
+        }
+
+        .back-link:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .back-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Page Title Header */
+        .page-title-row {
+            margin-bottom: 24px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            letter-spacing: -0.4px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* Two-Column Form Layout Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .panel-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-wireframe);
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Request Type Selection Grid */
+        .type-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .type-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 12px;
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .type-card svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .type-card span {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .type-card:hover {
+            border-color: var(--border-strong);
+            background: var(--primary-light);
+        }
+
+        .type-card.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .type-card.active svg {
+            stroke: white;
+        }
+
+        .type-card.active span {
+            color: white;
+        }
+
+        /* Form Controls */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-label .sub-info {
+            font-weight: 500;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            outline: none;
+            background: var(--bg-card);
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--border-strong);
+            box-shadow: 0 0 0 2px var(--primary-subtle);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.5;
+        }
+
+        /* Auto-Calculated Real-Time Info Box */
+        .calc-info-box {
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            font-size: 12.5px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .calc-info-box strong {
+            font-weight: 700;
+        }
+
+        .calc-badge {
+            border: 1px solid var(--border-strong);
+            background: var(--bg-card);
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 11.5px;
+        }
+
+        /* File Upload Dropzone */
+        .dropzone {
+            border: 2px dashed var(--border-dashed);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            background: var(--bg-app);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropzone:hover {
+            border-color: var(--border-strong);
+            background: var(--primary-light);
+        }
+
+        .dropzone svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .dropzone-text {
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .dropzone-text strong {
+            color: var(--text-main);
+        }
+
+        /* Action Buttons Row */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-submit {
+            padding: 11px 24px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-draft {
+            padding: 11px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-draft:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        /* Right Panel: Auto-Filled Context & Stepper Preview */
+        .user-summary-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            background: var(--bg-app);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12.5px;
+        }
+
+        .summary-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .summary-val {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Workflow Stepper Preview List */
+        .workflow-preview-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            padding-left: 24px;
+            margin-top: 10px;
+        }
+
+        .workflow-preview-list::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .preview-step-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .preview-step-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--border-strong);
+        }
+
+        .preview-step-item.active::before {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .preview-step-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .preview-step-role {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            border: 1px solid var(--border-strong);
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Sidebar Navigation (Unified Component) -->
+        <div class="sidebar" id="sidebarContainer" data-active="People Management" data-subpage="Request Management" data-is-subfolder="true"></div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <div class="search-container">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input class="search" id="searchInput" placeholder="Search forms, guides, templates...">
+                    </div>
+                    <div class="welcome-text">Welcome back, <strong>Lucia Doan</strong></div>
+                </div>
+
+                <div class="profile">
+                    <button class="icon-btn" id="notifBtn" title="Notifications">
+                        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="notification-badge"></span>
+                    </button>
+
+                    <div class="avatar" id="userAvatar" title="User Profile">
+                        LD
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Scrollable Area -->
+            <div class="main">
+
+                <!-- Breadcrumb Navigation -->
+                <div class="breadcrumb-row">
+                    <a href="EmployeeDirectory.html" class="back-link">
+                        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                        Dashboard
+                    </a>
+                    <span>/</span>
+                    <a href="RequestManagement.html" class="back-link">
+                        Employee Requests
+                    </a>
+                    <span>/</span>
+                    <span>Create New Request</span>
+                </div>
+
+                <div class="page-title-row">
+                    <h1 class="title">Create New HR Request</h1>
+                    <p class="subtitle">Submit an internal employee request with automatic workflow routing & real-time quota validation.</p>
+                </div>
+
+                <!-- Two-Column Dynamic Form Grid -->
+                <div class="form-grid">
+
+                    <!-- Left Panel: Dynamic Form Inputs -->
+                    <div class="panel-box">
+                        <h2 class="panel-title">
+                            <span>1. Select Request Type & Fill Details</span>
+                            <span style="font-size:11px; font-weight:500; color:var(--text-muted);">Auto-validated</span>
+                        </h2>
+
+                        <!-- Request Type Selection Grid Cards -->
+                        <div class="type-selector-grid" id="typeSelectorGrid">
+                            <div class="type-card active" data-type="Leave">
+                                <svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>
+                                <span>Annual Leave</span>
+                            </div>
+                            <div class="type-card" data-type="Equipment">
+                                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                <span>Equipment</span>
+                            </div>
+                            <div class="type-card" data-type="Overtime">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                <span>Overtime Claim</span>
+                            </div>
+                            <div class="type-card" data-type="Training">
+                                <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                                <span>Training Request</span>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Input Fields Form Container -->
+                        <form id="requestForm" onsubmit="return false;">
+
+                            <!-- Leave Specific Fields (Default Active) -->
+                            <div id="dynamicFieldsContainer">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Start Date *</label>
+                                        <input type="date" class="form-input" id="startDate" value="2026-08-12">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">End Date *</label>
+                                        <input type="date" class="form-input" id="endDate" value="2026-08-14">
+                                    </div>
+                                </div>
+
+                                <!-- Real-time Auto-Calculated Info Box -->
+                                <div class="calc-info-box" id="calcDaysBox">
+                                    <span>Calculated Duration: <strong id="calculatedDaysText">3 Working Days</strong> (Aug 12 – Aug 14)</span>
+                                    <span class="calc-badge" id="quotaCheckBadge">Quota Available: 12 Days</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Handover Assignee *
+                                        <span class="sub-info">Who will cover your tasks</span>
+                                    </label>
+                                    <select class="form-select" id="handoverAssignee">
+                                        <option value="Alex Lee">Alex Lee (Product Designer)</option>
+                                        <option value="Sarah Jenkins">Sarah Jenkins (HR Specialist)</option>
+                                        <option value="Mark Vance">Mark Vance (Backend Developer)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Common Priority Field -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Priority Level</label>
+                                    <select class="form-select" id="prioritySelect">
+                                        <option value="Low">Low Priority</option>
+                                        <option value="Medium" selected>Medium Priority</option>
+                                        <option value="High">High Priority</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Contact Phone during Leave</label>
+                                    <input type="text" class="form-input" id="contactPhone" value="+84 908 123 456">
+                                </div>
+                            </div>
+
+                            <!-- Reason / Note Description -->
+                            <div class="form-group">
+                                <label class="form-label">Reason / Application Notes *</label>
+                                <textarea class="form-textarea" id="reasonText" placeholder="Please enter detailed reason or justification for this request...">Requesting 3 days of annual leave for personal obligations. All sprint deliverables handed over to Alex Lee.</textarea>
+                            </div>
+
+                            <!-- Drag & Drop Attachment Area -->
+                            <div class="form-group">
+                                <label class="form-label">Supporting Attachments (Optional)</label>
+                                <div class="dropzone" id="fileDropzone">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <div class="dropzone-text">
+                                        Drag & drop supporting files here, or <strong>Browse files</strong>
+                                    </div>
+                                    <span style="font-size:11px; color:var(--text-muted);">Supports PDF, PNG, JPG (Max 10MB)</span>
+                                </div>
+                            </div>
+
+                            <!-- Actions Row -->
+                            <div class="form-actions">
+                                <button type="button" class="btn-draft" id="btnSaveDraft">Save Draft</button>
+                                <button type="button" class="btn-submit" id="btnSubmitForm">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                    Submit Request
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <!-- Right Panel: Auto-Filled Context & Live Workflow Preview -->
+                    <div>
+                        <!-- Auto-Filled User Info Box -->
+                        <div class="panel-box" style="margin-bottom:20px;">
+                            <h2 class="panel-title">Requester Information</h2>
+                            <div class="user-summary-card">
+                                <div class="summary-row">
+                                    <span class="summary-label">Requester Name</span>
+                                    <span class="summary-val">Duong Vo Duy Khang</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Employee ID</span>
+                                    <span class="summary-val">EMP-4018</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Department</span>
+                                    <span class="summary-val">Engineering</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Direct Manager</span>
+                                    <span class="summary-val">Duy Nguyen</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">HR Reviewer</span>
+                                    <span class="summary-val">Lucia Doan</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Live Workflow Preview Box -->
+                        <div class="panel-box">
+                            <h2 class="panel-title">
+                                <span>Live Workflow Preview</span>
+                                <span style="font-size:11px; font-weight:500; color:var(--text-muted);">4-Step Routing</span>
+                            </h2>
+                            <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">
+                                Your request will automatically follow this 4-step approval chain upon submission:
+                            </p>
+
+                            <div class="workflow-preview-list">
+                                <div class="preview-step-item active">
+                                    <span class="preview-step-name">1. Submit Request</span>
+                                    <span class="preview-step-role">Duong Vo Duy Khang (Requester)</span>
+                                </div>
+
+                                <div class="preview-step-item">
+                                    <span class="preview-step-name">2. Direct Manager Approval</span>
+                                    <span class="preview-step-role">Duy Nguyen (Engineering Manager)</span>
+                                </div>
+
+                                <div class="preview-step-item">
+                                    <span class="preview-step-name">3. HR Review & Quota Approval</span>
+                                    <span class="preview-step-role">Lucia Doan (HR Manager)</span>
+                                </div>
+
+                                <div class="preview-step-item">
+                                    <span class="preview-step-name">4. Final Completion</span>
+                                    <span class="preview-step-role">Automatic HR System Sync</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Component Scripts -->
+    <script src="../../js/components/sidebar.js"></script>
+    <script src="../../js/people_management/CreateRequest.js"></script>
+</body>
+
+</html>

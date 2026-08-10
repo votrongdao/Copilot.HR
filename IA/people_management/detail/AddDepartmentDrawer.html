@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawer Form - Add / Edit Department</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #09090b;
+            --bg-card: #ffffff;
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --radius-md: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #f4f4f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+
+        .drawer-preview {
+            width: 480px; background: var(--bg-card);
+            border-radius: 14px; border: 1px solid var(--border-color);
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            display: flex; flex-direction: column;
+        }
+
+        .drawer-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); }
+        .drawer-title { font-size: 16px; font-weight: 700; color: var(--text-main); }
+
+        .drawer-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 12px; font-weight: 600; color: var(--text-main); }
+        .form-control {
+            padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color);
+            font-size: 13px; outline: none; background: #fafafa;
+        }
+        textarea.form-control { height: 90px; resize: vertical; }
+
+        .drawer-footer {
+            padding: 18px 24px; border-top: 1px solid var(--border-color);
+            display: flex; justify-content: flex-end; gap: 12px; background: #fafafa;
+        }
+
+        .btn-cancel { padding: 10px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: white; font-weight: 600; cursor: pointer; font-size: 13px; }
+        .btn-save { padding: 10px 20px; border-radius: var(--radius-md); border: none; background: var(--primary); color: white; font-weight: 600; cursor: pointer; font-size: 13px; }
+    </style>
+</head>
+
+<body>
+    <div class="drawer-preview">
+        <div class="drawer-header">
+            <h2 class="drawer-title">Add / Edit Department Form</h2>
+        </div>
+
+        <div class="drawer-body">
+            <div class="form-group">
+                <label>Department Name *</label>
+                <input type="text" class="form-control" placeholder="e.g. System Administration" value="System Administration">
+            </div>
+
+            <div class="form-group">
+                <label>Parent Division / Department</label>
+                <select class="form-control">
+                    <option selected>Executive Board & CEO</option>
+                    <option>Technology & Software Division</option>
+                    <option>People & Culture (HR)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Designated Department Lead *</label>
+                <select class="form-control">
+                    <option selected>Dung Nguyen (Head of System Admin)</option>
+                    <option>Dao Vo (Chief Technology Officer)</option>
+                    <option>Lucia Doan (HR Director)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Primary Location Branch</label>
+                <select class="form-control">
+                    <option selected>Headquarters & Remote</option>
+                    <option>Hanoi Branch</option>
+                    <option>Da Nang Hub</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Annual Approved Budget ($ USD)</label>
+                <input type="number" class="form-control" value="180000">
+            </div>
+
+            <div class="form-group">
+                <label>Department Scope & Operational Description</label>
+                <textarea class="form-control" placeholder="Describe core responsibilities...">Responsible for cloud infrastructure, server uptime, security compliance, and internal IT systems operations.</textarea>
+            </div>
+        </div>
+
+        <div class="drawer-footer">
+            <button class="btn-cancel">Cancel</button>
+            <button class="btn-save">Save Department</button>
+        </div>
+    </div>
+</body>
+
+</html>

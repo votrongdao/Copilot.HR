@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopUp Modal - Approve / Reject Request Action</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #09090b;
+            --bg-card: #ffffff;
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #f4f4f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+
+        .modal-card {
+            background: var(--bg-card); border: 1px solid var(--border-strong);
+            border-radius: var(--radius-lg); width: 460px; max-width: 90vw;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2); overflow: hidden;
+        }
+
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); }
+        .modal-title { font-size: 16px; font-weight: 700; color: var(--text-main); }
+        .modal-body { padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 12px; font-weight: 600; color: var(--text-main); }
+        .form-control {
+            padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color);
+            font-size: 13px; outline: none; background: #fafafa; height: 80px; resize: vertical;
+        }
+
+        .modal-footer {
+            padding: 18px 24px; border-top: 1px solid var(--border-color);
+            display: flex; justify-content: flex-end; gap: 10px; background: #fafafa;
+        }
+
+        .btn-cancel { padding: 9px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: white; font-weight: 600; cursor: pointer; font-size: 13px; }
+        .btn-reject { padding: 9px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-strong); background: white; color: var(--text-main); font-weight: 600; cursor: pointer; font-size: 13px; }
+        .btn-approve { padding: 9px 18px; border-radius: var(--radius-md); border: none; background: var(--primary); color: white; font-weight: 600; cursor: pointer; font-size: 13px; }
+    </style>
+</head>
+
+<body>
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2 class="modal-title">Review & Approve Request REQ-2026-904</h2>
+        </div>
+
+        <div class="modal-body">
+            <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                You are reviewing <strong>Annual Paid Leave (3 Days)</strong> submitted by <strong>Nguyen Van An</strong>.
+            </div>
+
+            <div class="form-group">
+                <label>Reviewer Remarks & Approval Notes (Optional)</label>
+                <textarea class="form-control" placeholder="Enter approval comments or handover instructions...">Approved. Work items verified with Frontend Lead.</textarea>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancel">Cancel</button>
+            <button class="btn-reject">Reject</button>
+            <button class="btn-approve">Approve Request</button>
+        </div>
+    </div>
+</body>
+
+</html>

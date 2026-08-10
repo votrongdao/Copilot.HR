@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawer - Employee Request Detail & Stepper Timeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #09090b;
+            --bg-card: #ffffff;
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --border-color: #e4e4e7;
+            --radius-md: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #f4f4f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+        .drawer-preview { width: 680px; background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+        .drawer-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+
+        .title-block { font-size: 16px; font-weight: 700; color: var(--text-main); }
+        .badge-status { padding: 4px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 600; background: #f4f4f5; border: 1px solid #71717a; }
+
+        .drawer-body { padding: 24px; display: flex; flex-direction: column; gap: 20px; flex: 1; }
+
+        .section-card { border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px; }
+        .section-title { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 14px; }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .info-item { display: flex; flex-direction: column; gap: 4px; }
+        .info-label { font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; }
+        .info-value { font-size: 13px; font-weight: 600; color: var(--text-main); }
+
+        .stepper { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+        .step-item { display: flex; gap: 12px; align-items: flex-start; }
+        .step-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); margin-top: 4px; }
+        .step-title { font-size: 13px; font-weight: 600; color: var(--text-main); }
+        .step-meta { font-size: 11.5px; color: var(--text-muted); }
+    </style>
+</head>
+
+<body>
+    <div class="drawer-preview">
+        <div class="drawer-header">
+            <div>
+                <div class="title-block">REQ-2026-904 • Annual Paid Leave Request</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Submitted by Nguyen Van An (Technology & Software)</div>
+            </div>
+            <span class="badge-status">Pending Direct Manager Approval</span>
+        </div>
+
+        <div class="drawer-body">
+            <div class="section-card">
+                <div class="section-title">Request Specifications & Justification</div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">Request Type</span><span class="info-value">Annual Leave (3 Days)</span></div>
+                    <div class="info-item"><span class="info-label">Leave Duration</span><span class="info-value">12/08/2026 - 14/08/2026</span></div>
+                    <div class="info-item" style="grid-column: span 2;">
+                        <span class="info-label">Reason & Handover Plan</span>
+                        <span class="info-value" style="font-weight: 400; line-height: 1.5;">Personal family event. All sprint tasks handed over to Tran Minh (Frontend Lead). Urgent phone contact available.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">Multi-level Approval Workflow Stepper</div>
+                <div class="stepper">
+                    <div class="step-item">
+                        <div class="step-dot"></div>
+                        <div>
+                            <div class="step-title">Step 1: Request Submitted</div>
+                            <div class="step-meta">Submitted on 09/08/2026 at 09:15 AM by Nguyen Van An</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-dot"></div>
+                        <div>
+                            <div class="step-title">Step 2: Direct Manager Approval (Dao Vo - CTO)</div>
+                            <div class="step-meta">Status: In Progress • Notification Sent</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-dot" style="background: #e4e4e7;"></div>
+                        <div>
+                            <div class="step-title" style="color: var(--text-muted);">Step 3: HR Director Sign-off (Lucia Doan)</div>
+                            <div class="step-meta">Status: Pending Step 2</div>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-dot" style="background: #e4e4e7;"></div>
+                        <div>
+                            <div class="step-title" style="color: var(--text-muted);">Step 4: Final System Settlement & Leave Balance Deduction</div>
+                            <div class="step-meta">Status: Scheduled</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

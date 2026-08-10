@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopUp Modal - CEO Approval Pending</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #09090b;
+            --bg-card: #ffffff;
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --border-strong: #18181b;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #f4f4f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+
+        .modal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 440px;
+            max-width: 90vw;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+            display: flex; flex-direction: column; gap: 16px; text-align: center;
+        }
+
+        .icon-circle {
+            width: 52px; height: 52px; border-radius: 50%; background: #f4f4f5;
+            border: 1.5px solid var(--border-strong); display: flex; align-items: center; justify-content: center; margin: 0 auto;
+        }
+
+        .icon-circle svg { width: 26px; height: 26px; stroke: var(--primary); fill: none; stroke-width: 2; }
+        .modal-title { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+        .modal-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        .modal-desc strong { color: var(--text-main); font-weight: 700; }
+
+        .btn-ack {
+            padding: 10px 18px; font-size: 13px; font-weight: 600; background: var(--primary); color: white;
+            border: none; width: 100%; border-radius: var(--radius-md); margin-top: 4px; cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="modal-card">
+        <div class="icon-circle">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+            </svg>
+        </div>
+        <div>
+            <div class="modal-title">Department Restructure Submitted</div>
+            <div class="modal-desc">
+                The department restructuring request has been submitted successfully.<br>
+                Status: <strong>Pending approval from CEO (Luu Duong)</strong>.
+            </div>
+        </div>
+        <button class="btn-ack">Got it</button>
+    </div>
+</body>
+
+</html>

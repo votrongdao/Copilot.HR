@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Directory - Wireframe System</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Monochrome Wireframe Design System */
+        :root {
+            --primary: #09090b;
+            --primary-hover: #27272a;
+            --primary-active: #18181b;
+            --primary-light: #f4f4f5;
+            --primary-subtle: #e4e4e7;
+            --primary-border: #71717a;
+
+            --bg-app: #fafafa;
+            --bg-card: #ffffff;
+            --bg-hover: #f4f4f5;
+
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --text-light: #a1a1aa;
+
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --border-dashed: #d4d4d8;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+
+            --shadow-wireframe: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ================= Sidebar (Monochrome Wireframe) ================= */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--primary);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-item {
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            border: 1px solid transparent;
+        }
+
+        .menu-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-muted);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.15s ease;
+        }
+
+        .menu-item:hover {
+            background: var(--primary-light);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        .menu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .menu-item.active svg {
+            stroke: white;
+        }
+
+        /* Submenu Styling */
+        .submenu {
+            list-style: none;
+            padding-left: 20px;
+            margin: 4px 0 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            position: relative;
+        }
+
+        .submenu::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            bottom: 4px;
+            width: 1.5px;
+            background: var(--border-color);
+        }
+
+        .submenu-item {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .submenu-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .submenu-item:hover {
+            color: var(--text-main);
+            background: var(--primary-light);
+        }
+
+        .submenu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .submenu-item.active {
+            color: var(--text-main);
+            font-weight: 700;
+            background: var(--primary-light);
+            border-left: 2px solid var(--primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .submenu-item.active svg {
+            stroke: var(--text-main);
+        }
+
+        .dropdown-chevron {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            transition: transform 0.2s ease;
+            margin-left: auto;
+        }
+
+        .menu-item.collapsed .dropdown-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .submenu.hidden {
+            display: none;
+        }
+
+        /* Sidebar Bottom Profile & Popup */
+        .sidebar-footer {
+            position: relative;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-profile-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: var(--bg-card);
+        }
+
+        .user-profile-bar:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 10.5px;
+            color: var(--text-muted);
+        }
+
+        .dropdown-chevron {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* User Popup Menu */
+        .user-popup {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-hover);
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            z-index: 100;
+            transition: all 0.15s ease;
+        }
+
+        .user-popup.hidden {
+            display: none;
+        }
+
+        .popup-item {
+            width: 100%;
+            padding: 8px 10px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            transition: background 0.12s ease;
+        }
+
+        .popup-item svg {
+            width: 15px;
+            height: 15px;
+            stroke: var(--text-main);
+        }
+
+        .popup-item:hover {
+            background: var(--primary-light);
+        }
+
+        .popup-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 4px 0;
+        }
+
+        .popup-item.logout-item {
+            color: #dc2626;
+        }
+
+        .popup-item.logout-item svg {
+            stroke: #dc2626;
+        }
+
+        .popup-item.logout-item:hover {
+            background: #fef2f2;
+        }
+
+        /* ================= Content Area ================= */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            height: 80px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .welcome-text {
+            font-size: 30px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 20px;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .welcome-text strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0 16px 0 38px;
+            font-size: 13px;
+            outline: none;
+            background: var(--bg-app);
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+
+        .search:focus {
+            border-color: var(--border-strong);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 2px var(--primary-subtle);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            stroke: var(--text-muted);
+            pointer-events: none;
+            width: 16px;
+            height: 16px;
+        }
+
+        .profile {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            margin-right: 40px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.15s ease;
+            color: var(--text-main);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .avatar:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main View */
+        .main {
+            padding: 32px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            letter-spacing: -0.4px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* KPI Cards with Trend Indicators positioned on Right Side of Header */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Trend Badge on Right Side of Card Header */
+        .trend-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 7px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            color: var(--text-main);
+        }
+
+        .trend-badge svg {
+            width: 12px;
+            height: 12px;
+            stroke-width: 2.5;
+        }
+
+        .trend-up svg {
+            stroke: var(--text-main);
+        }
+
+        .trend-down svg {
+            stroke: var(--text-muted);
+        }
+
+        /* Management Modules */
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 14px;
+            letter-spacing: -0.2px;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .module {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.15s ease;
+        }
+
+        .module:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .module-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .module-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .module-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .module h2 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .module p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .btn-wireframe {
+            padding: 9px 16px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-wireframe:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Bottom Section: Kanban + Quick Actions Wireframe */
+        .bottom {
+            display: grid;
+            grid-template-columns: 2.3fr 1fr;
+            gap: 18px;
+        }
+
+        .panel {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .panel-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* ================= Wireframe Kanban Board ================= */
+        .kanban-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .kanban-column {
+            background: var(--bg-app);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            border: 1px dashed var(--border-dashed);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 250px;
+        }
+
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2px;
+        }
+
+        .column-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .column-title svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .column-count {
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        .kanban-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .kanban-card:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .card-text {
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .badge-tag {
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            color: var(--text-main);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        /* Wireframe Quick Actions */
+        .quick-actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-action-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-action-left svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-action:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-action:hover svg {
+            stroke: white;
+        }
+
+        .btn-action svg.arrow {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.15s ease;
+        }
+
+        .btn-action:hover svg.arrow {
+            transform: translateX(3px);
+        }
+
+        /* Dynamic Toast Notification (Wireframe Style) */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            border: 1px solid var(--border-strong);
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Employee Directory Table & Filter Bar */
+        .directory-panel {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+            padding: 22px;
+            margin-bottom: 30px;
+        }
+
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .table-search-box {
+            position: relative;
+            min-width: 260px;
+        }
+
+        .table-search-box input {
+            width: 100%;
+            height: 38px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0 14px 0 36px;
+            font-size: 13px;
+            outline: none;
+            background: var(--bg-app);
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+
+        .table-search-box input:focus {
+            border-color: var(--border-strong);
+            background: var(--bg-card);
+        }
+
+        .table-search-box svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            stroke: var(--text-muted);
+        }
+
+        .select-filter {
+            height: 38px;
+            padding: 0 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-app);
+            color: var(--text-main);
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .select-filter:focus {
+            border-color: var(--border-strong);
+            background: var(--bg-card);
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+
+        .dir-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .dir-table th {
+            background: var(--bg-app);
+            padding: 12px 16px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .dir-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .dir-table tbody tr {
+            transition: background 0.12s ease;
+            cursor: pointer;
+        }
+
+        .dir-table tbody tr:hover {
+            background: var(--primary-light);
+        }
+
+        .dir-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .user-cell-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-cell-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .user-cell-role {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .status-pill.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--border-strong);
+        }
+
+        .status-pill.on-leave {
+            background: #fafafa;
+            color: var(--text-muted);
+            border-color: var(--border-dashed);
+        }
+
+        .status-pill.probation {
+            background: #f4f4f5;
+            color: #27272a;
+            border-color: #71717a;
+        }
+
+        .table-pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .page-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.12s ease;
+        }
+
+        .page-btn:hover {
+            border-color: var(--border-strong);
+            background: var(--primary-light);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Slide-over Profile View Detail Drawer */
+        .drawer-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(9, 9, 11, 0.4);
+            backdrop-filter: blur(2px);
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 0.25s ease;
+        }
+
+        .drawer-backdrop.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .profile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 640px;
+            max-width: 92vw;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border-strong);
+            box-shadow: -6px 0 24px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(0);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .profile-drawer.hidden {
+            transform: translateX(100%);
+        }
+
+        .drawer-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: var(--bg-app);
+        }
+
+        .drawer-user-info {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .drawer-avatar-lg {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border-strong);
+            flex-shrink: 0;
+        }
+
+        .drawer-user-meta h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .drawer-user-meta p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .btn-close-drawer {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            padding: 6px;
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-close-drawer:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-close-drawer svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        .drawer-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card);
+            padding: 0 16px;
+            gap: 4px;
+            overflow-x: auto;
+        }
+
+        .drawer-tab {
+            padding: 14px 14px;
+            border: none;
+            background: transparent;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drawer-tab svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .drawer-tab:hover {
+            color: var(--text-main);
+        }
+
+        .drawer-tab.active {
+            color: var(--text-main);
+            font-weight: 700;
+            border-bottom-color: var(--primary);
+        }
+
+        .drawer-body {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .drawer-pane {
+            display: none;
+        }
+
+        .drawer-pane.active {
+            display: block;
+        }
+
+        .info-group {
+            margin-bottom: 24px;
+        }
+
+        .info-group-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .doc-list, .asset-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .doc-item, .asset-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-app);
+            transition: all 0.12s ease;
+        }
+
+        .doc-item:hover, .asset-item:hover {
+            border-color: var(--border-strong);
+            background: var(--bg-card);
+        }
+
+        .doc-meta, .asset-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .doc-icon, .asset-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .doc-icon svg, .asset-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .doc-details, .asset-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doc-name, .asset-title {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .doc-size, .asset-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .drawer-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background: var(--bg-app);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Sidebar Navigation (Unified Component) -->
+        <div class="sidebar" id="sidebarContainer" data-active="People Management" data-subpage="Employee Directory" data-is-subfolder="true"></div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <div class="search-container">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input class="search" id="searchInput" placeholder="Search employees, tasks, departments...">
+                    </div>
+                    <div class="welcome-text">Welcome back, <strong>Lucia Doan</strong></div>
+                </div>
+
+                <div class="profile">
+                    <button class="icon-btn" id="notifBtn" title="Notifications">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <span class="notification-badge"></span>
+                    </button>
+
+                    <div class="avatar" id="userAvatar" title="User Profile">
+                        LD
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Main View -->
+            <div class="main">
+
+                <div class="page-header">
+                    <h1 class="title" id="pageTitle">Employee Directory</h1>
+                    <p class="subtitle" id="pageSubtitle">Search, filter, and manage employee records, organizational roles, and detailed profile drawers.</p>
+                </div>
+
+                <!-- KPI Metric Cards -->
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Total Employees</h3>
+                            <div class="trend-badge trend-up">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg>
+                                +5.2%
+                            </div>
+                        </div>
+                        <h1>428</h1>
+                        <span class="card-subtitle">vs last month</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Active Employees</h3>
+                            <div class="trend-badge trend-up">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg>
+                                +3.1%
+                            </div>
+                        </div>
+                        <h1>401</h1>
+                        <span class="card-subtitle">vs last month</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Departments</h3>
+                            <div class="trend-badge">
+                                0.0%
+                            </div>
+                        </div>
+                        <h1>16</h1>
+                        <span class="card-subtitle">vs last quarter</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Pending Requests</h3>
+                            <div class="trend-badge trend-down">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <line x1="7" y1="7" x2="17" y2="17" />
+                                    <polyline points="17 7 17 17 7 17" />
+                                </svg>
+                                -12.5%
+                            </div>
+                        </div>
+                        <h1>27</h1>
+                        <span class="card-subtitle">vs last week</span>
+                    </div>
+                </div>
+
+                <!-- Employee Directory Data Table Panel -->
+                <div class="directory-panel">
+                    <div class="table-toolbar">
+                        <div class="toolbar-left">
+                            <div class="table-search-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                                <input type="text" id="dirSearchInput" placeholder="Filter by name, ID, role or email...">
+                            </div>
+
+                            <select class="select-filter" id="deptFilterSelect">
+                                <option value="ALL">All Departments</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Human Resources">Human Resources</option>
+                                <option value="Product & Design">Product & Design</option>
+                                <option value="Sales & Business Dev">Sales & Business Dev</option>
+                                <option value="Finance & Operations">Finance & Operations</option>
+                            </select>
+
+                            <select class="select-filter" id="statusFilterSelect">
+                                <option value="ALL">All Status</option>
+                                <option value="Active">Active</option>
+                                <option value="On Leave">On Leave</option>
+                                <option value="Probation">Probation</option>
+                            </select>
+                        </div>
+
+                        <div class="toolbar-right">
+                            <button class="btn-wireframe" id="btnExportCsv">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                Export CSV
+                            </button>
+                            <button class="btn-wireframe" id="btnAddEmployee" style="background: var(--primary); color: white;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Add Employee
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Directory Table -->
+                    <div class="table-responsive">
+                        <table class="dir-table" id="employeeDirectoryTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;"><input type="checkbox" id="selectAllCheckbox"></th>
+                                    <th>Employee ID</th>
+                                    <th>Name & Role</th>
+                                    <th>Department</th>
+                                    <th>Contact Info</th>
+                                    <th>Status</th>
+                                    <th>Join Date</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="directoryTableBody">
+                                <!-- Populated dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-pagination">
+                        <span id="paginationSummary">Showing 1-8 of 428 employees</span>
+                        <div class="pagination-controls">
+                            <button class="page-btn" id="btnPrevPage">Previous</button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn" id="btnNextPage">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Task Board & Quick Actions -->
+                <div class="bottom">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>Directory Activity Log</h2>
+                            <span class="badge-tag">Recent Updates</span>
+                        </div>
+                        <div class="kanban-board">
+                            <div class="kanban-column">
+                                <div class="column-header">
+                                    <span class="column-title">Recent Onboarding</span>
+                                    <span class="column-count">2</span>
+                                </div>
+                                <div class="kanban-card">
+                                    <div class="card-text">Pham Minh Tu joined Engineering</div>
+                                    <div class="card-meta">
+                                        <span class="badge-tag">Joined</span>
+                                        <span>Today</span>
+                                    </div>
+                                </div>
+                                <div class="kanban-card">
+                                    <div class="card-text">Do Hoang Anh completed 30-day review</div>
+                                    <div class="card-meta">
+                                        <span class="badge-tag">Probation</span>
+                                        <span>Yesterday</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kanban-column">
+                                <div class="column-header">
+                                    <span class="column-title">Profile Updates</span>
+                                    <span class="column-count">2</span>
+                                </div>
+                                <div class="kanban-card">
+                                    <div class="card-text">Lucia Doan updated bank account info</div>
+                                    <div class="card-meta">
+                                        <span class="badge-tag">Payroll</span>
+                                        <span>Today</span>
+                                    </div>
+                                </div>
+                                <div class="kanban-card">
+                                    <div class="card-text">Nguyen Van An updated emergency contact</div>
+                                    <div class="card-meta">
+                                        <span class="badge-tag">Info</span>
+                                        <span>2 days ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kanban-column">
+                                <div class="column-header">
+                                    <span class="column-title">Leave Status</span>
+                                    <span class="column-count">1</span>
+                                </div>
+                                <div class="kanban-card">
+                                    <div class="card-text">Tran Tuan on Annual Leave (3 days)</div>
+                                    <div class="card-meta">
+                                        <span class="badge-tag">On Leave</span>
+                                        <span>Until Aug 12</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>Quick Actions</h2>
+                        </div>
+                        <div class="quick-actions-list">
+                            <button class="btn-action" data-action="Add Employee">
+                                <div class="btn-action-left">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                                    <span>Add New Employee</span>
+                                </div>
+                                <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            </button>
+                            <button class="btn-action" data-action="Export Directory">
+                                <div class="btn-action-left">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    <span>Export Directory List</span>
+                                </div>
+                                <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            </button>
+                            <button class="btn-action" data-action="Org Structure">
+                                <div class="btn-action-left">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    <span>View Org Hierarchy</span>
+                                </div>
+                                <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Backdrop Overlay for Profile Detail Drawer -->
+    <div class="drawer-backdrop hidden" id="drawerBackdrop"></div>
+
+    <!-- Profile View Detail Slide-over Drawer (Sitemap Spec) -->
+    <div class="profile-drawer hidden" id="profileDetailDrawer">
+        <div class="drawer-header">
+            <div class="drawer-user-info">
+                <div class="drawer-avatar-lg" id="drawerAvatar">LD</div>
+                <div class="drawer-user-meta">
+                    <h2 id="drawerUserName">Lucia Doan <span class="status-pill active" id="drawerUserStatus">Active</span></h2>
+                    <p id="drawerUserRoleDept">HR Director • Human Resources (EMP-8021)</p>
+                </div>
+            </div>
+            <button class="btn-close-drawer" id="btnCloseDrawer" title="Close Drawer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 4 Navigation Tabs from Sitemap -->
+        <div class="drawer-tabs">
+            <button class="drawer-tab active" data-tab="overview">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                Overview & Personal Info
+            </button>
+            <button class="drawer-tab" data-tab="contract">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Contract & Document
+            </button>
+            <button class="drawer-tab" data-tab="attendance">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Time, Leave & Attendance
+            </button>
+            <button class="drawer-tab" data-tab="assets">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Asset & Equipment
+            </button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- 1. Overview & Personal Info Pane -->
+            <div class="drawer-pane active" id="pane-overview">
+                <div class="info-group">
+                    <div class="info-group-title">Personal Identification</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Full Name</span>
+                            <span class="info-value" id="valFullName">Lucia Doan</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Employee ID</span>
+                            <span class="info-value" id="valEmpId">EMP-8021</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Date of Birth</span>
+                            <span class="info-value" id="valDob">12/04/1992</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Gender</span>
+                            <span class="info-value" id="valGender">Female</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">National ID / Passport</span>
+                            <span class="info-value" id="valNatId">079192004812</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Work Location</span>
+                            <span class="info-value" id="valLocation">Headquarters (HCMC)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-group-title">Contact & Communication</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Work Email</span>
+                            <span class="info-value" id="valWorkEmail">lucia.doan@hrplatform.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Phone Number</span>
+                            <span class="info-value" id="valPhone">+84 908 123 456</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Emergency Contact</span>
+                            <span class="info-value" id="valEmergContact">Doan Van Hung (Father) - 0912 345 678</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Residential Address</span>
+                            <span class="info-value" id="valAddress">District 1, HCMC, Vietnam</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-group-title">Bank & Tax Account</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Bank Name</span>
+                            <span class="info-value" id="valBankName">Vietcombank (HCMC Branch)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Account Number</span>
+                            <span class="info-value" id="valBankAcc">1019 4820 9182</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Contract & Document Pane -->
+            <div class="drawer-pane" id="pane-contract">
+                <div class="info-group">
+                    <div class="info-group-title">Employment Contract Terms</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Contract Type</span>
+                            <span class="info-value" id="valContractType">Indefinite Permanent</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Effective Date</span>
+                            <span class="info-value" id="valContractStart">15/01/2021</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Tax Identification Code</span>
+                            <span class="info-value" id="valTaxId">8409182749</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Social Insurance Book</span>
+                            <span class="info-value" id="valSocialIns">SI-79104829</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-group-title">Uploaded Contracts & Attachments</div>
+                    <div class="doc-list" id="drawerDocList">
+                        <div class="doc-item">
+                            <div class="doc-meta">
+                                <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                                <div class="doc-details">
+                                    <span class="doc-name">Labor_Contract_LuciaDoan_2021.pdf</span>
+                                    <span class="doc-size">PDF • 2.4 MB • Signed on 15 Jan 2021</span>
+                                </div>
+                            </div>
+                            <button class="btn-wireframe" style="padding: 4px 10px; font-size: 11px;">View PDF</button>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-meta">
+                                <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                                <div class="doc-details">
+                                    <span class="doc-name">Non_Disclosure_Agreement_NDA.pdf</span>
+                                    <span class="doc-size">PDF • 1.1 MB • Signed on 15 Jan 2021</span>
+                                </div>
+                            </div>
+                            <button class="btn-wireframe" style="padding: 4px 10px; font-size: 11px;">View PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Time, Leave & Attendance Pane -->
+            <div class="drawer-pane" id="pane-attendance">
+                <div class="info-group">
+                    <div class="info-group-title">Leave Balance & Work Schedule</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Annual Leave Remaining</span>
+                            <span class="info-value" id="valLeaveBalance">14 / 18 Days</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Sick Leave Balance</span>
+                            <span class="info-value" id="valSickBalance">5 / 10 Days</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Standard Work Shift</span>
+                            <span class="info-value">Mon - Fri (08:30 - 17:30)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Punctuality Score</span>
+                            <span class="info-value">98.5% (High Rating)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-group-title">Recent Attendance Log</div>
+                    <div class="doc-list">
+                        <div class="doc-item">
+                            <div class="doc-meta">
+                                <div class="doc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                                <div class="doc-details">
+                                    <span class="doc-name">Today (09 Aug 2026)</span>
+                                    <span class="doc-size">Clocked in: 08:24 AM • Clocked out: -- : --</span>
+                                </div>
+                            </div>
+                            <span class="status-pill active">On Time</span>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-meta">
+                                <div class="doc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                                <div class="doc-details">
+                                    <span class="doc-name">Yesterday (08 Aug 2026)</span>
+                                    <span class="doc-size">Clocked in: 08:28 AM • Clocked out: 05:35 PM</span>
+                                </div>
+                            </div>
+                            <span class="status-pill active">8.1 Hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Asset & Equipment Pane -->
+            <div class="drawer-pane" id="pane-assets">
+                <div class="info-group">
+                    <div class="info-group-title">Assigned Hardware Devices</div>
+                    <div class="asset-list" id="drawerAssetList">
+                        <div class="asset-item">
+                            <div class="asset-meta">
+                                <div class="asset-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                                <div class="asset-details">
+                                    <span class="asset-title">MacBook Pro 16" M2 Max</span>
+                                    <span class="asset-sub">Serial: C02GX011MD6M • Issued on 15 Jan 2021</span>
+                                </div>
+                            </div>
+                            <span class="status-pill active">In Use</span>
+                        </div>
+                        <div class="asset-item">
+                            <div class="asset-meta">
+                                <div class="asset-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                                <div class="asset-details">
+                                    <span class="asset-title">Dell UltraSharp 27" 4K Monitor</span>
+                                    <span class="asset-sub">Serial: CN-05849-742 • Issued on 15 Jan 2021</span>
+                                </div>
+                            </div>
+                            <span class="status-pill active">In Use</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-group-title">Active Software Licenses & Accounts</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Slack Enterprise</span>
+                            <span class="info-value">Workspace Admin (lucia.doan@)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Google Workspace</span>
+                            <span class="info-value">Full Enterprise Suite</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Jira & Confluence</span>
+                            <span class="info-value">HR Operations Space Lead</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Security Keycard ID</span>
+                            <span class="info-value">#KC-4892 (HQ Access)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="drawer-footer">
+            <button class="btn-wireframe" id="btnCloseDrawerFooter">Close</button>
+            <button class="btn-primary" id="btnEditProfile" style="padding: 9px 16px; border-radius: var(--radius-md); background: var(--primary); color: white; border: none; font-weight: 600; cursor: pointer;">Edit Profile</button>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Component Scripts -->
+    <script src="../../js/components/sidebar.js"></script>
+    <script src="../../js/people_management/EmployeeDirectory.js"></script>
+</body>
+
+</html>

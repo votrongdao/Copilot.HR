@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profile Detail - Overview & Personal Info</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #09090b;
+            --primary-hover: #27272a;
+            --primary-light: #f4f4f5;
+            --bg-app: #fafafa;
+            --bg-card: #ffffff;
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-drawer: -4px 0 24px rgba(0, 0, 0, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #f4f4f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+
+        .drawer-preview {
+            width: 720px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drawer-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-hero {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .avatar-large {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-name { font-size: 18px; font-weight: 700; color: var(--text-main); }
+        .hero-role { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+        .status-pill {
+            display: inline-flex;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 600;
+            background: #f4f4f5;
+            color: #09090b;
+            border: 1px solid #71717a;
+        }
+
+        .drawer-nav-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 24px;
+            background: var(--bg-app);
+        }
+
+        .tab-item {
+            padding: 14px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .tab-item.active {
+            color: var(--text-main);
+            font-weight: 700;
+            border-bottom-color: var(--primary);
+        }
+
+        .drawer-body {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            background: var(--bg-card);
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label { font-size: 11.5px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-value { font-size: 13px; font-weight: 600; color: var(--text-main); }
+    </style>
+</head>
+
+<body>
+    <div class="drawer-preview">
+        <div class="drawer-header">
+            <div class="profile-hero">
+                <div class="avatar-large">LD</div>
+                <div>
+                    <div class="hero-name">Lucia Doan</div>
+                    <div class="hero-role">HR Director • EMP-8021</div>
+                </div>
+            </div>
+            <span class="status-pill">Active Permanent</span>
+        </div>
+
+        <div class="drawer-nav-tabs">
+            <div class="tab-item active">Overview & Personal Info</div>
+            <div class="tab-item">Contract & Document</div>
+            <div class="tab-item">Time, Leave & Attendance</div>
+            <div class="tab-item">Asset & Equipment</div>
+        </div>
+
+        <div class="drawer-body">
+            <div class="section-card">
+                <div class="section-title">Personal Identification & Profile</div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">Full Name</span><span class="info-value">Lucia Doan</span></div>
+                    <div class="info-item"><span class="info-label">Employee ID</span><span class="info-value">EMP-8021</span></div>
+                    <div class="info-item"><span class="info-label">Date of Birth</span><span class="info-value">12/04/1992 (34 y/o)</span></div>
+                    <div class="info-item"><span class="info-label">Gender</span><span class="info-value">Female</span></div>
+                    <div class="info-item"><span class="info-label">National Identity ID</span><span class="info-value">079192004812</span></div>
+                    <div class="info-item"><span class="info-label">Work Location</span><span class="info-value">Headquarters (HCMC)</span></div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">Contact & Emergency Details</div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">Work Email</span><span class="info-value">lucia.doan@hrplatform.com</span></div>
+                    <div class="info-item"><span class="info-label">Phone Number</span><span class="info-value">+84 908 123 456</span></div>
+                    <div class="info-item" style="grid-column: span 2;"><span class="info-label">Emergency Contact</span><span class="info-value">Doan Van Hung (Father) - 0912 345 678</span></div>
+                    <div class="info-item" style="grid-column: span 2;"><span class="info-label">Residential Address</span><span class="info-value">District 1, HCMC, Vietnam</span></div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">Banking & Direct Deposit</div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">Bank Name</span><span class="info-value">Vietcombank (HCMC Branch)</span></div>
+                    <div class="info-item"><span class="info-label">Account Number</span><span class="info-value">1019 4820 9182</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

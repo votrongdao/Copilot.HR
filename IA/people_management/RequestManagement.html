@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Requests - HR Platform</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Monochrome Wireframe Design System */
+        :root {
+            --primary: #09090b;
+            --primary-hover: #27272a;
+            --primary-active: #18181b;
+            --primary-light: #f4f4f5;
+            --primary-subtle: #e4e4e7;
+            --primary-border: #71717a;
+
+            --bg-app: #fafafa;
+            --bg-card: #ffffff;
+            --bg-hover: #f4f4f5;
+
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --text-light: #a1a1aa;
+
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --border-dashed: #d4d4d8;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+
+            --shadow-wireframe: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ================= Sidebar ================= */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--primary);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-item {
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+
+        .menu-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-muted);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.15s ease;
+        }
+
+        .menu-item:hover {
+            background: var(--primary-light);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        .menu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .menu-item.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-color: var(--primary);
+        }
+
+        .menu-item.active svg {
+            stroke: white;
+        }
+
+        /* Submenu Styling */
+        .submenu {
+            list-style: none;
+            padding-left: 20px;
+            margin: 4px 0 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            position: relative;
+        }
+
+        .submenu::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            bottom: 4px;
+            width: 1.5px;
+            background: var(--border-color);
+        }
+
+        .submenu-item {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .submenu-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .submenu-item:hover {
+            color: var(--text-main);
+            background: var(--primary-light);
+        }
+
+        .submenu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .submenu-item.active {
+            color: var(--text-main);
+            font-weight: 700;
+            background: var(--primary-light);
+            border-left: 2px solid var(--primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .submenu-item.active svg {
+            stroke: var(--text-main);
+        }
+
+        .dropdown-chevron {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            transition: transform 0.2s ease;
+            margin-left: auto;
+        }
+
+        .menu-item.collapsed .dropdown-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .submenu.hidden {
+            display: none;
+        }
+
+        /* Sidebar Footer User Profile */
+        .sidebar-footer {
+            position: relative;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-profile-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: var(--bg-card);
+        }
+
+        .user-profile-bar:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 10.5px;
+            color: var(--text-muted);
+        }
+
+        .dropdown-chevron {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .user-popup {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-hover);
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            z-index: 100;
+            transition: all 0.15s ease;
+        }
+
+        .user-popup.hidden {
+            display: none;
+        }
+
+        .popup-item {
+            width: 100%;
+            padding: 8px 10px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            transition: background 0.12s ease;
+        }
+
+        .popup-item svg {
+            width: 15px;
+            height: 15px;
+            stroke: var(--text-main);
+        }
+
+        .popup-item:hover {
+            background: var(--primary-light);
+        }
+
+        .popup-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 4px 0;
+        }
+
+        .popup-item.logout-item {
+            color: #dc2626;
+        }
+
+        .popup-item.logout-item svg {
+            stroke: #dc2626;
+        }
+
+        .popup-item.logout-item:hover {
+            background: #fef2f2;
+        }
+
+        /* ================= Content Area ================= */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            height: 80px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .welcome-text {
+            font-size: 30px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 20px;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .welcome-text strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0 16px 0 38px;
+            font-size: 13px;
+            outline: none;
+            background: var(--bg-app);
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+
+        .search:focus {
+            border-color: var(--border-strong);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 2px var(--primary-subtle);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            stroke: var(--text-muted);
+            pointer-events: none;
+            width: 16px;
+            height: 16px;
+        }
+
+        .profile {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            margin-right: 40px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.15s ease;
+            color: var(--text-main);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .avatar:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main View */
+        .main {
+            padding: 32px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Breadcrumb & Navigation Header */
+        .breadcrumb-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-main);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            transition: all 0.15s ease;
+        }
+
+        .back-link:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .back-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .page-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            letter-spacing: -0.4px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .btn-create {
+            padding: 10px 18px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.15s ease;
+        }
+
+        .btn-create:hover {
+            background: var(--primary-hover);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-create svg {
+            width: 16px;
+            height: 16px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* KPI Metric Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .trend-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 7px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            color: var(--text-main);
+        }
+
+        .trend-badge svg {
+            width: 12px;
+            height: 12px;
+            stroke-width: 2.5;
+        }
+
+        /* Requests Management Toolbars & Tabs */
+        .panel {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-app);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 8px 14px;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-weight: 600;
+            border-color: var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+        }
+
+        .tab-count {
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 8px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .select-filter {
+            height: 38px;
+            padding: 0 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-size: 12.5px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.15s ease;
+        }
+
+        .select-filter:focus {
+            border-color: var(--border-strong);
+        }
+
+        /* Requests Table View */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .requests-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .requests-table th {
+            padding: 12px 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border-color);
+            background: var(--bg-app);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        .requests-table td {
+            padding: 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .requests-table tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        .req-id {
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar-tiny {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 9px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-pending {
+            background: var(--bg-app);
+            color: var(--text-main);
+            border-color: var(--border-strong);
+        }
+
+        .status-approved {
+            background: #f0fdf4;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+
+        .status-rejected {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .priority-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            color: var(--text-muted);
+        }
+
+        .priority-high {
+            color: #b91c1c;
+            border-color: #fca5a5;
+        }
+
+        .action-cell {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-table-action {
+            padding: 5px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-size: 11.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-table-action:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Detail Modal Drawer */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(9, 9, 11, 0.4);
+            z-index: 500;
+            display: flex;
+            justify-content: flex-end;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .drawer {
+            width: 480px;
+            background: var(--bg-card);
+            height: 100%;
+            box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border-strong);
+            animation: slideLeft 0.2s ease;
+        }
+
+        @keyframes slideLeft {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .drawer-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .drawer-header h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .btn-close {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-close svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+        }
+
+        .drawer-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .detail-box {
+            padding: 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .drawer-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-approve {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-approve:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-reject {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-reject:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            border: 1px solid var(--border-strong);
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Sidebar Navigation (Unified Component) -->
+        <div class="sidebar" id="sidebarContainer" data-active="People Management" data-subpage="Request Management" data-is-subfolder="true"></div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <div class="search-container">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input class="search" id="searchInput" placeholder="Search requests, employees, IDs...">
+                    </div>
+                    <div class="welcome-text">Welcome back, <strong>Lucia Doan</strong></div>
+                </div>
+
+                <div class="profile">
+                    <button class="icon-btn" id="notifBtn" title="Notifications">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <span class="notification-badge"></span>
+                    </button>
+
+                    <div class="avatar" id="userAvatar" title="User Profile">
+                        LD
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Main Content -->
+            <div class="main">
+
+                <!-- Navigation Breadcrumb -->
+                <div class="breadcrumb-row">
+                    <a href="EmployeeDirectory.html" class="back-link">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="19" y1="12" x2="5" y2="12" />
+                            <polyline points="12 19 5 12 12 5" />
+                        </svg>
+                        Back to Employee Directory
+                    </a>
+                    <span>/</span>
+                    <span>Employee Requests</span>
+                </div>
+
+                <div class="page-header-row">
+                    <div>
+                        <h1 class="title">Employee Requests</h1>
+                        <p class="subtitle">Track, review, approve, and manage internal employee HR workflows and leave
+                            requests.</p>
+                    </div>
+                    <button class="btn-create" id="btnCreateRequest">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Create New Request
+                    </button>
+                </div>
+
+                <!-- Metric Cards -->
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Total Requests</h3>
+                            <div class="trend-badge">
+                                +12.4%
+                            </div>
+                        </div>
+                        <h1>128</h1>
+                        <span class="card-subtitle">vs last month</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Pending Approvals</h3>
+                            <div class="trend-badge">
+                                12 Pending
+                            </div>
+                        </div>
+                        <h1>12</h1>
+                        <span class="card-subtitle">Requires review</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Approved Requests</h3>
+                            <div class="trend-badge">
+                                +8.2%
+                            </div>
+                        </div>
+                        <h1>104</h1>
+                        <span class="card-subtitle">Processed successfully</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Avg Processing</h3>
+                            <div class="trend-badge">
+                                1.8 Days
+                            </div>
+                        </div>
+                        <h1>1.8d</h1>
+                        <span class="card-subtitle">-0.5d faster than avg</span>
+                    </div>
+                </div>
+
+                <!-- Main Requests Panel -->
+                <div class="panel">
+
+                    <!-- Toolbar & Filters -->
+                    <div class="toolbar">
+                        <div class="tab-group" id="statusTabs">
+                            <button class="tab-btn active" data-status="all">
+                                All Requests
+                                <span class="tab-count">27</span>
+                            </button>
+                            <button class="tab-btn" data-status="pending">
+                                Pending
+                                <span class="tab-count">12</span>
+                            </button>
+                            <button class="tab-btn" data-status="approved">
+                                Approved
+                                <span class="tab-count">10</span>
+                            </button>
+                            <button class="tab-btn" data-status="rejected">
+                                Rejected
+                                <span class="tab-count">5</span>
+                            </button>
+                        </div>
+
+                        <div class="filter-group">
+                            <select class="select-filter" id="typeFilter">
+                                <option value="all">All Request Types</option>
+                                <option value="Leave">Annual Leave</option>
+                                <option value="Equipment">Equipment / Asset</option>
+                                <option value="Training">Training Request</option>
+                                <option value="Overtime">Overtime Claim</option>
+                                <option value="Transfer">Department Transfer</option>
+                            </select>
+
+                            <select class="select-filter" id="priorityFilter">
+                                <option value="all">All Priorities</option>
+                                <option value="High">High Priority</option>
+                                <option value="Medium">Medium Priority</option>
+                                <option value="Low">Low Priority</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Requests Data Table -->
+                    <div class="table-container">
+                        <table class="requests-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Employee</th>
+                                    <th>Request Type</th>
+                                    <th>Submitted Date</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestsTableBody">
+                                <tr data-id="REQ-1092" data-status="pending" data-type="Leave" data-priority="High">
+                                    <td class="req-id">REQ-1092</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="avatar-tiny">EC</div>
+                                            <div>
+                                                <strong>Emily Chen</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">Senior Designer
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Annual Leave (3 Days)</td>
+                                    <td>Today, 09:30 AM</td>
+                                    <td><span class="priority-badge priority-high">High</span></td>
+                                    <td>
+                                        <span class="status-pill status-pending">
+                                            <span class="status-dot"></span> Pending Review
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-cell">
+                                            <button class="btn-table-action btn-view-detail">View</button>
+                                            <button class="btn-table-action btn-quick-approve">Approve</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr data-id="REQ-1091" data-status="pending" data-type="Equipment"
+                                    data-priority="Medium">
+                                    <td class="req-id">REQ-1091</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="avatar-tiny">DM</div>
+                                            <div>
+                                                <strong>David Miller</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">DevOps Engineer
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Laptop Upgrade Request</td>
+                                    <td>Today, 08:15 AM</td>
+                                    <td><span class="priority-badge">Medium</span></td>
+                                    <td>
+                                        <span class="status-pill status-pending">
+                                            <span class="status-dot"></span> Pending Review
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-cell">
+                                            <button class="btn-table-action btn-view-detail">View</button>
+                                            <button class="btn-table-action btn-quick-approve">Approve</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr data-id="REQ-1090" data-status="approved" data-type="Profile" data-priority="Low">
+                                    <td class="req-id">REQ-1090</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="avatar-tiny">SJ</div>
+                                            <div>
+                                                <strong>Sarah Jenkins</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">HR Specialist
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Address & Contact Update</td>
+                                    <td>Yesterday</td>
+                                    <td><span class="priority-badge">Low</span></td>
+                                    <td>
+                                        <span class="status-pill status-approved">
+                                            <span class="status-dot"></span> Approved
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-cell">
+                                            <button class="btn-table-action btn-view-detail">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr data-id="REQ-1089" data-status="pending" data-type="Overtime" data-priority="High">
+                                    <td class="req-id">REQ-1089</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="avatar-tiny">MV</div>
+                                            <div>
+                                                <strong>Mark Vance</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">Backend Developer
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Weekend Overtime Claim</td>
+                                    <td>Yesterday</td>
+                                    <td><span class="priority-badge priority-high">High</span></td>
+                                    <td>
+                                        <span class="status-pill status-pending">
+                                            <span class="status-dot"></span> Pending Review
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-cell">
+                                            <button class="btn-table-action btn-view-detail">View</button>
+                                            <button class="btn-table-action btn-quick-approve">Approve</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr data-id="REQ-1088" data-status="rejected" data-type="Transfer"
+                                    data-priority="Medium">
+                                    <td class="req-id">REQ-1088</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="avatar-tiny">AL</div>
+                                            <div>
+                                                <strong>Alex Lee</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">Product Designer
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Internal Department Transfer</td>
+                                    <td>2 days ago</td>
+                                    <td><span class="priority-badge">Medium</span></td>
+                                    <td>
+                                        <span class="status-pill status-rejected">
+                                            <span class="status-dot"></span> Rejected
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-cell">
+                                            <button class="btn-table-action btn-view-detail">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Request Details Side Drawer / Modal -->
+    <div class="modal-overlay hidden" id="requestModal">
+        <div class="drawer">
+            <div class="drawer-header">
+                <h2 id="modalReqId">Request Details - REQ-1092</h2>
+                <button class="btn-close" id="btnCloseModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="drawer-body">
+                <div class="detail-group">
+                    <span class="detail-label">Employee Name</span>
+                    <span class="detail-value" id="modalEmpName">Emily Chen (Senior Designer)</span>
+                </div>
+
+                <div class="detail-group">
+                    <span class="detail-label">Request Type & Subject</span>
+                    <span class="detail-value" id="modalReqSubject">Annual Leave Request (3 Days)</span>
+                </div>
+
+                <div class="detail-group">
+                    <span class="detail-label">Submission Date & Priority</span>
+                    <span class="detail-value" id="modalReqMeta">Submitted Today at 09:30 AM • High Priority</span>
+                </div>
+
+                <div class="detail-group">
+                    <span class="detail-label">Description / Reason</span>
+                    <div class="detail-box" id="modalReqDesc">
+                        Requesting 3 days of annual leave from Aug 12 to Aug 14 for family obligation. Handover
+                        completed with Alex Lee.
+                    </div>
+                </div>
+
+                <div class="detail-group">
+                    <span class="detail-label">Current Status</span>
+                    <div>
+                        <span class="status-pill status-pending" id="modalReqStatus">
+                            <span class="status-dot"></span> Pending Manager Approval
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer-footer">
+                <button class="btn-reject" id="btnModalReject">Reject Request</button>
+                <button class="btn-approve" id="btnModalApprove">Approve Request</button>
+                <a href="TrackingRequest.html" class="btn-approve" style="background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-color); text-decoration:none; text-align:center; display:inline-flex; align-items:center; justify-content:center;">Track Stepper Timeline</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Component Scripts -->
+    <script src="../../js/components/sidebar.js"></script>
+    <script src="../../js/people_management/RequestManagement.js"></script>
+</body>
+
+</html>

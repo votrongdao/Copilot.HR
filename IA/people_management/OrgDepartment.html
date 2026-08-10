@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization & Department - HR Platform</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Monochrome Wireframe Design System */
+        :root {
+            --primary: #09090b;
+            --primary-hover: #27272a;
+            --primary-active: #18181b;
+            --primary-light: #f4f4f5;
+            --primary-subtle: #e4e4e7;
+            --primary-border: #71717a;
+
+            --bg-app: #fafafa;
+            --bg-card: #ffffff;
+            --bg-hover: #f4f4f5;
+
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --text-light: #a1a1aa;
+
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --border-dashed: #d4d4d8;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+
+            --shadow-wireframe: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ================= Sidebar ================= */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--primary);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-item {
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+
+        .menu-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-muted);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.15s ease;
+        }
+
+        .menu-item:hover {
+            background: var(--primary-light);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        .menu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .menu-item.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-color: var(--primary);
+        }
+
+        .menu-item.active svg {
+            stroke: white;
+        }
+
+        /* Submenu Styling */
+        .submenu {
+            list-style: none;
+            padding-left: 20px;
+            margin: 4px 0 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            position: relative;
+        }
+
+        .submenu::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            bottom: 4px;
+            width: 1.5px;
+            background: var(--border-color);
+        }
+
+        .submenu-item {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .submenu-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .submenu-item:hover {
+            color: var(--text-main);
+            background: var(--primary-light);
+        }
+
+        .submenu-item:hover svg {
+            stroke: var(--text-main);
+        }
+
+        .submenu-item.active {
+            color: var(--text-main);
+            font-weight: 700;
+            background: var(--primary-light);
+            border-left: 2px solid var(--primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .submenu-item.active svg {
+            stroke: var(--text-main);
+        }
+
+        .dropdown-chevron {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            transition: transform 0.2s ease;
+            margin-left: auto;
+        }
+
+        .menu-item.collapsed .dropdown-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .submenu.hidden {
+            display: none;
+        }
+
+        /* Sidebar Footer User Profile */
+        .sidebar-footer {
+            position: relative;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .user-profile-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: var(--bg-card);
+        }
+
+        .user-profile-bar:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .user-avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--primary-border);
+        }
+
+        .user-info-text {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Popup Menu */
+        .user-popup-menu {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-hover);
+            padding: 6px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .user-popup-menu.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+
+        .popup-item {
+            padding: 8px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-main);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.15s ease;
+        }
+
+        .popup-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-muted);
+        }
+
+        .popup-item:hover {
+            background: var(--primary-light);
+        }
+
+        .popup-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 4px 0;
+        }
+
+        /* ================= Content Area ================= */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Header */
+        .header {
+            height: 64px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .header-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            width: 320px;
+        }
+
+        .header-search svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-muted);
+        }
+
+        .header-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 13px;
+            color: var(--text-main);
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-main);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 2px solid var(--bg-card);
+        }
+
+        /* Main Scrollable View */
+        .main {
+            padding: 32px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .page-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            letter-spacing: -0.4px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* Primary Action Button */
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.15s ease;
+            box-shadow: var(--shadow-wireframe);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .btn-primary svg {
+            width: 16px;
+            height: 16px;
+            stroke: white;
+            stroke-width: 2.5;
+        }
+
+        .btn-wireframe {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 9px 15px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.15s ease;
+        }
+
+        .btn-wireframe:hover {
+            background: var(--primary-light);
+            border-color: var(--border-strong);
+        }
+
+        .btn-wireframe svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+        }
+
+        /* KPI Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .trend-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 7px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            color: var(--text-main);
+        }
+
+        /* View Mode Controls & Tabs Bar */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            background: var(--bg-card);
+            padding: 12px 16px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-app);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .select-input {
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            font-size: 12px;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .select-input:hover {
+            border-color: var(--border-strong);
+        }
+
+        /* View Containers */
+        .view-pane {
+            display: none;
+        }
+
+        .view-pane.active {
+            display: block;
+        }
+
+        /* ================= Tab 1: Interactive Org Tree Canvas ================= */
+        .tree-canvas-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 36px 24px;
+            min-height: 540px;
+            box-shadow: var(--shadow-wireframe);
+            overflow-x: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .tree-zoom-toolbar {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--bg-app);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 4px;
+        }
+
+        .zoom-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .zoom-btn:hover {
+            background: var(--bg-card);
+        }
+
+        .zoom-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+        }
+
+        /* Tree Hierarchy CSS Rendering */
+        .org-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Node Cards */
+        .tree-node {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            width: 260px;
+            box-shadow: var(--shadow-wireframe);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            user-select: none;
+        }
+
+        .tree-node:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .tree-node.sub-node {
+            border: 1.5px solid var(--border-strong);
+            width: 230px;
+            padding: 14px 16px;
+        }
+
+        .tree-node.leaf-node {
+            border: 1px solid var(--border-color);
+            width: 210px;
+            padding: 12px 14px;
+            background: var(--bg-app);
+        }
+
+        .node-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .node-badge {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            background: var(--primary-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .node-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .node-lead {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .node-lead-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .node-lead-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .node-lead-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .node-lead-role {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .node-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .count-tag {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Connection Connector Lines */
+        .tree-line-v {
+            width: 2px;
+            height: 28px;
+            background: var(--border-strong);
+            margin: 0 auto;
+        }
+
+        .tree-connector-row {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            position: relative;
+        }
+
+        .tree-connector-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-strong);
+        }
+
+        /* ================= Tab 2: Roster Table View ================= */
+        .table-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-wireframe);
+            overflow: hidden;
+        }
+
+        .dept-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .dept-table th {
+            background: var(--bg-app);
+            padding: 14px 18px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        .dept-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .dept-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .dept-table tr:hover td {
+            background: var(--primary-light);
+        }
+
+        .dept-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .dept-icon-box {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dept-icon-box svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-main);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: var(--bg-app);
+        }
+
+        .status-pill.active {
+            border-color: var(--border-strong);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .table-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ================= Drawer / Modal ================= */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(9, 9, 11, 0.4);
+            backdrop-filter: blur(2px);
+            z-index: 200;
+            display: flex;
+            justify-content: flex-end;
+
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .drawer-overlay.hidden {
+            display: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .drawer {
+            width: 480px;
+            background: var(--bg-card);
+            height: 100%;
+            border-left: 1px solid var(--border-strong);
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            transform: translateX(0);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .drawer-overlay.hidden .drawer {
+            transform: translateX(100%);
+        }
+
+        .drawer-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .drawer-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .drawer-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .drawer-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            background: var(--bg-app);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-control {
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            font-size: 13px;
+            color: var(--text-main);
+            outline: none;
+            transition: border 0.15s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--border-strong);
+        }
+
+        textarea.form-control {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--primary);
+            color: white;
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideUp 0.25s ease;
+        }
+
+        /* Drag & Drop Visual Feedback for Org Nodes */
+        .tree-node[draggable="true"] {
+            cursor: grab;
+            user-select: none;
+        }
+
+        .tree-node[draggable="true"]:active {
+            cursor: grabbing;
+        }
+
+        .tree-node.dragging {
+            opacity: 0.4;
+            transform: scale(0.96);
+            border: 2px dashed var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .tree-node.drag-over {
+            border: 2px solid var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 16px rgba(9, 9, 11, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* CEO Approval Pending Modal */
+        .approval-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(9, 9, 11, 0.45);
+            backdrop-filter: blur(3px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .approval-modal-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .approval-modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 440px;
+            max-width: 90vw;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .approval-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            border: 1.5px solid var(--border-strong);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .approval-icon-box svg {
+            width: 26px;
+            height: 26px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .approval-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .approval-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .approval-desc strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <!-- Sidebar Navigation (Unified Component) -->
+        <div class="sidebar" id="sidebarContainer" data-active="People Management"
+            data-subpage="Organization & Department" data-is-subfolder="true"></div>
+
+        <!-- ================= Main Workspace ================= -->
+        <div class="content-area">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" id="deptSearchInput"
+                        placeholder="Search department, branch, or department lead...">
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn" id="btnNotifications" title="Notifications">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <span class="notification-badge"></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Scroll View -->
+            <main class="main">
+                <div class="page-header-row">
+                    <div>
+                        <h1 class="title">Organization & Department</h1>
+                        <p class="subtitle">Manage company structure, reporting lines, departments, and headcount
+                            allocations.</p>
+                    </div>
+
+                    <button class="btn-primary" id="btnCreateDept">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        <span> Add Department</span>
+                    </button>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Total Departments</h3>
+                            <span class="trend-badge trend-up">+1 New</span>
+                        </div>
+                        <h1>8</h1>
+                        <span class="card-subtitle">Active operational units</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Branches & Divisions</h3>
+                            <span class="trend-badge">4 Locations</span>
+                        </div>
+                        <h1>12</h1>
+                        <span class="card-subtitle">Sub-units & regional clusters</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Total Personnel</h3>
+                            <span class="trend-badge trend-up">+5.2% MoM</span>
+                        </div>
+                        <h1>248</h1>
+                        <span class="card-subtitle">Assigned to departments</span>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3>Span of Control</h3>
+                            <span class="trend-badge">Optimal</span>
+                        </div>
+                        <h1>1 : 7.2</h1>
+                        <span class="card-subtitle">Manager to staff ratio</span>
+                    </div>
+                </div>
+
+                <!-- Controls & View Switcher -->
+                <div class="controls-bar">
+                    <div class="tab-group" id="viewModeTabs">
+                        <button class="tab-btn active" data-view="treeView">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                            </svg>
+                            <span>Org Tree View</span>
+                        </button>
+                        <button class="tab-btn" data-view="tableView">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <line x1="8" y1="6" x2="21" y2="6" />
+                                <line x1="8" y1="12" x2="21" y2="12" />
+                                <line x1="8" y1="18" x2="21" y2="18" />
+                                <line x1="3" y1="6" x2="3.01" y2="6" />
+                                <line x1="3" y1="12" x2="3.01" y2="12" />
+                                <line x1="3" y1="18" x2="3.01" y2="18" />
+                            </svg>
+                            <span>Roster Table</span>
+                        </button>
+                    </div>
+
+                    <div class="filter-group">
+                        <select class="select-input" id="branchFilter">
+                            <option value="all">All Locations (Branches)</option>
+                            <option value="hq">Headquarters (HCMC)</option>
+                            <option value="hn">Hanoi Branch</option>
+                            <option value="dn">Da Nang Hub</option>
+                            <option value="remote">Remote Workforce</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- View 1: Interactive Org Tree Canvas -->
+                <div class="view-pane active" id="treeView">
+                    <div class="tree-canvas-container">
+                        <div class="tree-zoom-toolbar">
+                            <button class="zoom-btn" id="btnZoomIn" title="Zoom In">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                    <line x1="11" y1="8" x2="11" y2="14" />
+                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                </svg>
+                            </button>
+                            <button class="zoom-btn" id="btnZoomOut" title="Zoom Out">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="org-tree" id="orgTreeContent">
+                            <!-- Level 1: Executive Board -->
+                            <div class="tree-level">
+                                <div class="tree-node" data-dept-id="executive" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">Executive</span>
+                                        <span class="count-tag">HQ</span>
+                                    </div>
+                                    <div class="node-title">Board of Directors & CEO</div>
+                                    <div class="node-lead">
+                                        <div class="node-lead-avatar">LD</div>
+                                        <div class="node-lead-info">
+                                            <span class="node-lead-name">Luu Duong</span>
+                                            <span class="node-lead-role">Chief Executive Officer (CEO)</span>
+                                        </div>
+                                    </div>
+                                    <div class="node-footer">
+                                        <span>Direct Reports: 6</span>
+                                        <span class="count-tag">248 Total</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tree-line-v"></div>
+
+                            <!-- Level 2: Core Divisions -->
+                            <div class="tree-level" style="gap: 40px;">
+                                <div class="tree-node sub-node" data-dept-id="engineering" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">Engineering</span>
+                                        <span class="count-tag">HQ & Remote</span>
+                                    </div>
+                                    <div class="node-title">Technology & Software</div>
+                                    <div class="node-lead">
+                                        <div class="node-lead-avatar">DV</div>
+                                        <div class="node-lead-info">
+                                            <span class="node-lead-name">Dao Vo</span>
+                                            <span class="node-lead-role">Chief Technology Officer (CTO)</span>
+                                        </div>
+                                    </div>
+                                    <div class="node-footer">
+                                        <span>4 Sub-teams</span>
+                                        <span class="count-tag">86 Staff</span>
+                                    </div>
+                                </div>
+
+                                <div class="tree-node sub-node" data-dept-id="hr" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">People & Culture</span>
+                                        <span class="count-tag">HQ</span>
+                                    </div>
+                                    <div class="node-title">Human Resources (HR)</div>
+                                    <div class="node-lead">
+                                        <div class="node-lead-avatar">LD</div>
+                                        <div class="node-lead-info">
+                                            <span class="node-lead-name">Lucia Doan</span>
+                                            <span class="node-lead-role">HR Director</span>
+                                        </div>
+                                    </div>
+                                    <div class="node-footer">
+                                        <span>3 Sub-teams</span>
+                                        <span class="count-tag">24 Staff</span>
+                                    </div>
+                                </div>
+
+                                <div class="tree-node sub-node" data-dept-id="sysadmin" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">Infrastructure</span>
+                                        <span class="count-tag">HQ & Remote</span>
+                                    </div>
+                                    <div class="node-title">System Administration</div>
+                                    <div class="node-lead">
+                                        <div class="node-lead-avatar">DN</div>
+                                        <div class="node-lead-info">
+                                            <span class="node-lead-name">Dung Nguyen</span>
+                                            <span class="node-lead-role">Head of System Admin</span>
+                                        </div>
+                                    </div>
+                                    <div class="node-footer">
+                                        <span>2 Sub-teams</span>
+                                        <span class="count-tag">18 Staff</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tree-line-v"></div>
+
+                            <!-- Level 3: Department Units -->
+                            <div class="tree-level" style="gap: 20px;">
+                                <div class="tree-node leaf-node" data-dept-id="frontend" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">Sub-unit</span>
+                                    </div>
+                                    <div class="node-title">Frontend Engineering</div>
+                                    <div class="node-footer">
+                                        <span>Lead: Minh Le</span>
+                                        <span class="count-tag">28 Staff</span>
+                                    </div>
+                                </div>
+
+                                <div class="tree-node leaf-node" data-dept-id="backend" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">Sub-unit</span>
+                                    </div>
+                                    <div class="node-title">Backend & Cloud Ops</div>
+                                    <div class="node-footer">
+                                        <span>Lead: Hoang Nam</span>
+                                        <span class="count-tag">34 Staff</span>
+                                    </div>
+                                </div>
+
+                                <div class="tree-node leaf-node" data-dept-id="recruitment" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">Sub-unit</span>
+                                    </div>
+                                    <div class="node-title">Recruitment & ATS</div>
+                                    <div class="node-footer">
+                                        <span>Lead: Mai Anh</span>
+                                        <span class="count-tag">10 Staff</span>
+                                    </div>
+                                </div>
+
+                                <div class="tree-node leaf-node" data-dept-id="finance" draggable="true">
+                                    <div class="node-header">
+                                        <span class="node-badge">Sub-unit</span>
+                                    </div>
+                                    <div class="node-title">Finance & Payroll</div>
+                                    <div class="node-footer">
+                                        <span>Lead: Pham Duc</span>
+                                        <span class="count-tag">14 Staff</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View 2: Department Roster Table -->
+                <div class="view-pane" id="tableView">
+                    <div class="table-container">
+                        <table class="dept-table">
+                            <thead>
+                                <tr>
+                                    <th>Department Name</th>
+                                    <th>Department Lead</th>
+                                    <th>Parent Division</th>
+                                    <th>Location Branch</th>
+                                    <th>Headcount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deptTableBody">
+                                <tr>
+                                    <td>
+                                        <div class="dept-name-cell">
+                                            <div class="dept-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                                    <polyline points="16 18 22 12 16 6" />
+                                                    <polyline points="8 6 2 12 8 18" />
+                                                </svg>
+                                            </div>
+                                            <span>Technology & Software Engineering</span>
+                                        </div>
+                                    </td>
+                                    <td>Dao Vo (CTO)</td>
+                                    <td>Executive Board</td>
+                                    <td>Headquarters (HCMC)</td>
+                                    <td>86 Employees</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="btn-wireframe btn-edit-dept"
+                                                data-id="engineering">Edit</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="dept-name-cell">
+                                            <div class="dept-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                                    <circle cx="9" cy="7" r="4" />
+                                                </svg>
+                                            </div>
+                                            <span>Human Resources (People & Culture)</span>
+                                        </div>
+                                    </td>
+                                    <td>Lucia Doan (Director)</td>
+                                    <td>Executive Board</td>
+                                    <td>Headquarters (HCMC)</td>
+                                    <td>24 Employees</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="btn-wireframe btn-edit-dept" data-id="hr">Edit</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="dept-name-cell">
+                                            <div class="dept-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                                    <line x1="8" y1="21" x2="16" y2="21" />
+                                                    <line x1="12" y1="17" x2="12" y2="21" />
+                                                </svg>
+                                            </div>
+                                            <span>System Administration</span>
+                                        </div>
+                                    </td>
+                                    <td>Dung Nguyen (Head)</td>
+                                    <td>Executive Board</td>
+                                    <td>HQ & Remote</td>
+                                    <td>18 Employees</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="btn-wireframe btn-edit-dept" data-id="sysadmin">Edit</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="dept-name-cell">
+                                            <div class="dept-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                                    <line x1="12" y1="1" x2="12" y2="23" />
+                                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                                </svg>
+                                            </div>
+                                            <span>Finance & Accounting</span>
+                                        </div>
+                                    </td>
+                                    <td>Pham Duc (Lead)</td>
+                                    <td>Human Resources</td>
+                                    <td>Headquarters (HCMC)</td>
+                                    <td>14 Employees</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="btn-wireframe btn-edit-dept" data-id="finance">Edit</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ================= Add / Edit Department Drawer ================= -->
+    <div class="drawer-overlay hidden" id="deptDrawerOverlay">
+        <div class="drawer">
+            <div class="drawer-header">
+                <h2 class="drawer-title" id="drawerTitle">Add New Department</h2>
+                <button class="icon-btn" id="btnCloseDrawer" title="Close Drawer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+
+            <form id="deptForm" class="drawer-body">
+                <div class="form-group">
+                    <label for="deptNameInput">Department Name</label>
+                    <input type="text" id="deptNameInput" class="form-control" placeholder="e.g. Quality Assurance (QA)"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="parentDeptSelect">Parent Division / Department</label>
+                    <select id="parentDeptSelect" class="form-control">
+                        <option value="executive">Board of Directors & CEO</option>
+                        <option value="engineering">Technology & Software Engineering</option>
+                        <option value="hr">Human Resources (People & Culture)</option>
+                        <option value="sales">Sales & Business Development</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="deptLeadSelect">Department Lead / Manager</label>
+                    <select id="deptLeadSelect" class="form-control">
+                        <option value="Duy Nguyen">Duy Nguyen (VP Engineering)</option>
+                        <option value="Lucia Doan">Lucia Doan (HR Director)</option>
+                        <option value="Tran Tuan">Tran Tuan (Head of Sales)</option>
+                        <option value="Minh Le">Minh Le (Frontend Lead)</option>
+                        <option value="Mai Anh">Mai Anh (Recruitment Lead)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="locationSelect">Primary Location Branch</label>
+                    <select id="locationSelect" class="form-control">
+                        <option value="Headquarters (HCMC)">Headquarters (HCMC)</option>
+                        <option value="Hanoi Branch">Hanoi Branch</option>
+                        <option value="Da Nang Hub">Da Nang Hub</option>
+                        <option value="Remote Workforce">Remote Workforce</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="budgetInput">Allocated Annual Budget ($ USD)</label>
+                    <input type="number" id="budgetInput" class="form-control" placeholder="e.g. 150000" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="deptDescInput">Operational Description & Mandate</label>
+                    <textarea id="deptDescInput" class="form-control"
+                        placeholder="Specify department scope and responsibilities..."></textarea>
+                </div>
+            </form>
+
+            <div class="drawer-footer">
+                <button type="button" class="btn-wireframe" id="btnCancelDrawer">Cancel</button>
+                <button type="submit" form="deptForm" class="btn-primary" id="btnSaveDept">Save Department</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CEO Approval Pending PopUp Modal -->
+    <div class="approval-modal-overlay hidden" id="approvalModalOverlay">
+        <div class="approval-modal">
+            <div class="approval-icon-box">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                </svg>
+            </div>
+            <div>
+                <div class="approval-title">Department Restructure Submitted</div>
+                <div class="approval-desc">
+                    The department restructuring request has been submitted successfully.<br>
+                    Status: <strong>Pending approval from CEO (Luu Duong)</strong>.
+                </div>
+            </div>
+            <button class="btn-wireframe" id="btnCloseApprovalModal"
+                style="padding: 9px 18px; font-size: 13px; font-weight: 600; background: var(--primary); color: white; border-color: var(--primary); width: 100%; border-radius: var(--radius-md); margin-top: 4px; cursor: pointer;">
+                Got it
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification Anchor -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Component Scripts -->
+    <script src="../../js/components/sidebar.js"></script>
+    <script src="../../js/people_management/OrgDepartment.js"></script>
+</body>
+
+</html>

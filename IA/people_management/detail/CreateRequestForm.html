@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Screen - Create New Request</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #09090b;
+            --bg-app: #fafafa;
+            --bg-card: #ffffff;
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --border-color: #e4e4e7;
+            --border-strong: #18181b;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg-app); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 30px 20px; }
+
+        .form-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg); width: 680px; max-width: 95vw;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 30px;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+
+        .form-header { border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .form-title { font-size: 20px; font-weight: 700; color: var(--text-main); }
+        .form-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full { grid-column: span 2; }
+        .form-group label { font-size: 12px; font-weight: 600; color: var(--text-main); }
+        .form-control {
+            padding: 10px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color);
+            font-size: 13px; outline: none; background: #fafafa;
+        }
+        textarea.form-control { height: 100px; resize: vertical; }
+
+        .btn-submit {
+            padding: 12px 24px; border-radius: var(--radius-md); border: none; background: var(--primary);
+            color: white; font-size: 14px; font-weight: 600; cursor: pointer; align-self: flex-end; margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-card">
+        <div class="form-header">
+            <div class="form-title">Create New Employee Request Form</div>
+            <div class="form-subtitle">Submit leave, hardware equipment requisition, or department transfer requests.</div>
+        </div>
+
+        <div class="form-grid">
+            <div class="form-group full">
+                <label>Request Type *</label>
+                <select class="form-control">
+                    <option selected>Annual Paid Leave Request</option>
+                    <option>Hardware & Equipment Requisition</option>
+                    <option>Department & Role Transfer Request</option>
+                    <option>General HR Service Request</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Start Date *</label>
+                <input type="date" class="form-control" value="2026-08-12">
+            </div>
+
+            <div class="form-group">
+                <label>End Date *</label>
+                <input type="date" class="form-control" value="2026-08-14">
+            </div>
+
+            <div class="form-group full">
+                <label>Designated Covering Colleague (Handover)</label>
+                <input type="text" class="form-control" value="Tran Minh (Senior Frontend Lead)" placeholder="Name of coworker covering your duties">
+            </div>
+
+            <div class="form-group full">
+                <label>Justification & Detailed Work Handover Notes *</label>
+                <textarea class="form-control" placeholder="Specify work handover status...">Personal family event. All current sprint tasks have been merged to staging and handed over to Tran Minh.</textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>Supporting Documents / Attachments (Optional)</label>
+                <input type="file" class="form-control">
+            </div>
+        </div>
+
+        <button class="btn-submit">Submit Request Form</button>
+    </div>
+</body>
+
+</html>
