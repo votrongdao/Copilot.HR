@@ -8,6 +8,16 @@ This document defines the Entity-Relationship Diagram (ERD) and data schema for 
 
 ![Organization](../images/database/Organization.png)
 
+---
+
+## 2. Use Case Diagram
+
+![Organization Use Case](../images/usecase/Organization.png)
+
+---
+
+## 3. Master Schema Code (Mermaid)
+
 ```mermaid
 erDiagram
     COMPANY_BRANCH ||--o{ DEPARTMENT : "houses"

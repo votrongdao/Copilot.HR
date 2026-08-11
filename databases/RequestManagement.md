@@ -8,6 +8,16 @@ This document defines the Entity-Relationship Diagram (ERD) and data schema for 
 
 ![Request](../images/database/Request_Managment.png)
 
+---
+
+## 2. Use Case Diagram
+
+![Request Use Case](../images/usecase/RequestManagement.png)
+
+---
+
+## 3. Master Schema Code (Mermaid)
+
 ```mermaid
 erDiagram
     REQUEST_TYPE ||--o{ TICKET_REQUEST : "categorizes"

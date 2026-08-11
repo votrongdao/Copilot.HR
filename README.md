@@ -228,7 +228,19 @@ flowchart LR
 
 ---
 
-# Copilot.HR - Master Database Architecture & ERD
+## Information Architecture (IA) Sitemap
+
+Link Sitemap IA: [Relume Sitemap Project](https://www.relume.ai/app/project/P3513106_M_AsmXcsz2LE9p9i5egRRtV2aMuaJQ4-Pj5YjjiDkKo#mode=sitemap)
+
+---
+
+## Use Case Diagrams
+
+![People Use Case Diagram](./images/usecase/People.png)
+
+---
+
+# People ERD
 
 **Total System Tables**: **20 Tables**
 

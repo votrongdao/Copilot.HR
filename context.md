@@ -198,6 +198,41 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 
 ---
 
+### 📌 Task 21: UML Use Case Diagram Generation - Employee Directory
+- **Generated High-Quality UML Diagram**: Created a clean vector-style UML Use Case Diagram for the Employee Directory module.
+
+---
+
+### 📌 Task 22: Complete Use Case Diagrams Generation (Org & Request) & Title Refactoring
+- **Removed "Management" Word**: Refactored system boundary titles across all UML Use Case diagrams to concise titles: `Employee Directory`, `Organization`, `Request`.
+- **Generated All 3 Module Use Case Diagrams**:
+  1. `Employee Directory` ➔ [images/usecase/EmployeeDirectory.png](file:///d:/Copilot.HR/images/usecase/EmployeeDirectory.png)
+  2. `Organization` ➔ [images/usecase/Organization.png](file:///d:/Copilot.HR/images/usecase/Organization.png)
+  3. `Request` ➔ [images/usecase/RequestManagement.png](file:///d:/Copilot.HR/images/usecase/RequestManagement.png)
+- **Embedded into Specs**: Embedded the respective Use Case PNG diagrams into [databases/EmployeeDirectory.md](file:///d:/Copilot.HR/databases/EmployeeDirectory.md), [databases/Organization.md](file:///d:/Copilot.HR/databases/Organization.md), and [databases/RequestManagement.md](file:///d:/Copilot.HR/databases/RequestManagement.md).
+
+---
+
+### 📌 Task 23: Organization Use Case Diagram Role Refactoring
+- **Strict Role-Permission Connectors**: Updated [images/usecase/Organization.png](file:///d:/Copilot.HR/images/usecase/Organization.png) to strictly mirror role boundaries:
+  - `Employee`: Only connected to `View Org Chart` & `View Department Details`.
+  - `Manager`: Connected to `Manage Team & Members`, `View Org Chart`, and `View Department Details`.
+  - `HR Admin`: Connected to `Configure Department Structure`, `Configure Job Positions`, `Manage Team & Members`, and `View Org Chart`.
+
+---
+
+### 📌 Task 24: Root README.md Layout Refactoring - Sitemap IA, Use Cases & People ERD
+- **Sitemap IA Link Integration**: Added `## Information Architecture (IA) Sitemap` section directly under the Feature Mindmap Flowchart in [README.md](file:///d:/Copilot.HR/README.md) linking to [Relume Sitemap Project](https://www.relume.ai/app/project/P3513106_M_AsmXcsz2LE9p9i5egRRtV2aMuaJQ4-Pj5YjjiDkKo#mode=sitemap).
+- **Use Case Diagrams Section**: Placed all 3 Use Case PNG diagrams (`Organization`, `Employee Directory`, `Request`) directly below the Sitemap section.
+- **Renamed Table Section Header**: Renamed the database table matrix section heading to **`# People ERD`**.
+
+---
+
+### 📌 Task 25: Root README.md Image Consolidation - Integrated People.png Use Case Diagram
+- **Consolidated Use Case Section**: Replaced 3 individual module Use Case images with 1 consolidated master Use Case diagram `images/usecase/People.png` in [README.md](file:///d:/Copilot.HR/README.md).
+
+---
+
 ## 3. Git Activity Summary
 
 ```bash

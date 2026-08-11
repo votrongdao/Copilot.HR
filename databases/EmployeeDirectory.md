@@ -8,6 +8,16 @@ This document defines the Entity-Relationship Diagram (ERD) and data schema for 
 
 ![Employee Directory](../images/database/EmployeeDirectory.png)
 
+---
+
+## 2. Use Case Diagram
+
+![Employee Directory Use Case](../images/usecase/EmployeeDirectory.png)
+
+---
+
+## 3. Master Schema Code (Mermaid)
+
 ```mermaid
 erDiagram
 
