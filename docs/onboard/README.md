@@ -1,7 +1,7 @@
 # Onboarding Documents
 
 ## Onboarding Sitemap 
-![Onboarding Sitemap](../../workforce/docs/onboard/pics/onboarding-sitemap.png)
+![alt text](../../images/sitemap/onboarding-sitemap.png)
 
 ## Onboarding Use Case
 ![Onboarding Use Case](../../images/usecase/onboard-usecase.png)
@@ -35,4 +35,4 @@
 
 ### 7. Tracking Onboard Progress 
 ![Tracking Onboard Progress UI](../../images/uiux/onboard/tracking-screen.png)
-![Tracking Onboard Progress ERD](../../images/erd/tracking-erd.png)
+![Tracking Onboard Progress ERD](../../images/erd/tracking-erd.png)
