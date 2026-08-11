@@ -315,6 +315,11 @@ flowchart LR
 
 
 ## III. UI/UX
+### 28. Attendence Management
+![alt text](<images/uiux/attendance/Attendance Dashboard.png>)
+![alt text](<images/uiux/attendance/Attendance Corrections - Manager View.png>)
+![alt text](<images/uiux/attendance/Attendance Records & Exceptions.png>)
+![alt text](<images/uiux/attendance/My Attendance - Working State.png>)
 ## IV. DB, Entity Diagram
 ## V. API docs
 
