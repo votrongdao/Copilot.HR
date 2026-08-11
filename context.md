@@ -133,10 +133,48 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 
 ### 📌 Task 11: Modularized Database Documentation by PowerPoint Presentation Slides
 - **Restructured Databases Folder**: Updated all schema documents under [databases/](file:///d:/Copilot.HR/databases) to feature slide-based Mermaid ERD diagrams:
-  - 🖼️ **[databases/README.md](file:///d:/Copilot.HR/databases/README.md)**: Full 19-table Master ERD + 3 Slide Part Diagrams + 19-table Presentation Matrix.
+  - 🖼️ **[databases/README.md](file:///d:/Copilot.HR/databases/README.md)**: Full 20-table Master ERD + 3 Slide Part Diagrams + 20-table Presentation Matrix.
   - 🖼️ **[databases/Organization.md](file:///d:/Copilot.HR/databases/Organization.md)**: Slide 1 Diagram (6 Tables - Organization Architecture & Reporting Lines).
-  - 🖼️ **[databases/EmployeeDirectory.md](file:///d:/Copilot.HR/databases/EmployeeDirectory.md)**: Slide 2 Diagram (7 Tables - Employee 360° Profile & Lifecycle Records).
+  - 🖼️ **[databases/EmployeeDirectory.md](file:///d:/Copilot.HR/databases/EmployeeDirectory.md)**: Slide 2 Diagram (8 Tables - Employee 360° Profile & Lifecycle Records).
   - 🖼️ **[databases/RequestManagement.md](file:///d:/Copilot.HR/databases/RequestManagement.md)**: Slide 3 Diagram (6 Tables - HR Request Engine & Approval Audit Logs).
+
+---
+
+### 📌 Task 12: Database ERD Expansion - Added EMPLOYEE_PROFILE Table (#20)
+- **Separated Demographics (1:1 Entity)**: Decoupled personal attributes (`first_name`, `last_name`, `phone`, `avatar_url`, `gender`, `date_of_birth`) from core account entity `EMPLOYEE` into **`EMPLOYEE_PROFILE`** in [databases/EmployeeDirectory.md](file:///d:/Copilot.HR/databases/EmployeeDirectory.md).
+- **Synchronized Master ERD**: Updated [databases/README.md](file:///d:/Copilot.HR/databases/README.md) to reflect the 20-table Master ERD diagram, Slide 2 diagram (8 tables), and 20-table Relationship Matrix.
+
+---
+
+### 📌 Task 13: README Restructure & REPORTING_LINE Specification
+- **Restructured README Layout**: Reordered [databases/README.md](file:///d:/Copilot.HR/databases/README.md) to strictly follow the sequence:
+  1. `## 1. Master System ERD Diagram (Diagram Chung 20 Bảng)`
+  2. `## 2. Master Table Relationships Matrix (Danh sách 20 Bảng & Mối quan hệ)`
+  3. `## 3. PowerPoint Presentation Slides Breakdown (Diagram Từng Phần)`
+- **REPORTING_LINE Specification**: Clarified the dual-matrix reporting line architecture (`Direct` vs `Matrix` vs `Functional` reporting hierarchy).
+
+---
+
+### 📌 Task 14: Database Schema Upgrade - TICKET_REQUEST & Expanded REQUEST_TYPE
+- **Renamed Table**: Renamed `HR_REQUEST` to **`TICKET_REQUEST`** across [databases/RequestManagement.md](file:///d:/Copilot.HR/databases/RequestManagement.md) and [databases/README.md](file:///d:/Copilot.HR/databases/README.md) to represent both Employee Self-Service applications and HR Administrative Operation tickets.
+- **Enriched `REQUEST_TYPE` Attributes**: Added comprehensive schema fields (`type_id`, `type_code`, `type_name`, `category`, `description`, `default_sla_hours`, `requires_handover`, `requires_attachment`, `is_active`) to support dynamic multi-category HR request routing.
+
+---
+
+### 📌 Task 15: README Layout Restructure (Table ➔ Images ➔ ERD Chung ➔ ERD Riêng) & ERD Diagram Images Integration
+- **Restructured README Sequence**: Updated [databases/README.md](file:///d:/Copilot.HR/databases/README.md) to follow the exact order:
+  1. `## 1. Master Table Relationships Matrix` (20-table Summary Matrix)
+  2. `## 2. System ERD Diagrams Images` (Embedded PNG Diagrams from `images/database/`)
+  3. `## 3. Master System ERD Diagram` (20-table Full Mermaid Code)
+  4. `## 4. PowerPoint Presentation Slides Breakdown` (Slide 1, Slide 2, Slide 3 Mermaid Code)
+- **Embedded Diagram Images**: Linked `Organization.png`, `EmployeeDirectory.png`, and `Request_Managment.png` across [databases/README.md](file:///d:/Copilot.HR/databases/README.md), [Organization.md](file:///d:/Copilot.HR/databases/Organization.md), [EmployeeDirectory.md](file:///d:/Copilot.HR/databases/EmployeeDirectory.md), and [RequestManagement.md](file:///d:/Copilot.HR/databases/RequestManagement.md).
+
+---
+
+### 📌 Task 16: Documentation Refactoring - Clean English Titles & Icon Removal
+- **Concise English Headings**: Shortened section and image titles across all database documentation files ([databases/README.md](file:///d:/Copilot.HR/databases/README.md), [Organization.md](file:///d:/Copilot.HR/databases/Organization.md), [EmployeeDirectory.md](file:///d:/Copilot.HR/databases/EmployeeDirectory.md), [RequestManagement.md](file:///d:/Copilot.HR/databases/RequestManagement.md)) to clean concise terms: `Organization`, `Employee Directory`, `Request`.
+- **Removed Icons & Emojis**: Removed all decorative icons/emojis across database Markdown files for a clean, professional technical presentation.
+- **100% English Standardization**: Standardized all headings, section labels, and text descriptions to 100% English.
 
 ---
 

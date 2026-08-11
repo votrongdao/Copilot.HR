@@ -1,13 +1,17 @@
-# Employee 360° Profile Database Specification (PPT Slide 2)
+# Employee Directory Database Specification
 
-This document defines the Entity-Relationship Diagram (ERD) and data schema for the **Employee 360° Profile & Lifecycle Management** module in Copilot.HR.
+This document defines the Entity-Relationship Diagram (ERD) and data schema for the **Employee Directory** module in Copilot.HR.
 
 ---
 
-## 1. Presentation Slide ERD Diagram (Slide 2 - 7 Tables)
+## 1. Entity-Relationship Diagram (ERD)
+
+![Employee Directory](../images/database/EmployeeDirectory.png)
 
 ```mermaid
 erDiagram
+
+    EMPLOYEE ||--|| EMPLOYEE_PROFILE : "has"
     EMPLOYEE ||--o{ CONTRACT : "owns"
     EMPLOYEE ||--o{ EDUCATION : "attained"
     EMPLOYEE ||--o{ CERTIFICATION : "holds"
@@ -17,19 +21,24 @@ erDiagram
 
     EMPLOYEE {
         string employee_id PK
-        string first_name
-        string last_name
         string email UK
-        string phone
-        string avatar_url
-        string gender
-        date date_of_birth
         date join_date
         string employment_status
         string department_id FK
         string position_id FK
         string team_id FK
         string direct_manager_id FK
+    }
+
+    EMPLOYEE_PROFILE {
+        string profile_id PK
+        string employee_id FK, UK
+        string first_name
+        string last_name
+        string phone
+        string avatar_url
+        string gender
+        date date_of_birth
     }
 
     CONTRACT {
@@ -96,11 +105,12 @@ erDiagram
 
 ---
 
-## 2. Data Dictionary Summary (7 Core Tables)
+## 2. Data Dictionary
 
 | Entity Name | Function Description | Primary Key (PK) | Foreign Keys (FK) |
 | :--- | :--- | :--- | :--- |
-| **`EMPLOYEE`** | Central employee profile identity and personal status | `employee_id` | `department_id`, `position_id`, `team_id`, `direct_manager_id` |
+| **`EMPLOYEE`** | Central employee system account and employment status | `employee_id` | `department_id`, `position_id`, `team_id`, `direct_manager_id` |
+| **`EMPLOYEE_PROFILE`** | Personal demographic details (1:1 with `EMPLOYEE`) | `profile_id` | `employee_id` |
 | **`CONTRACT`** | Labor contracts, terms, and base compensation history | `contract_id` | `employee_id` |
 | **`EDUCATION`** | Academic degrees, majors, and universities | `education_id` | `employee_id` |
 | **`CERTIFICATION`** | Professional credentials and international certificates | `certification_id` | `employee_id` |
