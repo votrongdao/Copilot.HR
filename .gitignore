@@ -30,7 +30,11 @@ exported_screenshots/
 package.json
 package-lock.json
 
+# IDE Config
+.idea/
+
 # Context & Internal Docs
+
 context.md
 IA/
 databases/
