@@ -178,6 +178,26 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 
 ---
 
+### 📌 Task 17: Table Matrix Simplification - Removed Presentation Slide Column
+- **Simplified Table Layout**: Removed the `Presentation Slide` column from Section 1 `Master Table Relationships Matrix` in [databases/README.md](file:///d:/Copilot.HR/databases/README.md) for a clean 5-column layout (`#`, `Table Name`, `Description`, `Primary Key (PK)`, `Foreign Keys (FK)`).
+
+---
+
+### 📌 Task 18: Relationships Column Integration in Master Matrix
+- **Added Relationships & Cardinality Column**: Expanded Section 1 `Master Table Relationships Matrix` in [databases/README.md](file:///d:/Copilot.HR/databases/README.md) by adding the 6th column **`Relationships & Cardinality`** mapping foreign table connections and cardinality (`1:1`, `1:N`, `N:1`).
+
+---
+
+### 📌 Task 19: Root README.md Database Documentation Integration
+- **Integrated Database Architecture into Root README**: Appended the Master Table Relationships Matrix and ERD Diagram Images (`Organization.png`, `EmployeeDirectory.png`, `Request_Managment.png`) into [README.md](file:///d:/Copilot.HR/README.md).
+
+---
+
+### 📌 Task 20: Root README.md Cleanup - Removed Mermaid ERD Code Blocks
+- **Streamlined Main Documentation**: Removed raw Mermaid ERD diagram code blocks from [README.md](file:///d:/Copilot.HR/README.md) to keep the root file clean, containing exclusively the Feature Mindmap, 20-Table Master Matrix, and ERD PNG Diagram Images.
+
+---
+
 ## 3. Git Activity Summary
 
 ```bash

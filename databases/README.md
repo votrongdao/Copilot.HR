@@ -6,28 +6,28 @@
 
 ## 1. Master Table Relationships Matrix
 
-| # | Table Name | Presentation Slide | Description | Primary Key (PK) | Foreign Keys (FK) |
+| # | Table Name | Description | Primary Key (PK) | Foreign Keys (FK) | Relationships & Cardinality |
 | :---: | :--- | :--- | :--- | :--- | :--- |
-| **1** | **`COMPANY_BRANCH`** | **Slide 1** (Organization) | Office locations & regional hubs | `branch_id` | *None* |
-| **2** | **`DEPARTMENT`** | **Slide 1** (Organization) | Operational units & hierarchy | `department_id` | `parent_department_id`, `department_lead_id`, `branch_id` |
-| **3** | **`TEAM`** | **Slide 1** (Organization) | Cross-functional project teams | `team_id` | `department_id`, `team_lead_id` |
-| **4** | **`POSITION`** | **Slide 1** (Organization) | Job titles & salary bands | `position_id` | `department_id` |
-| **5** | **`REPORTING_LINE`** | **Slide 1** (Organization) | Direct & Matrix reporting lines | `reporting_id` | `employee_id`, `manager_id` |
-| **6** | **`TEAM_MEMBER`** | **Slide 1** (Organization) | Multi-team memberships & capacity | `member_id` | `team_id`, `employee_id` |
-| **7** | **`EMPLOYEE`** | **Slide 2** (Employee Directory) | Central employee system account | `employee_id` | `department_id`, `position_id`, `team_id`, `direct_manager_id` |
-| **8** | **`EMPLOYEE_PROFILE`** | **Slide 2** (Employee Directory) | Personal demographical details (1:1) | `profile_id` | `employee_id` |
-| **9** | **`CONTRACT`** | **Slide 2** (Employee Directory) | Labor contracts & base pay | `contract_id` | `employee_id` |
-| **10** | **`EDUCATION`** | **Slide 2** (Employee Directory) | Academic degrees & universities | `education_id` | `employee_id` |
-| **11** | **`CERTIFICATION`** | **Slide 2** (Employee Directory) | Professional certifications | `certification_id` | `employee_id` |
-| **12** | **`ASSET`** | **Slide 2** (Employee Directory) | Hardware devices assigned to staff | `asset_id` | `employee_id` |
-| **13** | **`EMPLOYEE_DOCUMENT`** | **Slide 2** (Employee Directory) | Scanned identity & HR files | `document_id` | `employee_id` |
-| **14** | **`EMPLOYEE_QUOTA`** | **Slide 2** (Employee Directory) | Annual leave & quota balance | `quota_id` | `employee_id` |
-| **15** | **`REQUEST_TYPE`** | **Slide 3** (Request) | Categories & default SLA rules | `type_id` | *None* |
-| **16** | **`TICKET_REQUEST`** | **Slide 3** (Request) | Employee ticket applications | `request_id` | `employee_id`, `type_id`, `handover_employee_id` |
-| **17** | **`WORKFLOW_STEP`** | **Slide 3** (Request) | Multi-stage approval sequence | `step_id` | `type_id` |
-| **18** | **`APPROVAL_LOG`** | **Slide 3** (Request) | Audit trail of manager approvals | `log_id` | `request_id`, `step_id`, `approver_id` |
-| **19** | **`REQUEST_ATTACHMENT`** | **Slide 3** (Request) | Supporting files for requests | `attachment_id` | `request_id` |
-| **20** | **`HANDOVER_TASK`** | **Slide 3** (Request) | Work handover checklist items | `task_id` | `request_id` |
+| **1** | **`COMPANY_BRANCH`** | Office locations & regional hubs | `branch_id` | *None* | `DEPARTMENT` (1:N) |
+| **2** | **`DEPARTMENT`** | Operational units & hierarchy | `department_id` | `parent_department_id`, `department_lead_id`, `branch_id` | `DEPARTMENT` (Self N:1), `COMPANY_BRANCH` (N:1), `EMPLOYEE` (1:1 Lead), `TEAM` (1:N), `POSITION` (1:N) |
+| **3** | **`TEAM`** | Cross-functional project teams | `team_id` | `department_id`, `team_lead_id` | `DEPARTMENT` (N:1), `EMPLOYEE` (1:1 Lead), `TEAM_MEMBER` (1:N) |
+| **4** | **`POSITION`** | Job titles & salary bands | `position_id` | `department_id` | `DEPARTMENT` (N:1), `EMPLOYEE` (1:N) |
+| **5** | **`REPORTING_LINE`** | Direct & Matrix reporting lines | `reporting_id` | `employee_id`, `manager_id` | `EMPLOYEE` (N:1 Subordinate), `EMPLOYEE` (N:1 Manager) |
+| **6** | **`TEAM_MEMBER`** | Multi-team memberships & capacity | `member_id` | `team_id`, `employee_id` | `TEAM` (N:1), `EMPLOYEE` (N:1) |
+| **7** | **`EMPLOYEE`** | Central employee system account | `employee_id` | `department_id`, `position_id`, `team_id`, `direct_manager_id` | `DEPARTMENT` (N:1), `POSITION` (N:1), `TEAM` (N:1), `EMPLOYEE` (Self N:1), `EMPLOYEE_PROFILE` (1:1) |
+| **8** | **`EMPLOYEE_PROFILE`** | Personal demographical details (1:1) | `profile_id` | `employee_id` | `EMPLOYEE` (1:1) |
+| **9** | **`CONTRACT`** | Labor contracts & base pay | `contract_id` | `employee_id` | `EMPLOYEE` (N:1) |
+| **10** | **`EDUCATION`** | Academic degrees & universities | `education_id` | `employee_id` | `EMPLOYEE` (N:1) |
+| **11** | **`CERTIFICATION`** | Professional certifications | `certification_id` | `employee_id` | `EMPLOYEE` (N:1) |
+| **12** | **`ASSET`** | Hardware devices assigned to staff | `asset_id` | `employee_id` | `EMPLOYEE` (N:1) |
+| **13** | **`EMPLOYEE_DOCUMENT`** | Scanned identity & HR files | `document_id` | `employee_id` | `EMPLOYEE` (N:1) |
+| **14** | **`EMPLOYEE_QUOTA`** | Annual leave & quota balance | `quota_id` | `employee_id` | `EMPLOYEE` (N:1) |
+| **15** | **`REQUEST_TYPE`** | Categories & default SLA rules | `type_id` | *None* | `TICKET_REQUEST` (1:N), `WORKFLOW_STEP` (1:N) |
+| **16** | **`TICKET_REQUEST`** | Employee ticket applications | `request_id` | `employee_id`, `type_id`, `handover_employee_id` | `EMPLOYEE` (N:1), `REQUEST_TYPE` (N:1), `APPROVAL_LOG` (1:N), `REQUEST_ATTACHMENT` (1:N), `HANDOVER_TASK` (1:N) |
+| **17** | **`WORKFLOW_STEP`** | Multi-stage approval sequence | `step_id` | `type_id` | `REQUEST_TYPE` (N:1), `APPROVAL_LOG` (1:N) |
+| **18** | **`APPROVAL_LOG`** | Audit trail of manager approvals | `log_id` | `request_id`, `step_id`, `approver_id` | `TICKET_REQUEST` (N:1), `WORKFLOW_STEP` (N:1), `EMPLOYEE` (N:1) |
+| **19** | **`REQUEST_ATTACHMENT`** | Supporting files for requests | `attachment_id` | `request_id` | `TICKET_REQUEST` (N:1) |
+| **20** | **`HANDOVER_TASK`** | Work handover checklist items | `task_id` | `request_id` | `TICKET_REQUEST` (N:1) |
 
 ---
 
