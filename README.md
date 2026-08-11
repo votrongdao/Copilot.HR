@@ -295,6 +295,7 @@ flowchart LR
 |  48 | **Integration**              | Approval Workflow Management        | High     | Manage configurable multi-level approval workflows across business processes.                         |
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 ## II. Use case images
 
