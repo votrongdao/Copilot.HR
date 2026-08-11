@@ -297,6 +297,48 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 
 ---
 
+### 📌 Task 35: OpenAPI 3.0 Specification Generation for Employee Directory
+- **Created OpenAPI Spec File**: Generated [docs/openapi_employee_directory.yaml](file:///d:/Copilot.HR/docs/openapi_employee_directory.yaml) fully compliant with Swagger Editor (OpenAPI 3.0.3).
+- **Comprehensive API Coverage**: Documented all 12 RESTful API endpoints for Employee Directory, Profile 360°, Labor Contracts, Documents Upload, Leave Balances, Audit History, and Data Export.
+
+---
+
+### 📌 Task 36: Complete OpenAPI 3.2.0 Suite (Request & Org Department Specifications)
+- **Request Management API Spec**: Created [docs/apis/openapi_request_management.yaml](file:///d:/Copilot.HR/docs/apis/openapi_request_management.yaml) covering all 9 APIs (Request submission, approvals/rejections, timeline tracking, and quota pre-check).
+- **Org & Department API Spec**: Created [docs/apis/openapi_org_department.yaml](file:///d:/Copilot.HR/docs/apis/openapi_org_department.yaml) covering all 14 APIs (Department tree hierarchy, drag-and-drop restructuring, position job titles, teams, and reporting line matrices).
+
+---
+
+### 📌 Task 37: Master Unified OpenAPI 3.2.0 Suite (`openapi_people_management.yaml`)
+- **Combined Master Specification**: Consolidated all 35 RESTful API endpoints into a single master specification file [docs/apis/openapi_people_management.yaml](file:///d:/Copilot.HR/docs/apis/openapi_people_management.yaml).
+- **Seamless Swagger Editor Import**: Provided a single unified document with complete tags, schemas, parameters, and responses across Employee Directory, Request Management, and Org & Department.
+
+---
+
+### 📌 Task 38: RESTful API Specifications Markdown Documentation Matrix
+- **Documented API Matrix**: Added Section 3 (RESTful API Specifications) to both [docs/README.md](file:///d:/Copilot.HR/docs/README.md) and root [README.md](file:///d:/Copilot.HR/README.md).
+- **Formatted 35 Endpoints**: Organised all 35 APIs across 3 tables (`Employee Directory`, `Organization & Department`, `Request Management`) with columns `Method`, `URL Endpoint`, `Parameters / Query` (or `None`), `Status Code`, and `Description`.
+
+---
+
+### 📌 Task 39: Role-Based Authorization Column Added to API Tables
+- **Added Role Column**: Updated all 3 API specification tables in both [docs/README.md](file:///d:/Copilot.HR/docs/README.md) and root [README.md](file:///d:/Copilot.HR/README.md) to include explicit role authorization column (`Role`).
+- **Role Permissions**: Explicitly specified role access boundaries (`All Roles`, `Employee (Self)`, `Manager`, `HR Admin`, `Director/CEO`, `Applicant`, `Reviewer`) for all 35 API endpoints.
+
+---
+
+### 📌 Task 40: Strict Role Authorization Standardization (`Employee`, `Manager`, `HRM`, `Director`)
+- **Standardized Roles**: Updated all 3 API specification tables in [docs/README.md](file:///d:/Copilot.HR/docs/README.md) and root [README.md](file:///d:/Copilot.HR/README.md) to strictly use combinations of 4 standard system roles: `Employee`, `Manager`, `HRM`, and `Director`.
+- **Removed Non-Standard Terms**: Removed `Applicant`, `Reviewer`, `HR Admin`, and general `All Roles` tags across all 35 RESTful API endpoints.
+
+---
+
+### 📌 Task 41: Added `HR Manager` Role to API Specification Tables
+- **System Roles Inclusion**: Added `HR Manager` alongside `HR Staff` across all 3 API specification tables in [docs/README.md](file:///d:/Copilot.HR/docs/README.md) and root [README.md](file:///d:/Copilot.HR/README.md).
+- **Specific Authority Boundaries**: Granted `HR Manager` administrative and approval privileges (e.g. employee offboarding, department deletion, request approval/rejection, org tree restructure).
+
+---
+
 ## 3. Git Activity Summary
 
 ```bash
