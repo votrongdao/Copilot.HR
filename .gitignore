@@ -37,5 +37,5 @@ package-lock.json
 
 context.md
 IA/
-databases/
+/databases/
 export_image.js
