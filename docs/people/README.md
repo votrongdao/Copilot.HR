@@ -4,13 +4,38 @@ Comprehensive architectural documentation for the **People Management** module i
 
 ---
 
-## 1. Use Case Diagram
+## 1. Use Case & BPMN Process Workflow Diagrams
 
-The People Management Use Case Diagram defines the primary system interactions between System Actors (Staff, HR Staff, Manager, HR Manager, Tenant Admin) and key module capabilities (Directory, Profile, Org Tree, Request Workflow).
+Comprehensive functional use case actor mapping and BPMN 2.0 business process workflow models for the People Management module.
+
+### 1.1 System Use Case Diagram
+The People Management Use Case Diagram defines the primary system interactions between System Actors (Staff, HR Staff, Manager, HR Manager, Tenant Admin) and core module capabilities (Employee Directory, Profile Management, Org Tree, Request Workflow).
 
 ![People Management Use Case Diagram](../../images/usecase/People.png)
 
 ---
+
+### 1.2 Employee Lifecycle BPMN Workflow Diagram
+High-level BPMN process workflow illustrating the employee onboarding, profile creation, document verification, quota initialization, and offboarding lifecycle.
+
+![Employee Lifecycle BPMN Workflow](../../images/bpmn/Employee_Lifecycle_Process.png)
+
+---
+
+### 1.3 HR Request Approval BPMN Workflow Diagram
+Multi-stage BPMN approval process workflow mapping ticket submission, automated quota validation, manager reviews, CEO sign-offs, and rejection branch handling.
+
+![HR Request Approval BPMN Workflow](../../images/bpmn/HR_Request_Approval_Process.png)
+
+---
+
+### 1.4 Org Restructuring BPMN Workflow Diagram
+Organizational restructuring process workflow mapping drag-and-drop tree reassignments, hierarchy validation, executive approvals, and audit log broadcasts.
+
+![Org Restructuring BPMN Workflow](../../images/bpmn/Org_Restructuring_Process.png)
+
+---
+
 
 ## 2. UI/UX Specifications
 
