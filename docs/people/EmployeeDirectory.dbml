@@ -1,0 +1,119 @@
+// Database Markup Language (DBML) Specification
+// Project: Copilot.HR - Employee Directory Domain
+
+Project Copilot_HR_EmployeeDirectory {
+  database_type: 'PostgreSQL'
+  Note: 'Database schema for Employee Directory & 360 Profiles module in Copilot.HR'
+}
+
+Table EMPLOYEE {
+  employee_id varchar [pk, note: 'Unique Employee ID (e.g. EMP-8021)']
+  email varchar [unique, note: 'Corporate Email']
+  join_date date
+  employment_status varchar [note: 'Active, Probation, On Leave, Terminated']
+  department_id varchar
+  position_id varchar
+  team_id varchar
+  direct_manager_id varchar [ref: > EMPLOYEE.employee_id]
+
+  Note: 'Central employee system account and employment status'
+}
+
+Table EMPLOYEE_PROFILE {
+  profile_id varchar [pk]
+  employee_id varchar [unique, ref: - EMPLOYEE.employee_id]
+  first_name varchar
+  last_name varchar
+  phone varchar
+  avatar_url varchar
+  gender varchar
+  date_of_birth date
+
+  Note: 'Personal demographic details (1:1 with EMPLOYEE)'
+}
+
+Table CONTRACT {
+  contract_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  contract_number varchar [unique]
+  contract_type varchar
+  start_date date
+  end_date date
+  base_salary decimal(12,2)
+  status varchar
+  signed_document_url varchar
+
+  Note: 'Labor contracts, terms, and base compensation history'
+}
+
+Table EDUCATION {
+  education_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  degree varchar
+  institution varchar
+  field_of_study varchar
+  start_year int
+  end_year int
+
+  Note: 'Academic degrees, majors, and universities'
+}
+
+Table CERTIFICATION {
+  certification_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  name varchar
+  issuing_organization varchar
+  issue_date date
+  expiry_date date
+  credential_id varchar
+
+  Note: 'Professional credentials and international certificates'
+}
+
+Table ASSET {
+  asset_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  asset_name varchar
+  serial_number varchar [unique]
+  asset_type varchar
+  issue_date date
+  status varchar
+
+  Note: 'Hardware devices assigned to personnel'
+}
+
+Table EMPLOYEE_DOCUMENT {
+  document_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  document_name varchar
+  document_type varchar
+  file_url varchar
+  uploaded_at timestamp
+
+  Note: 'Scanned personal documents and identity files'
+}
+
+Table LEAVE_TYPE {
+  leave_type_id varchar [pk]
+  code varchar [unique, note: 'ANNUAL, SICK, MATERNITY, COMPENSATORY']
+  name varchar [note: 'Annual Leave, Sick Leave, Maternity Leave, Compensatory Leave']
+  is_paid boolean [note: 'Whether salary compensation is paid during leave']
+  default_days_per_year decimal(5,2) [note: 'Default entitlement quota per year']
+  status varchar [note: 'Active / Inactive']
+
+  Note: 'Master configuration table for all leave categories'
+}
+
+Table EMPLOYEE_LEAVE_BALANCE {
+  balance_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  leave_type_id varchar [ref: > LEAVE_TYPE.leave_type_id]
+  year int [note: 'Entitlement calculation year (e.g. 2026)']
+  allocated_days decimal(5,2) [note: 'Annual leave quota allocated for the year']
+  carried_over_days decimal(5,2) [note: 'Unused days rolled over from previous year']
+  used_days decimal(5,2) [note: 'Approved leave days taken']
+  pending_days decimal(5,2) [note: 'Leave days in pending approval requests']
+  remaining_days decimal(5,2) [note: 'Available balance = (Allocated + Carried Over) - Used - Pending']
+
+  Note: 'Employee leave entitlements, quotas, and real-time balances per leave type'
+}
