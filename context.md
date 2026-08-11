@@ -164,7 +164,7 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 ### 📌 Task 15: README Layout Restructure (Table ➔ Images ➔ ERD Chung ➔ ERD Riêng) & ERD Diagram Images Integration
 - **Restructured README Sequence**: Updated [databases/README.md](file:///d:/Copilot.HR/databases/README.md) to follow the exact order:
   1. `## 1. Master Table Relationships Matrix` (20-table Summary Matrix)
-  2. `## 2. System ERD Diagrams Images` (Embedded PNG Diagrams from `images/database/`)
+  2. `## 2. System ERD Diagrams Images` (Embedded PNG Diagrams from `images/databases/`)
   3. `## 3. Master System ERD Diagram` (20-table Full Mermaid Code)
   4. `## 4. PowerPoint Presentation Slides Breakdown` (Slide 1, Slide 2, Slide 3 Mermaid Code)
 - **Embedded Diagram Images**: Linked `Organization.png`, `EmployeeDirectory.png`, and `Request_Managment.png` across [databases/README.md](file:///d:/Copilot.HR/databases/README.md), [Organization.md](file:///d:/Copilot.HR/databases/Organization.md), [EmployeeDirectory.md](file:///d:/Copilot.HR/databases/EmployeeDirectory.md), and [RequestManagement.md](file:///d:/Copilot.HR/databases/RequestManagement.md).
@@ -353,6 +353,60 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 
 ### 📌 Task 43: Interactive SwaggerHub Link Added to API Specifications Section
 - **Updated API Header Links**: Inserted direct interactive SwaggerHub documentation link `https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents` right above Section V API tables in [README.md](file:///d:/Copilot.HR/README.md).
+
+---
+
+### 📌 Task 44: People Management API Architecture Tree Image Generation
+- **Generated Image**: Created high-resolution dark-mode API hierarchy tree screenshot [docs/apis/api_structure.png](file:///d:/Copilot.HR/docs/apis/api_structure.png) representing all 35 People Management API endpoints (Employees, Contracts, Documents, Quotas, History, Departments, Positions, Teams, Reporting Lines, Requests).
+
+---
+
+### 📌 Task 45: Inserted API Architecture Tree Image into Root README
+- **Embedded Image**: Embedded `![People Management API Architecture](./docs/apis/api_structure.png)` directly under Section V heading and right above Section V.1 Employee Directory APIs table in [README.md](file:///d:/Copilot.HR/README.md).
+
+---
+
+### 📌 Task 46: High-Level BPMN Workflow Diagrams Generation
+- **Generated 3 BPMN Diagrams**: Generated 3 high-level BPMN process workflow images in [images/bpmn/](file:///d:/Copilot.HR/images/bpmn/) matching the reference swimlane format:
+  1. `images/bpmn/Employee_Lifecycle_Process.png` (`PEOPLE MANAGEMENT - EMPLOYEE LIFECYCLE WORKFLOW`)
+  2. `images/bpmn/HR_Request_Approval_Process.png` (`PEOPLE MANAGEMENT - HR REQUEST APPROVAL WORKFLOW`)
+  3. `images/bpmn/Org_Restructuring_Process.png` (`PEOPLE MANAGEMENT - ORG RESTRUCTURING WORKFLOW`)
+
+---
+
+### 📌 Task 47: Regenerated Employee Lifecycle BPMN Diagram (3 Swimlanes)
+- **Updated BPMN Diagram**: Removed non-participating actor `Tenant Admin / HR Manager` column from [images/bpmn/Employee_Lifecycle_Process.png](file:///d:/Copilot.HR/images/bpmn/Employee_Lifecycle_Process.png).
+- **Streamlined 3 Swimlanes**: Streamlined into 3 active process actors: `HR Staff`, `HR System Services`, and `Staff (Employee)`.
+
+---
+
+### 📌 Task 48: Explicit YES / NO Decision Condition Branches Added to All 3 BPMN Diagrams
+- **Regenerated 3 BPMN Diagrams**: Added explicit `YES` (True path) and `NO` (False path) decision output arrows with rejection/failure handling tasks across all diamond decision gateways in [images/bpmn/](file:///d:/Copilot.HR/images/bpmn/):
+  1. [images/bpmn/Employee_Lifecycle_Process.png](file:///d:/Copilot.HR/images/bpmn/Employee_Lifecycle_Process.png): Gateway `Updated Details Valid?` (YES -> Initialize Quota, NO -> Notify Invalid Data & Reject).
+  2. [images/bpmn/HR_Request_Approval_Process.png](file:///d:/Copilot.HR/images/bpmn/HR_Request_Approval_Process.png): Gateways `Quota Valid?`, `Manager Approved?`, `Final Approved?` with YES approval paths and RED NO rejection paths to Red End Events.
+  3. [images/bpmn/Org_Restructuring_Process.png](file:///d:/Copilot.HR/images/bpmn/Org_Restructuring_Process.png): Gateways `Hierarchy Valid?` and `Approved by CEO?` with YES execution paths and RED NO rejection paths.
+
+---
+
+### 📌 Task 49: Regenerated HR Request Approval BPMN (Removed Horizontal Swimlane Lines)
+- **Cleaner Visual Layout**: Regenerated [images/bpmn/HR_Request_Approval_Process.png](file:///d:/Copilot.HR/images/bpmn/HR_Request_Approval_Process.png) to remove all horizontal swimlane lines/background bars.
+- **Pure Vertical Flow**: Kept pure white background with vertical dashed column dividers and explicit YES/NO decision branches.
+
+---
+
+### 📌 Task 50: Updated `.gitignore` Rules
+- **Added Ignore Entries**: Added `IA/`, `context.md`, `package.json`, and `package-lock.json` to [.gitignore](file:///d:/Copilot.HR/.gitignore) to prevent tracking internal documentation and local node manifests.
+
+---
+
+### 📌 Task 51: People Management Documentation Hub Created (`docs/people/README.md`)
+- **Created Documentation Hub**: Created [docs/people/README.md](file:///d:/Copilot.HR/docs/people/README.md) containing comprehensive architectural specifications.
+- **Embedded Short Descriptions Above Images**: Every image includes an explicit short functional summary paragraph right above the image tag:
+  1. **Use Case Diagram**: `../../images/usecase/People.png`
+  2. **UI/UX Specifications**: 9 Main Screens + 3 Popups/Drawers in `../../images/uiux/`
+  3. **Database Schema ERD**: 3 ERD Diagrams in `../../images/databases/` (Organization, EmployeeDirectory, Request_Managment)
+  4. **API Architecture Tree Structure**: `../apis/api_structure.png`
+  5. **Swagger API Documentation Link**: Interactive SwaggerHub link appended at the bottom.
 
 ---
 

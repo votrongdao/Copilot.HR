@@ -379,6 +379,10 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 Comprehensive API inventory for the People Management module divided into Employee Directory, Organization & Department, and Request Management domains. Interactive Swagger API documentation: [Copilot.HR Employee Directory API - SwaggerHub](https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents).
 
+![People Management API Architecture](./docs/apis/api_structure.png)
+
+---
+
 ### V.1. Employee Directory APIs
 
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
@@ -471,14 +475,14 @@ Comprehensive API inventory for the People Management module divided into Employ
 ### VI.2. ERD Diagram Visuals
 
 #### 2.1 Organization Domain
-![Organization](./images/database/Organization.png)
+![Organization](images/databases/Organization.png)
 
 ---
 
 #### 2.2 Employee Directory Domain
-![Employee Directory](./images/database/EmployeeDirectory.png)
+![Employee Directory](images/databases/EmployeeDirectory.png)
 
 ---
 
 #### 2.3 Request Management Domain
-![Request](./images/database/Request_Managment.png)
+![Request](images/databases/Request_Managment.png)

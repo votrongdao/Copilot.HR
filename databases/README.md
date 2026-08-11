@@ -34,17 +34,17 @@
 ## 2. ERD Diagram Images
 
 ### Organization
-![Organization](../images/database/Organization.png)
+![Organization](../images/databases/Organization.png)
 
 ---
 
 ### Employee Directory
-![Employee Directory](../images/database/EmployeeDirectory.png)
+![Employee Directory](../images/databases/EmployeeDirectory.png)
 
 ---
 
 ### Request
-![Request](../images/database/Request_Managment.png)
+![Request](../images/databases/Request_Managment.png)
 
 ---
 

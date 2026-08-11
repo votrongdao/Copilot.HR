@@ -6,7 +6,7 @@ This document defines the Entity-Relationship Diagram (ERD) and data schema for 
 
 ## 1. Entity-Relationship Diagram (ERD)
 
-![Request](../images/database/Request_Managment.png)
+![Request](../images/databases/Request_Managment.png)
 
 ---
 
