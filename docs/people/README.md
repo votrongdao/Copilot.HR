@@ -197,53 +197,53 @@ Copilot.HR - People Management API
 #### Employee Directory APIs
 Swagger interactive endpoint documentation for searching, creating, and fetching employee profiles.
 
-![Employee Directory APIs](./EmployeeApi.png)
+![Employee Directory APIs](../../images/api-swagger/people/EmployeeApi.png)
 
 ---
 
 #### Labor Contracts & Documents APIs
 Swagger documentation for managing labor contracts, salary history, and employee document uploads.
 
-![Labor Contracts and Documents APIs](./Contract_Documents.png)
+![Labor Contracts and Documents APIs](../../images/api-swagger/people/Contract_Documents.png)
 
 ---
 
 #### Leave & Audit History APIs
 Swagger documentation for fetching career audit trails and event logs.
 
-![Leave and Audit History APIs](./Leave_History.png)
+![Leave and Audit History APIs](../../images/api-swagger/people/Leave_History.png)
 
 ---
 
 #### Leave Categories & Quotas APIs
 Swagger documentation for leave category configurations and leave balance quota validation.
 
-![Report Quotas APIs](./Report_Quotas.png)
+![Report Quotas APIs](../../images/api-swagger/people/Report_Quotas.png)
 
 ---
 
 #### Request Management APIs
 Swagger documentation for submitting, filtering, and managing employee HR requests.
 
-![Request Management APIs](./Request.png)
+![Request Management APIs](../../images/api-swagger/people/Request.png)
 
 ---
 
 #### Approvals & Workflow Tracking APIs
 Swagger documentation for multi-level approval routing, decision processing, and workflow timeline tracking.
 
-![Approvals and Tracking APIs](./Approvals_Tracking.png)
+![Approvals and Tracking APIs](../../images/api-swagger/people/Approvals_Tracking.png)
 
 ---
 
 #### Department Management APIs
 Swagger documentation for department tree hierarchy, creation, modification, and organizational restructuring.
 
-![Department Management APIs](./Department.png)
+![Department Management APIs](../../images/api-swagger/people/Department.png)
 
 ---
 
 #### Positions, Teams & Reporting Lines APIs
 Swagger documentation for position titles, job levels, project teams, and reporting line hierarchy matrix.
 
-![Positions Teams and Reporting Lines APIs](./Position_Team.png)
+![Positions Teams and Reporting Lines APIs](../../images/api-swagger/people/Position_Team.png)
