@@ -14,7 +14,8 @@ The People Management Use Case Diagram defines the primary system interactions b
 
 ## 2. Information Architecture (IA) Sitemap
 
-Link Sitemap IA: [Relume Sitemap Project](https://www.relume.ai/app/project/P3513106_M_AsmXcsz2LE9p9i5egRRtV2aMuaJQ4-Pj5YjjiDkKo#mode=sitemap)
+![People Management Information Architecture Sitemap](../images/sitemap/people-sitemap.png)
+
 
 ---
 
