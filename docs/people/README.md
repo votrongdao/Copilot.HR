@@ -1,6 +1,6 @@
 # People Management Module Documentation
 
-Comprehensive architectural documentation for the **People Management** module in **Copilot.HR**, including Use Case diagrams, UI/UX specifications, Database Schema ERDs, API tree architecture, and interactive Swagger API documentation.
+Comprehensive architectural documentation for the **People Management** module in **Copilot.HR**, including Use Case diagrams, Information Architecture (IA) sitemap, UI/UX specifications, Database Schema ERDs, API tree architecture, and interactive Swagger API documentation.
 
 ---
 
@@ -12,11 +12,17 @@ The People Management Use Case Diagram defines the primary system interactions b
 
 ---
 
-## 2. UI/UX Specifications
+## 2. Information Architecture (IA) Sitemap
+
+![People Management Information Architecture Sitemap](../../images/sitemap/people-sitemap.png)
+
+---
+
+## 3. UI/UX Specifications
 
 User interface screens, slide-over drawers, and modal dialogs designed for the People Management module following minimal monochrome wireframe aesthetics.
 
-### 2.1 Main Screens & Sub-Screens
+### 3.1 Main Screens & Sub-Screens
 
 #### Employee Directory Screen
 Central workforce catalog featuring searchable employee records, KPI metrics, status filters, and quick action toolbars.
@@ -81,7 +87,7 @@ Organizational matrix displaying direct report supervisors, functional line mana
 
 ---
 
-### 2.2 Major PopUp Modals & Drawers
+### 3.2 Major PopUp Modals & Drawers
 
 #### Add New Employee Profile Modal
 Modal popup form for registering a new employee profile with personal demographics, corporate email, role assignment, and department placement.
@@ -104,7 +110,7 @@ Form popup for registering official labor contracts, compensation terms, effecti
 
 ---
 
-## 3. Database Schema ERD
+## 4. Database Schema ERD
 
 Entity Relationship Diagrams (ERD) illustrating the relational schema across Organization, Employee Directory, and Request Management domains.
 
@@ -129,7 +135,7 @@ Workflow database model covering Ticket Requests, Request Types, Workflow Steps,
 
 ---
 
-## 4. API Architecture Tree Structure
+## 5. API Architecture Tree Structure
 
 High-level tree view of all 35 RESTful API endpoints in the People Management module grouped into logical domain controllers.
 
@@ -139,7 +145,7 @@ Hierarchical API endpoint tree diagram illustrating resource routing for Employe
 
 ---
 
-## 5. Interactive Swagger API Documentation
+## 6. Interactive Swagger API Documentation
 
 Access the interactive online Swagger API documentation for real-time request testing, request/response schema inspection, and live endpoint execution:
 
