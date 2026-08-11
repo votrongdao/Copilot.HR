@@ -293,4 +293,3 @@ flowchart LR
 |  46 | **Integration**              | External Integration Management     | High     | Manage integrations with external email, calendar, storage, accounting, and workforce services.       |
 |  47 | **Integration**              | API & Webhook Management            | High     | Manage public APIs and webhook-based integrations.                                                    |
 |  48 | **Integration**              | Approval Workflow Management        | High     | Manage configurable multi-level approval workflows across business processes.                         |
-
