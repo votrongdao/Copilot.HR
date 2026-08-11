@@ -33,3 +33,5 @@ package-lock.json
 # Context & Internal Docs
 context.md
 IA/
+databases/
+export_image.js
