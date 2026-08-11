@@ -281,12 +281,63 @@ paths:
         '201':
           description: Document uploaded successfully
 
+  /leave-types:
+    get:
+      tags:
+        - Leave & Quotas
+      summary: List all configured leave categories
+      description: Retrieve all system-defined leave types, paid status, and default annual entitlement quotas.
+      responses:
+        '200':
+          description: Leave types list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveTypeItem'
+
+    post:
+      tags:
+        - Leave & Quotas
+      summary: Create a new leave category
+      description: Define a new leave category with default annual quotas and paid status.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+                - name
+              properties:
+                code:
+                  type: string
+                  example: "COMPENSATORY"
+                name:
+                  type: string
+                  example: "Compensatory Leave"
+                isPaid:
+                  type: boolean
+                  default: true
+                defaultDaysPerYear:
+                  type: number
+                  example: 5.0
+      responses:
+        '201':
+          description: Leave category created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveTypeItem'
+
   /employees/{id}/leave-balance:
     get:
       tags:
         - Leave & Quotas
       summary: Get leave entitlement balances
-      description: Retrieve remaining annual leave and sick leave quota balances for the current year.
+      description: Retrieve detailed leave entitlement balances, allocated quotas, carried over days, used days, and pending approval days across all leave types for the current year.
       parameters:
         - name: id
           in: path
@@ -589,13 +640,14 @@ paths:
           schema:
             type: string
             example: "EMP-8021"
-        - name: leaveType
+        - name: leaveTypeCode
           in: query
           required: true
+          description: Leave type code (e.g. ANNUAL, SICK, MATERNITY, COMPENSATORY)
           schema:
             type: string
-            enum: [AnnualLeave, SickLeave, UnpaidLeave]
-            example: "AnnualLeave"
+            enum: [ANNUAL, SICK, MATERNITY, COMPENSATORY]
+            example: "ANNUAL"
         - name: requestedDays
           in: query
           required: true
@@ -1093,18 +1145,75 @@ components:
           type: string
           example: "2021-01-15"
 
-    LeaveBalance:
+    LeaveTypeItem:
       type: object
       properties:
-        annualLeaveDaysRemaining:
+        leaveTypeId:
+          type: string
+          example: "LT-ANNUAL"
+        code:
+          type: string
+          example: "ANNUAL"
+        name:
+          type: string
+          example: "Annual Leave"
+        isPaid:
+          type: boolean
+          example: true
+        defaultDaysPerYear:
           type: number
-          example: 14.0
-        sickLeaveDaysRemaining:
-          type: number
-          example: 10.0
+          example: 12.0
+        status:
+          type: string
+          example: "Active"
+
+    LeaveBalanceItem:
+      type: object
+      properties:
+        balanceId:
+          type: string
+          example: "BAL-901"
+        leaveTypeId:
+          type: string
+          example: "LT-ANNUAL"
+        leaveTypeCode:
+          type: string
+          example: "ANNUAL"
+        leaveTypeName:
+          type: string
+          example: "Annual Leave"
         year:
           type: integer
           example: 2026
+        allocatedDays:
+          type: number
+          example: 12.0
+        carriedOverDays:
+          type: number
+          example: 3.0
+        usedDays:
+          type: number
+          example: 4.0
+        pendingDays:
+          type: number
+          example: 1.0
+        remainingDays:
+          type: number
+          example: 10.0
+
+    LeaveBalance:
+      type: object
+      properties:
+        employeeId:
+          type: string
+          example: "EMP-8021"
+        year:
+          type: integer
+          example: 2026
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaveBalanceItem'
 
     AuditHistoryItem:
       type: object
