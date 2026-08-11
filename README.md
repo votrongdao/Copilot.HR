@@ -317,4 +317,3 @@ flowchart LR
 
 ![Work Schedule Management use case](workforce/docs/usecases/work-schedule-management.png)
 
-
