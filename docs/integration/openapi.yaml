@@ -1,0 +1,1127 @@
+openapi: 3.0.3
+info:
+  title: BBV HR - Integration Management API
+  version: 1.0.0
+  description: |
+    API for Integration Management.
+    Covers integration overview, calendar, email, recruitment platform,
+    and integration synchronization history.
+
+servers:
+  - url: /api
+
+tags:
+  - name: Integrations
+  - name: Calendar Integration
+  - name: Email Integration
+  - name: Recruitment Integration
+  - name: Sync History
+
+paths:
+  /integrations:
+    get:
+      tags: [Integrations]
+      summary: Get integrations
+      parameters:
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+        - name: category
+          in: query
+          schema:
+            $ref: "#/components/schemas/IntegrationCategory"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/IntegrationStatus"
+        - name: provider
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Paged integrations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedIntegrationResponse"
+
+    post:
+      tags: [Integrations]
+      summary: Create integration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIntegrationRequest"
+      responses:
+        "201":
+          description: Integration created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegrationResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /integrations/{integrationId}:
+    get:
+      tags: [Integrations]
+      summary: Get integration detail
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "200":
+          description: Integration detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegrationResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    put:
+      tags: [Integrations]
+      summary: Update integration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateIntegrationRequest"
+      responses:
+        "200":
+          description: Integration updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegrationResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    delete:
+      tags: [Integrations]
+      summary: Disconnect integration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "204":
+          description: Integration disconnected
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /integrations/{integrationId}/test:
+    post:
+      tags: [Integrations]
+      summary: Test integration connection
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "200":
+          description: Connection test result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConnectionTestResponse"
+
+  /integrations/{integrationId}/reconnect:
+    post:
+      tags: [Integrations]
+      summary: Reconnect integration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "200":
+          description: Integration reconnected
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegrationResponse"
+
+  /integrations/{integrationId}/sync:
+    post:
+      tags: [Sync History]
+      summary: Run integration sync now
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "202":
+          description: Sync started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncHistoryResponse"
+
+  /integrations/{integrationId}/calendar-config:
+    get:
+      tags: [Calendar Integration]
+      summary: Get calendar configuration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "200":
+          description: Calendar configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarConfigResponse"
+
+    put:
+      tags: [Calendar Integration]
+      summary: Update calendar configuration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCalendarConfigRequest"
+      responses:
+        "200":
+          description: Calendar configuration updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarConfigResponse"
+
+  /integrations/{integrationId}/calendar-events:
+    get:
+      tags: [Calendar Integration]
+      summary: Get synced calendar events
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+        - name: syncStatus
+          in: query
+          schema:
+            $ref: "#/components/schemas/SyncStatus"
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        "200":
+          description: Paged calendar event sync records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedCalendarEventSyncResponse"
+
+  /integrations/{integrationId}/email-config:
+    get:
+      tags: [Email Integration]
+      summary: Get email configuration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "200":
+          description: Email configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailConfigResponse"
+
+    put:
+      tags: [Email Integration]
+      summary: Update email configuration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEmailConfigRequest"
+      responses:
+        "200":
+          description: Email configuration updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailConfigResponse"
+
+  /integrations/{integrationId}/email-templates:
+    get:
+      tags: [Email Integration]
+      summary: Get email templates
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+        - $ref: "#/components/parameters/Search"
+        - name: category
+          in: query
+          schema:
+            $ref: "#/components/schemas/EmailTemplateCategory"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/ActiveStatus"
+      responses:
+        "200":
+          description: Email templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EmailTemplateResponse"
+
+    post:
+      tags: [Email Integration]
+      summary: Create email template
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEmailTemplateRequest"
+      responses:
+        "201":
+          description: Email template created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailTemplateResponse"
+
+  /email-templates/{templateId}:
+    put:
+      tags: [Email Integration]
+      summary: Update email template
+      parameters:
+        - name: templateId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEmailTemplateRequest"
+      responses:
+        "200":
+          description: Email template updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailTemplateResponse"
+
+    delete:
+      tags: [Email Integration]
+      summary: Delete email template
+      parameters:
+        - name: templateId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Email template deleted
+
+  /integrations/{integrationId}/email-logs:
+    get:
+      tags: [Email Integration]
+      summary: Get email delivery logs
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+        - name: messageType
+          in: query
+          schema:
+            $ref: "#/components/schemas/EmailTemplateCategory"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/EmailDeliveryStatus"
+      responses:
+        "200":
+          description: Paged email delivery logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedEmailDeliveryLogResponse"
+
+  /integrations/{integrationId}/send-test-email:
+    post:
+      tags: [Email Integration]
+      summary: Send test email
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendTestEmailRequest"
+      responses:
+        "200":
+          description: Test email result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDeliveryLogResponse"
+
+  /integrations/{integrationId}/recruitment-config:
+    get:
+      tags: [Recruitment Integration]
+      summary: Get recruitment integration configuration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "200":
+          description: Recruitment configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecruitmentConfigResponse"
+
+    put:
+      tags: [Recruitment Integration]
+      summary: Update recruitment integration configuration
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRecruitmentConfigRequest"
+      responses:
+        "200":
+          description: Recruitment configuration updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecruitmentConfigResponse"
+
+  /integrations/{integrationId}/job-postings:
+    get:
+      tags: [Recruitment Integration]
+      summary: Get synced job postings
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/JobPostingStatus"
+      responses:
+        "200":
+          description: Paged job posting sync records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedJobPostingSyncResponse"
+
+    post:
+      tags: [Recruitment Integration]
+      summary: Publish job to recruitment platform
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateJobPostingSyncRequest"
+      responses:
+        "201":
+          description: Job publication created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobPostingSyncResponse"
+
+  /job-postings/{jobPostingSyncId}/sync:
+    post:
+      tags: [Recruitment Integration]
+      summary: Sync published job
+      parameters:
+        - name: jobPostingSyncId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job sync completed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobPostingSyncResponse"
+
+  /job-postings/{jobPostingSyncId}/close:
+    post:
+      tags: [Recruitment Integration]
+      summary: Close published job
+      parameters:
+        - name: jobPostingSyncId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job closed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobPostingSyncResponse"
+
+  /job-postings/{jobPostingSyncId}/candidate-imports:
+    get:
+      tags: [Recruitment Integration]
+      summary: Get imported candidates/applications
+      parameters:
+        - name: jobPostingSyncId
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/CandidateImportStatus"
+      responses:
+        "200":
+          description: Paged candidate imports
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedCandidateImportResponse"
+
+  /integrations/{integrationId}/application-sync:
+    post:
+      tags: [Recruitment Integration]
+      summary: Run application sync
+      parameters:
+        - $ref: "#/components/parameters/IntegrationId"
+      responses:
+        "202":
+          description: Application sync started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncHistoryResponse"
+
+  /sync-history:
+    get:
+      tags: [Sync History]
+      summary: Get integration sync history
+      parameters:
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+        - name: integrationId
+          in: query
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            $ref: "#/components/schemas/IntegrationCategory"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/SyncStatus"
+        - name: syncType
+          in: query
+          schema:
+            $ref: "#/components/schemas/SyncType"
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        "200":
+          description: Paged integration sync history
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedSyncHistoryResponse"
+
+  /sync-history/{syncId}:
+    get:
+      tags: [Sync History]
+      summary: Get sync history detail
+      parameters:
+        - name: syncId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Sync history detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncHistoryResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /sync-history/{syncId}/retry:
+    post:
+      tags: [Sync History]
+      summary: Retry failed sync
+      parameters:
+        - name: syncId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "202":
+          description: Retry started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncHistoryResponse"
+
+components:
+  parameters:
+    Search:
+      name: search
+      in: query
+      schema:
+        type: string
+
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+    IntegrationId:
+      name: integrationId
+      in: path
+      required: true
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetails"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetails"
+
+  schemas:
+    IntegrationCategory:
+      type: string
+      enum: [CALENDAR, EMAIL, RECRUITMENT]
+
+    IntegrationStatus:
+      type: string
+      enum: [CONNECTED, DISCONNECTED, PARTIAL, ERROR]
+
+    SyncStatus:
+      type: string
+      enum: [IN_PROGRESS, SUCCESS, WARNING, FAILED]
+
+    SyncType:
+      type: string
+      enum: [MANUAL, SCHEDULED, WEBHOOK]
+
+    ActiveStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE]
+
+    EmailTemplateCategory:
+      type: string
+      enum: [INTERVIEW, OFFER, ONBOARDING, PAYSLIP, RECRUITMENT]
+
+    EmailDeliveryStatus:
+      type: string
+      enum: [PENDING, DELIVERED, FAILED, RETRY]
+
+    JobPostingStatus:
+      type: string
+      enum: [DRAFT, PUBLISHED, CLOSED, FAILED]
+
+    CandidateImportStatus:
+      type: string
+      enum: [IMPORTED, DUPLICATE, FAILED]
+
+    CreateIntegrationRequest:
+      type: object
+      required: [companyId, providerName, category]
+      properties:
+        companyId:
+          type: string
+        providerName:
+          type: string
+          example: Microsoft 365
+        category:
+          $ref: "#/components/schemas/IntegrationCategory"
+        accountIdentifier:
+          type: string
+          example: hr@bbv.vn
+
+    UpdateIntegrationRequest:
+      type: object
+      properties:
+        providerName:
+          type: string
+        accountIdentifier:
+          type: string
+        syncFrequencyMinutes:
+          type: integer
+        status:
+          $ref: "#/components/schemas/IntegrationStatus"
+
+    IntegrationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        providerName:
+          type: string
+        category:
+          $ref: "#/components/schemas/IntegrationCategory"
+        accountIdentifier:
+          type: string
+        status:
+          $ref: "#/components/schemas/IntegrationStatus"
+        connectedAt:
+          type: string
+          format: date-time
+        lastSyncAt:
+          type: string
+          format: date-time
+          nullable: true
+        syncFrequencyMinutes:
+          type: integer
+
+    ConnectionTestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        status:
+          type: string
+        message:
+          type: string
+
+    UpdateCalendarConfigRequest:
+      type: object
+      properties:
+        defaultCalendar:
+          type: string
+        timezone:
+          type: string
+          example: Asia/Ho_Chi_Minh
+        defaultDurationMinutes:
+          type: integer
+          example: 60
+        onlineMeetingProvider:
+          type: string
+          example: Microsoft Teams
+        checkAvailabilityEnabled:
+          type: boolean
+        createEventEnabled:
+          type: boolean
+        updateCancelEventEnabled:
+          type: boolean
+        onlineMeetingEnabled:
+          type: boolean
+        syncAttendeeResponseEnabled:
+          type: boolean
+
+    CalendarConfigResponse:
+      allOf:
+        - $ref: "#/components/schemas/UpdateCalendarConfigRequest"
+        - type: object
+          properties:
+            id:
+              type: string
+            integrationId:
+              type: string
+
+    CalendarEventSyncResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        integrationId:
+          type: string
+        internalEventId:
+          type: string
+        externalEventId:
+          type: string
+        title:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        syncStatus:
+          $ref: "#/components/schemas/SyncStatus"
+        lastSyncedAt:
+          type: string
+          format: date-time
+
+    UpdateEmailConfigRequest:
+      type: object
+      properties:
+        fromName:
+          type: string
+          example: BBV HR
+        fromEmail:
+          type: string
+          format: email
+        replyTo:
+          type: string
+          format: email
+        defaultSignature:
+          type: string
+        interviewInvitationEnabled:
+          type: boolean
+        offerEmailEnabled:
+          type: boolean
+        onboardingEmailEnabled:
+          type: boolean
+        payslipEmailEnabled:
+          type: boolean
+        recruitmentNotificationEnabled:
+          type: boolean
+
+    EmailConfigResponse:
+      allOf:
+        - $ref: "#/components/schemas/UpdateEmailConfigRequest"
+        - type: object
+          properties:
+            id:
+              type: string
+            integrationId:
+              type: string
+
+    CreateEmailTemplateRequest:
+      type: object
+      required: [name, category, subject, body]
+      properties:
+        name:
+          type: string
+        category:
+          $ref: "#/components/schemas/EmailTemplateCategory"
+        subject:
+          type: string
+        body:
+          type: string
+        status:
+          $ref: "#/components/schemas/ActiveStatus"
+
+    UpdateEmailTemplateRequest:
+      allOf:
+        - $ref: "#/components/schemas/CreateEmailTemplateRequest"
+
+    EmailTemplateResponse:
+      allOf:
+        - $ref: "#/components/schemas/CreateEmailTemplateRequest"
+        - type: object
+          properties:
+            id:
+              type: string
+            integrationId:
+              type: string
+
+    EmailDeliveryLogResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        integrationId:
+          type: string
+        employeeId:
+          type: string
+          nullable: true
+        recipientEmail:
+          type: string
+          format: email
+        messageType:
+          $ref: "#/components/schemas/EmailTemplateCategory"
+        subject:
+          type: string
+        status:
+          $ref: "#/components/schemas/EmailDeliveryStatus"
+        sentAt:
+          type: string
+          format: date-time
+          nullable: true
+        errorMessage:
+          type: string
+          nullable: true
+
+    SendTestEmailRequest:
+      type: object
+      required: [recipientEmail]
+      properties:
+        recipientEmail:
+          type: string
+          format: email
+
+    UpdateRecruitmentConfigRequest:
+      type: object
+      properties:
+        publishJobEnabled:
+          type: boolean
+        updateJobEnabled:
+          type: boolean
+        closeJobEnabled:
+          type: boolean
+        receiveApplicationEnabled:
+          type: boolean
+        duplicateDetectionEnabled:
+          type: boolean
+        cvAttachmentEnabled:
+          type: boolean
+        candidateContactEnabled:
+          type: boolean
+        jobMappingEnabled:
+          type: boolean
+        autoSyncIntervalMinutes:
+          type: integer
+
+    RecruitmentConfigResponse:
+      allOf:
+        - $ref: "#/components/schemas/UpdateRecruitmentConfigRequest"
+        - type: object
+          properties:
+            id:
+              type: string
+            integrationId:
+              type: string
+
+    CreateJobPostingSyncRequest:
+      type: object
+      required: [internalJobId]
+      properties:
+        internalJobId:
+          type: string
+
+    JobPostingSyncResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        integrationId:
+          type: string
+        internalJobId:
+          type: string
+        externalJobId:
+          type: string
+          nullable: true
+        status:
+          $ref: "#/components/schemas/JobPostingStatus"
+        postedAt:
+          type: string
+          format: date-time
+          nullable: true
+        lastSyncedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    CandidateImportResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        jobPostingSyncId:
+          type: string
+        externalCandidateId:
+          type: string
+        internalApplicationId:
+          type: string
+          nullable: true
+        candidateName:
+          type: string
+        candidateEmail:
+          type: string
+          format: email
+        resumeUrl:
+          type: string
+        importedAt:
+          type: string
+          format: date-time
+        importStatus:
+          $ref: "#/components/schemas/CandidateImportStatus"
+
+    SyncHistoryResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        integrationId:
+          type: string
+        syncType:
+          $ref: "#/components/schemas/SyncType"
+        operation:
+          type: string
+        status:
+          $ref: "#/components/schemas/SyncStatus"
+        recordsProcessed:
+          type: integer
+        errorCount:
+          type: integer
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        durationMs:
+          type: integer
+        message:
+          type: string
+        errorDetails:
+          type: string
+          nullable: true
+
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalItems:
+          type: integer
+        totalPages:
+          type: integer
+        hasPreviousPage:
+          type: boolean
+        hasNextPage:
+          type: boolean
+
+    PagedIntegrationResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/IntegrationResponse"
+        pagination:
+          $ref: "#/components/schemas/PaginationMeta"
+
+    PagedCalendarEventSyncResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CalendarEventSyncResponse"
+        pagination:
+          $ref: "#/components/schemas/PaginationMeta"
+
+    PagedEmailDeliveryLogResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmailDeliveryLogResponse"
+        pagination:
+          $ref: "#/components/schemas/PaginationMeta"
+
+    PagedJobPostingSyncResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/JobPostingSyncResponse"
+        pagination:
+          $ref: "#/components/schemas/PaginationMeta"
+
+    PagedCandidateImportResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CandidateImportResponse"
+        pagination:
+          $ref: "#/components/schemas/PaginationMeta"
+
+    PagedSyncHistoryResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/SyncHistoryResponse"
+        pagination:
+          $ref: "#/components/schemas/PaginationMeta"
+
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
