@@ -21,63 +21,63 @@ User interface screens, slide-over drawers, and modal dialogs designed for the P
 #### Employee Directory Screen
 Central workforce catalog featuring searchable employee records, KPI metrics, status filters, and quick action toolbars.
 
-![Employee Directory Screen](../../images/uiux/EmployeeDirectory.png)
+![Employee Directory Screen](../../images/uiux/people/EmployeeDirectory.png)
 
 ---
 
 #### Employee Profile Detail Screen
 Dedicated 360-degree employee profile view with breadcrumb navigation, header banner, and consolidated tabs for Overview, Contract & Documents, Education, and Audit History.
 
-![Employee Profile Detail Screen](../../images/uiux/EmployeeProfileDetail.png)
+![Employee Profile Detail Screen](../../images/uiux/people/EmployeeProfileDetail.png)
 
 ---
 
 #### Organization & Department Screen
 Interactive organizational structure canvas featuring department hierarchy tree, roster headcount metrics, branch location filters, and zoom controls.
 
-![Organization & Department Screen](../../images/uiux/OrgDepartment.png)
+![Organization & Department Screen](../../images/uiux/people/OrgDepartment.png)
 
 ---
 
 #### Request Management Screen
 Management dashboard for employee HR requests, leave approvals, status filtering, and workflow processing.
 
-![Request Management Screen](../../images/uiux/RequestManagement.png)
+![Request Management Screen](../../images/uiux/people/RequestManagement.png)
 
 ---
 
 #### Create HR Request Screen
 Two-column interactive form for submitting annual leave, equipment, or policy requests with automatic quota balance validation and document uploads.
 
-![Create HR Request Screen](../../images/uiux/CreateRequest.png)
+![Create HR Request Screen](../../images/uiux/people/CreateRequest.png)
 
 ---
 
 #### Tracking Request Progress Screen
 Real-time request progress tracker displaying step-by-step approval workflow stages, reviewer audit logs, and timeline timestamps.
 
-![Tracking Request Progress Screen](../../images/uiux/TrackingRequest.png)
+![Tracking Request Progress Screen](../../images/uiux/people/TrackingRequest.png)
 
 ---
 
 #### Position & Job Title Management Screen
 Management screen defining organizational job titles, competency levels (L1-L6), salary band ranges, and headcount quotas.
 
-![Position Management Screen](../../images/uiux/PositionManagement.png)
+![Position Management Screen](../../images/uiux/people/PositionManagement.png)
 
 ---
 
 #### Team Management Screen
 Workspace for organizing cross-functional project teams, designating team leads, and allocating member capacity.
 
-![Team Management Screen](../../images/uiux/TeamManagement.png)
+![Team Management Screen](../../images/uiux/people/TeamManagement.png)
 
 ---
 
 #### Reporting Lines & Hierarchy Matrix Screen
 Organizational matrix displaying direct report supervisors, functional line managers, and reporting relationships.
 
-![Reporting Lines Matrix Screen](../../images/uiux/ReportingLines.png)
+![Reporting Lines Matrix Screen](../../images/uiux/people/ReportingLines.png)
 
 ---
 
@@ -86,21 +86,21 @@ Organizational matrix displaying direct report supervisors, functional line mana
 #### Add New Employee Profile Modal
 Modal popup form for registering a new employee profile with personal demographics, corporate email, role assignment, and department placement.
 
-![Add Employee Modal](../../images/uiux/AddEmployeeModal.png)
+![Add Employee Modal](../../images/uiux/people/AddEmployeeModal.png)
 
 ---
 
 #### Add Department Drawer
 Slide-over drawer for configuring new department entities, parent division alignment, location branch, and department lead assignment.
 
-![Add Department Drawer](../../images/uiux/AddDepartmentDrawer.png)
+![Add Department Drawer](../../images/uiux/people/AddDepartmentDrawer.png)
 
 ---
 
 #### Add Labor Contract Modal
 Form popup for registering official labor contracts, compensation terms, effective start/end dates, and document attachments.
 
-![Add Labor Contract Modal](../../images/uiux/AddContractModal.png)
+![Add Labor Contract Modal](../../images/uiux/people/AddContractModal.png)
 
 ---
 
