@@ -39,7 +39,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `People` -> `Employee Directory` in the sidebar.  
 **Description:** Central workforce catalog displaying searchable employee records, KPI metrics, status filters, and quick action toolbars.
 
-![Employee Directory Screen](../images/uiux/EmployeeDirectory.png)
+![Employee Directory Screen](../images/uiux/people/EmployeeDirectory.png)
 
 ---
 
@@ -47,7 +47,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click any employee row in the Employee Directory table.  
 **Description:** Dedicated 360-degree employee profile screen featuring breadcrumbs navigation, employee header banner, and consolidated tabs for Overview & Employment, Contract & Documents, Education & Certifications, and History.
 
-![Employee Profile Detail Screen](../images/uiux/EmployeeProfileDetail.png)
+![Employee Profile Detail Screen](../images/uiux/people/EmployeeProfileDetail.png)
 
 ---
 
@@ -55,7 +55,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `People` -> `Org & Department` in the sidebar.  
 **Description:** Interactive organizational structure canvas featuring department hierarchy tree, roster table view, branch filters, and zoom controls.
 
-![Organization & Department Screen](../images/uiux/OrgDepartment.png)
+![Organization & Department Screen](../images/uiux/people/OrgDepartment.png)
 
 ---
 
@@ -63,7 +63,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `People` -> `Request` in the sidebar.  
 **Description:** Management dashboard for employee HR requests, leave approvals, status filtering, and workflow processing.
 
-![Request Management Screen](../images/uiux/RequestManagement.png)
+![Request Management Screen](../images/uiux/people/RequestManagement.png)
 
 ---
 
@@ -71,7 +71,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `+ Create Request` button on the Request Management page.  
 **Description:** Two-column interactive form for submitting annual leave, equipment, or policy requests with automatic quota validation.
 
-![Create HR Request Screen](../images/uiux/CreateRequest.png)
+![Create HR Request Screen](../images/uiux/people/CreateRequest.png)
 
 ---
 
@@ -79,7 +79,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `View Timeline` or any request item in the Request Management table.  
 **Description:** Real-time request progress tracker displaying approval workflow steps, reviewer comments, and timeline status.
 
-![Tracking Request Progress Screen](../images/uiux/TrackingRequest.png)
+![Tracking Request Progress Screen](../images/uiux/people/TrackingRequest.png)
 
 ---
 
@@ -87,7 +87,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `Position Management` subnav link in Org & Department.  
 **Description:** Management screen defining organizational job titles, competency levels, salary bands, and headcount quotas.
 
-![Position Management Screen](../images/uiux/PositionManagement.png)
+![Position Management Screen](../images/uiux/people/PositionManagement.png)
 
 ---
 
@@ -95,7 +95,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `Team Management` subnav link in Org & Department.  
 **Description:** Workspace for organizing project teams, designating team leads, and allocating member resources.
 
-![Team Management Screen](../images/uiux/TeamManagement.png)
+![Team Management Screen](../images/uiux/people/TeamManagement.png)
 
 ---
 
@@ -103,7 +103,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `Reporting Lines` subnav link in Org & Department.  
 **Description:** Organizational matrix displaying direct report managers, functional line supervisors, and reporting relationships.
 
-![Reporting Lines Matrix Screen](../images/uiux/ReportingLines.png)
+![Reporting Lines Matrix Screen](../images/uiux/people/ReportingLines.png)
 
 ---
 
@@ -113,7 +113,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `Add Employee` button on the Employee Directory toolbar.  
 **Description:** Modal popup form for registering a new employee profile with personal demographics, corporate email, role, and department assignment.
 
-![Add Employee Modal](../images/uiux/AddEmployeeModal.png)
+![Add Employee Modal](../images/uiux/people/AddEmployeeModal.png)
 
 ---
 
@@ -121,7 +121,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `Add Department` button on the Organization & Department page header.  
 **Description:** Slide-over drawer for configuring new department entities, parent division alignment, location branch, and manager assignments.
 
-![Add Department Drawer](../images/uiux/AddDepartmentDrawer.png)
+![Add Department Drawer](../images/uiux/people/AddDepartmentDrawer.png)
 
 ---
 
@@ -129,7 +129,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 **Trigger:** Click `+ Add Contract` button on the Employee Profile Contract tab.  
 **Description:** Form popup for registering official labor contracts, compensation terms, effective dates, and document attachments.
 
-![Add Labor Contract Modal](../images/uiux/AddContractModal.png)
+![Add Labor Contract Modal](../images/uiux/people/AddContractModal.png)
 
 ---
 
