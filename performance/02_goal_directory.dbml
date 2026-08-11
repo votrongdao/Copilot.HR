@@ -1,0 +1,108 @@
+// Goal Directory - screen-specific DBML
+
+Enum goal_status {
+  draft
+  active
+  completed
+  cancelled
+  overdue
+}
+
+Enum goal_visibility {
+  private
+  team
+  organization
+}
+
+Table users {
+  id bigint [pk, increment]
+  employee_code varchar(50) [not null, unique]
+  full_name varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  avatar_url varchar(500)
+  department varchar(150)
+  job_title varchar(150)
+  is_active boolean [not null, default: true]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table review_cycles {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  review_type varchar(50) [not null]
+  start_date date [not null]
+  end_date date [not null]
+  status varchar(30) [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table goals {
+  id bigint [pk, increment]
+  review_cycle_id bigint
+  owner_id bigint [not null]
+  title varchar(255) [not null]
+  description text
+  status goal_status [not null]
+  visibility goal_visibility [not null, default: team]
+  progress_percent decimal(5,2) [not null, default: 0]
+  start_date date
+  due_date date
+  completed_at timestamp
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  Indexes {
+    owner_id
+    review_cycle_id
+    status
+    due_date
+  }
+}
+
+Table goal_categories {
+  id bigint [pk, increment]
+  name varchar(100) [not null, unique]
+  description text
+  is_active boolean [not null, default: true]
+}
+
+Table goal_category_map {
+  goal_id bigint [not null]
+  category_id bigint [not null]
+
+  Indexes {
+    (goal_id, category_id) [pk]
+  }
+}
+
+Table goal_progress_snapshots {
+  id bigint [pk, increment]
+  goal_id bigint [not null]
+  progress_percent decimal(5,2) [not null]
+  recorded_at timestamp [not null]
+  recorded_by bigint [not null]
+  note text
+}
+
+Table goal_updates {
+  id bigint [pk, increment]
+  goal_id bigint [not null]
+  author_id bigint [not null]
+  update_text text [not null]
+  progress_percent decimal(5,2)
+  created_at timestamp [not null]
+}
+
+Ref: goals.review_cycle_id > review_cycles.id
+Ref: goals.owner_id > users.id
+
+Ref: goal_category_map.goal_id > goals.id
+Ref: goal_category_map.category_id > goal_categories.id
+
+Ref: goal_progress_snapshots.goal_id > goals.id
+Ref: goal_progress_snapshots.recorded_by > users.id
+
+Ref: goal_updates.goal_id > goals.id
+Ref: goal_updates.author_id > users.id

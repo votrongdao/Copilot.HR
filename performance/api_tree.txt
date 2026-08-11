@@ -1,0 +1,47 @@
+Performance Management System API
+│
+├── Goal Management
+│   ├── GET    /goal-cycles
+│   ├── POST   /goal-cycles
+│   ├── GET    /goal-cycles/{cycleId}
+│   ├── GET    /goals
+│   ├── POST   /goals
+│   ├── GET    /goals/{goalId}
+│   ├── PUT    /goals/{goalId}
+│   ├── PATCH  /goals/{goalId}/progress
+│   ├── POST   /goals/{goalId}/approvals
+│   ├── POST   /goals/{goalId}/revisions
+│   └── GET    /goals/{goalId}/history
+│
+├── Performance Review Management
+│   ├── GET    /review-cycles
+│   ├── POST   /review-cycles
+│   ├── GET    /review-cycles/{cycleId}
+│   ├── GET    /review-templates
+│   ├── POST   /review-templates
+│   ├── GET    /review-templates/{templateId}/sections
+│   ├── GET    /performance-reviews
+│   ├── POST   /performance-reviews
+│   ├── GET    /performance-reviews/{reviewId}
+│   ├── PATCH  /performance-reviews/{reviewId}/status
+│   ├── GET    /performance-reviews/{reviewId}/participants
+│   ├── POST   /performance-reviews/{reviewId}/feedback
+│   ├── POST   /performance-reviews/{reviewId}/approvals
+│   ├── POST   /performance-reviews/{reviewId}/corrections
+│   └── GET    /performance-reviews/{reviewId}/history
+│
+├── One-on-One Coaching Management
+│   ├── GET    /coaching-templates
+│   ├── POST   /coaching-templates
+│   ├── GET    /one-on-ones
+│   ├── POST   /one-on-ones
+│   ├── GET    /one-on-ones/{sessionId}
+│   ├── PATCH  /one-on-ones/{sessionId}/status
+│   ├── POST   /one-on-ones/{sessionId}/agenda-items
+│   ├── POST   /one-on-ones/{sessionId}/notes
+│   ├── POST   /one-on-ones/{sessionId}/action-items
+│   └── GET    /one-on-ones/{sessionId}/history
+│
+└── Performance Reporting & Summaries
+    ├── GET    /employees/{employeeId}/performance-summary
+    └── POST   /employees/{employeeId}/performance-summary/recalculate

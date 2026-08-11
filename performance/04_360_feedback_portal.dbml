@@ -1,0 +1,113 @@
+// 360 Feedback Portal - screen-specific DBML
+
+Enum feedback_request_status {
+  pending
+  accepted
+  declined
+  in_progress
+  submitted
+  expired
+  cancelled
+}
+
+Enum feedback_source_type {
+  manager
+  peer
+  direct_report
+  self
+  external
+}
+
+Table users {
+  id bigint [pk, increment]
+  employee_code varchar(50) [not null, unique]
+  full_name varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  avatar_url varchar(500)
+  department varchar(150)
+  job_title varchar(150)
+  is_active boolean [not null, default: true]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table review_cycles {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  start_date date [not null]
+  end_date date [not null]
+  status varchar(30) [not null]
+}
+
+Table feedback_templates {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  description text
+  is_active boolean [not null, default: true]
+  created_at timestamp [not null]
+}
+
+Table feedback_questions {
+  id bigint [pk, increment]
+  template_id bigint [not null]
+  question_text text [not null]
+  competency varchar(150)
+  response_type varchar(30) [not null, default: 'rating']
+  sort_order int [not null, default: 0]
+  is_required boolean [not null, default: true]
+}
+
+Table feedback_requests {
+  id bigint [pk, increment]
+  review_cycle_id bigint [not null]
+  template_id bigint [not null]
+  subject_user_id bigint [not null]
+  reviewer_user_id bigint [not null]
+  source_type feedback_source_type [not null]
+  status feedback_request_status [not null]
+  requested_at timestamp [not null]
+  due_at timestamp
+  submitted_at timestamp
+  completed_at timestamp
+
+  Indexes {
+    (review_cycle_id, subject_user_id)
+    (subject_user_id, reviewer_user_id, review_cycle_id) [unique]
+    status
+  }
+}
+
+Table feedback_responses {
+  id bigint [pk, increment]
+  feedback_request_id bigint [not null]
+  question_id bigint [not null]
+  rating decimal(5,2)
+  answer_text text
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  Indexes {
+    (feedback_request_id, question_id) [unique]
+  }
+}
+
+Table feedback_summary {
+  id bigint [pk, increment]
+  feedback_request_id bigint [not null, unique]
+  overall_score decimal(5,2)
+  strengths text
+  development_areas text
+  submitted_at timestamp
+}
+
+Ref: feedback_templates.id < feedback_questions.template_id
+
+Ref: review_cycles.id < feedback_requests.review_cycle_id
+Ref: feedback_templates.id < feedback_requests.template_id
+Ref: users.id < feedback_requests.subject_user_id
+Ref: users.id < feedback_requests.reviewer_user_id
+
+Ref: feedback_requests.id < feedback_responses.feedback_request_id
+Ref: feedback_questions.id < feedback_responses.question_id
+
+Ref: feedback_requests.id - feedback_summary.feedback_request_id
