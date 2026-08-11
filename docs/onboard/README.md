@@ -38,6 +38,7 @@
 ![Tracking Onboard Progress ERD](../../images/erd/tracking-erd.png)
 
 ## API route tree structure
+https://app.swaggerhub.com/apis/bbv-a74/Onboarding/1.0.0#/
 ```text
 Copilot HR - Employee Onboarding API
 │
