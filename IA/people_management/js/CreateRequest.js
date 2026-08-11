@@ -29,4 +29,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (startDate) startDate.addEventListener('change', calculateDays);
     if (endDate) endDate.addEventListener('change', calculateDays);
+
+    // Form Submit -> Navigate to TrackingRequest.html
+    const submitBtn = document.getElementById('btnSubmitForm');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', function () {
+            window.location.href = 'TrackingRequest.html';
+        });
+    }
+
+    const draftBtn = document.getElementById('btnSaveDraft');
+    if (draftBtn) {
+        draftBtn.addEventListener('click', function () {
+            window.location.href = 'RequestManagement.html';
+        });
+    }
 });

@@ -42,4 +42,21 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    // Row Click Navigation -> TrackingRequest.html
+    tableRows.forEach(row => {
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', function (e) {
+            if (e.target.closest('.btn-quick-approve')) return;
+            window.location.href = 'TrackingRequest.html';
+        });
+    });
+
+    // Create New Request Button Navigation -> CreateRequest.html
+    const btnCreateRequest = document.getElementById('btnCreateRequest');
+    if (btnCreateRequest) {
+        btnCreateRequest.addEventListener('click', function () {
+            window.location.href = 'CreateRequest.html';
+        });
+    }
 });

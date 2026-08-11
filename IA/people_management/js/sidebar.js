@@ -38,6 +38,7 @@
             .sidebar-submenu-item:hover svg { stroke: #09090b; }
             .sidebar-submenu-item.active { color: #09090b; font-weight: 700; background: #f4f4f5; box-shadow: inset 3px 0 0 #09090b; }
             .sidebar-submenu-item.active svg { stroke: #09090b; }
+
             .sidebar-footer { position: relative; padding-top: 14px; border-top: 1px solid #e4e4e7; margin-top: 12px; }
             .user-profile-bar { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; border: 1px solid #e4e4e7; cursor: pointer; transition: all 0.15s ease; background: #ffffff; user-select: none; }
             .user-profile-bar:hover { background: #f4f4f5; border-color: #d4d4d8; }
@@ -62,7 +63,7 @@
         const container = document.getElementById('sidebarContainer') || document.querySelector('.sidebar');
         if (!container) return;
 
-        const activeMain = container.getAttribute('data-active') || 'People Management';
+        const activeMain = container.getAttribute('data-active') || 'People';
         const activeSubpage = container.getAttribute('data-subpage') || '';
         
         let isSubfolder = container.getAttribute('data-is-subfolder');
@@ -79,11 +80,11 @@
             'Home': homePath,
             'Employee Directory': `${basePath}EmployeeDirectory.html`,
             'Organization & Department': `${basePath}OrgDepartment.html`,
-            'Team Management': `${basePath}TeamManagement.html`,
-            'Position Management': `${basePath}PositionManagement.html`,
-            'Request Management': `${basePath}RequestManagement.html`,
-            'Reporting Lines': `${basePath}ReportingLines.html`
+            'Request': `${basePath}RequestManagement.html`
         };
+
+        const isPeopleActive = activeMain === 'People' || activeMain === 'People Management';
+        const isOrgDomain = ['Organization & Department', 'Team Management', 'Position Management', 'Reporting Lines'].includes(activeSubpage);
 
         container.innerHTML = `
             <div class="sidebar-top">
@@ -93,6 +94,7 @@
                 </div>
 
                 <ul class="sidebar-menu">
+                    <!-- 1. Home -->
                     <li>
                         <a href="${routes['Home']}" class="sidebar-menu-item ${activeMain === 'Home' ? 'active' : ''}">
                             <div class="sidebar-menu-item-left">
@@ -102,11 +104,47 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-menu-group ${activeMain === 'People Management' ? '' : 'collapsed'}">
-                        <div class="sidebar-menu-item ${activeMain === 'People Management' ? 'active' : ''}" id="togglePeopleMgmt">
+                    <!-- 2. Recruitment -->
+                    <li>
+                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Recruitment' ? 'active' : ''}" data-module="Recruitment">
+                            <div class="sidebar-menu-item-left">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                                <span>Recruitment</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- 3. Onboard / Offboard (Group with subitems Onboarding, Offboarding) -->
+                    <li class="sidebar-menu-group ${activeMain === 'Onboard / Offboard' ? '' : 'collapsed'}">
+                        <div class="sidebar-menu-item ${activeMain === 'Onboard / Offboard' ? 'active' : ''}" class="toggle-group-btn">
+                            <div class="sidebar-menu-item-left">
+                                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+                                <span>Onboard / Offboard</span>
+                            </div>
+                            <svg class="sidebar-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="javascript:void(0)" class="sidebar-submenu-item ${activeSubpage === 'Onboarding' ? 'active' : ''}">
+                                    <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                                    <span>Onboarding</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="sidebar-submenu-item ${activeSubpage === 'Offboarding' ? 'active' : ''}">
+                                    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                                    <span>Offboarding</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- 4. People (Group with subitems Employee Directory, Org & Department, Request) -->
+                    <li class="sidebar-menu-group ${isPeopleActive ? '' : 'collapsed'}">
+                        <div class="sidebar-menu-item ${isPeopleActive ? 'active' : ''}" class="toggle-group-btn">
                             <div class="sidebar-menu-item-left">
                                 <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                                <span>People Management</span>
+                                <span>People</span>
                             </div>
                             <svg class="sidebar-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
                         </div>
@@ -118,79 +156,44 @@
                                     <span>Employee Directory</span>
                                 </a>
                             </li>
+
                             <li>
-                                <a href="${routes['Organization & Department']}" class="sidebar-submenu-item ${activeSubpage === 'Organization & Department' ? 'active' : ''}">
+                                <a href="${routes['Organization & Department']}" class="sidebar-submenu-item ${isOrgDomain ? 'active' : ''}">
                                     <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                                     <span>Org & Department</span>
                                 </a>
                             </li>
+
                             <li>
-                                <a href="${routes['Team Management']}" class="sidebar-submenu-item ${activeSubpage === 'Team Management' ? 'active' : ''}">
-                                    <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                                    <span>Team Management</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="${routes['Position Management']}" class="sidebar-submenu-item ${activeSubpage === 'Position Management' ? 'active' : ''}">
-                                    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="21" x2="16" y2="5"/></svg>
-                                    <span>Position Management</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="${routes['Request Management']}" class="sidebar-submenu-item ${activeSubpage === 'Request Management' ? 'active' : ''}">
+                                <a href="${routes['Request']}" class="sidebar-submenu-item ${activeSubpage === 'Request Management' || activeSubpage === 'Request' ? 'active' : ''}">
                                     <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                                    <span>Request Management</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="${routes['Reporting Lines']}" class="sidebar-submenu-item ${activeSubpage === 'Reporting Lines' ? 'active' : ''}">
-                                    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                                    <span>Reporting Lines</span>
+                                    <span>Request</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
+                    <!-- 5. Workforce -->
                     <li>
-                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Recruitment' ? 'active' : ''}" data-module="Recruitment">
-                            <div class="sidebar-menu-item-left">
-                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                                <span>Recruitment</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Onboarding' ? 'active' : ''}" data-module="Onboarding">
-                            <div class="sidebar-menu-item-left">
-                                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
-                                <span>Onboarding</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Offboarding' ? 'active' : ''}" data-module="Offboarding">
-                            <div class="sidebar-menu-item-left">
-                                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                                <span>Offboarding</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Attendance' ? 'active' : ''}" data-module="Attendance">
+                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Workforce' ? 'active' : ''}" data-module="Workforce">
                             <div class="sidebar-menu-item-left">
                                 <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                <span>Attendance</span>
+                                <span>Workforce</span>
                             </div>
                         </a>
                     </li>
+
+                    <!-- 6. Project -->
                     <li>
-                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Payroll' ? 'active' : ''}" data-module="Payroll">
+                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Project' ? 'active' : ''}" data-module="Project">
                             <div class="sidebar-menu-item-left">
-                                <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                                <span>Payroll</span>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                <span>Project</span>
                             </div>
                         </a>
                     </li>
+
+                    <!-- 7. Performance -->
                     <li>
                         <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Performance' ? 'active' : ''}" data-module="Performance">
                             <div class="sidebar-menu-item-left">
@@ -199,19 +202,32 @@
                             </div>
                         </a>
                     </li>
+
+                    <!-- 8. Payroll -->
                     <li>
-                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Settings' ? 'active' : ''}" data-module="Settings">
+                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Payroll' ? 'active' : ''}" data-module="Payroll">
+                            <div class="sidebar-menu-item-left">
+                                <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                <span>Payroll</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- 9. Integration -->
+                    <li>
+                        <a href="javascript:void(0)" class="sidebar-menu-item ${activeMain === 'Integration' ? 'active' : ''}" data-module="Integration">
                             <div class="sidebar-menu-item-left">
                                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                                <span>Settings</span>
+                                <span>Integration</span>
                             </div>
                         </a>
                     </li>
                 </ul>
             </div>
 
+            <!-- Footer Avatar Box & Dropdown Menu (Update, Help, Log Out) -->
             <div class="sidebar-footer">
-                <div class="user-profile-bar" id="sidebarUserProfileBar">
+                <div class="user-profile-bar" id="sidebarUserProfileBar" title="Click to view profile options">
                     <div class="user-avatar-sq">DK</div>
                     <div class="user-profile-info">
                         <span class="user-profile-name">Duong Khang</span>
@@ -219,9 +235,25 @@
                     </div>
                     <svg class="profile-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
+
+                <div class="user-dropdown-menu" id="sidebarUserDropdown">
+                    <a href="javascript:void(0)" class="user-dropdown-item" id="userMenuUpdate">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        <span>Update</span>
+                    </a>
+                    <a href="javascript:void(0)" class="user-dropdown-item" id="userMenuHelp">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <span>Help</span>
+                    </a>
+                    <a href="javascript:void(0)" class="user-dropdown-item danger" id="userMenuLogout">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        <span>Log Out</span>
+                    </a>
+                </div>
             </div>
         `;
 
+        // Logo Click Navigation
         const logoBtn = container.querySelector('#sidebarLogo');
         if (logoBtn) {
             logoBtn.addEventListener('click', function () {
@@ -229,16 +261,57 @@
             });
         }
 
-        const toggleBtn = container.querySelector('#togglePeopleMgmt');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', function (e) {
+        // Accordion Groups Toggle (Onboard / Offboard, People)
+        const menuGroups = container.querySelectorAll('.sidebar-menu-group');
+        menuGroups.forEach(group => {
+            const toggleItem = group.querySelector('.sidebar-menu-item');
+            if (toggleItem) {
+                toggleItem.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    group.classList.toggle('collapsed');
+                });
+            }
+        });
+
+        // User Avatar Dropdown Toggle Logic
+        const userProfileBar = container.querySelector('#sidebarUserProfileBar');
+        const userDropdown = container.querySelector('#sidebarUserDropdown');
+
+        if (userProfileBar && userDropdown) {
+            userProfileBar.addEventListener('click', function (e) {
                 e.stopPropagation();
-                const parentGroup = toggleBtn.closest('.sidebar-menu-group');
-                if (parentGroup) {
-                    parentGroup.classList.toggle('collapsed');
+                userDropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!userProfileBar.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('show');
                 }
             });
         }
+
+        // Toast Notifications Helper
+        function showToast(msg) {
+            let toast = document.getElementById('sidebarToastMsg');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'sidebarToastMsg';
+                toast.className = 'sidebar-toast-msg';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> ${msg}`;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2500);
+        }
+
+        const updateBtn = container.querySelector('#userMenuUpdate');
+        if (updateBtn) updateBtn.addEventListener('click', () => showToast('Update profile clicked'));
+
+        const helpBtn = container.querySelector('#userMenuHelp');
+        if (helpBtn) helpBtn.addEventListener('click', () => showToast('Help center opened'));
+
+        const logoutBtn = container.querySelector('#userMenuLogout');
+        if (logoutBtn) logoutBtn.addEventListener('click', () => showToast('Logging out...'));
     }
 
     if (document.readyState === 'loading') {

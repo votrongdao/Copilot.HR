@@ -642,6 +642,49 @@
             border: 1px solid var(--border-color);
         }
 
+        /* Domain Sub-Navigation Bar */
+        .org-subnav-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .org-subnav-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+
+        .org-subnav-item svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+        }
+
+        .org-subnav-item:hover {
+            color: var(--text-main);
+            background: var(--primary-light);
+        }
+
+        .org-subnav-item.active {
+            color: var(--text-main);
+            font-weight: 600;
+            background: var(--bg-card);
+            border-color: var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
         .filter-group {
             display: flex;
             align-items: center;
@@ -1258,6 +1301,26 @@
                     </button>
                 </div>
 
+                <!-- Domain Sub-Navigation Bar -->
+                <div class="org-subnav-bar">
+                    <a href="OrgDepartment.html" class="org-subnav-item active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        <span>Department Tree</span>
+                    </a>
+                    <a href="TeamManagement.html" class="org-subnav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        <span>Team Management</span>
+                    </a>
+                    <a href="PositionManagement.html" class="org-subnav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><line x1="16" y1="21" x2="16" y2="5"/></svg>
+                        <span>Position Management</span>
+                    </a>
+                    <a href="ReportingLines.html" class="org-subnav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        <span>Reporting Lines</span>
+                    </a>
+                </div>
+
                 <!-- KPI Cards -->
                 <div class="cards">
                     <div class="card">
@@ -1705,7 +1768,7 @@
 
     <!-- Component Scripts -->
     <script src="js/sidebar.js"></script>
-    <script src="../../js/people_management/OrgDepartment.js"></script>
+    <script src="js/OrgDepartment.js"></script>
 </body>
 
 </html>

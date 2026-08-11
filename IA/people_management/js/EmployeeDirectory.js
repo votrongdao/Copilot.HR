@@ -26,14 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
         tableBody.innerHTML = '';
 
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:32px; color:var(--text-muted);">No employees found matching criteria.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--text-muted);">No employees found matching criteria.</td></tr>`;
             return;
         }
 
         data.forEach(emp => {
             const tr = document.createElement('tr');
+            tr.style.cursor = 'pointer';
+            tr.setAttribute('data-id', emp.id);
             tr.innerHTML = `
-                <td><input type="checkbox" class="row-checkbox"></td>
                 <td><strong>${emp.id}</strong></td>
                 <td>
                     <div style="display:flex; align-items:center; gap:10px;">
@@ -54,16 +55,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     <button class="btn-wireframe btn-view-profile" data-id="${emp.id}" style="padding:4px 8px; font-size:12px;">View Profile</button>
                 </td>
             `;
-            tableBody.appendChild(tr);
-        });
 
-        // Add View Profile Click Event
-        tableBody.querySelectorAll('.btn-view-profile').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const id = btn.getAttribute('data-id');
-                const emp = employees.find(e => e.id === id);
+            // Row click event -> Open Profile Drawer
+            tr.addEventListener('click', function (e) {
                 openProfileDrawer(emp);
             });
+
+            tableBody.appendChild(tr);
         });
     }
 

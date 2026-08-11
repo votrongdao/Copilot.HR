@@ -1590,7 +1590,6 @@
                         <table class="dir-table" id="employeeDirectoryTable">
                             <thead>
                                 <tr>
-                                    <th style="width: 40px;"><input type="checkbox" id="selectAllCheckbox"></th>
                                     <th>Employee ID</th>
                                     <th>Name & Role</th>
                                     <th>Department</th>
@@ -1601,7 +1600,82 @@
                                 </tr>
                             </thead>
                             <tbody id="directoryTableBody">
-                                <!-- Populated dynamically via JS -->
+                                <tr style="cursor: pointer;" data-id="EMP-8021">
+                                    <td><strong>EMP-8021</strong></td>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:10px;">
+                                            <div class="avatar-tiny" style="width:30px; height:30px; background:#09090b; color:#fff; border-radius:6px; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center;">LD</div>
+                                            <div>
+                                                <strong>Lucia Doan</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">HR Director</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Human Resources</td>
+                                    <td>lucia.doan@copilot.hr</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>15 Jan 2021</td>
+                                    <td style="text-align:right;">
+                                        <button class="btn-wireframe btn-view-profile" data-id="EMP-8021" style="padding:4px 8px; font-size:12px;">View Profile</button>
+                                    </td>
+                                </tr>
+                                <tr style="cursor: pointer;" data-id="EMP-8022">
+                                    <td><strong>EMP-8022</strong></td>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:10px;">
+                                            <div class="avatar-tiny" style="width:30px; height:30px; background:#09090b; color:#fff; border-radius:6px; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center;">DK</div>
+                                            <div>
+                                                <strong>Duong Vo Duy Khang</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">Senior Frontend Engineer</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Engineering</td>
+                                    <td>khang.duong@copilot.hr</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>01 Mar 2022</td>
+                                    <td style="text-align:right;">
+                                        <button class="btn-wireframe btn-view-profile" data-id="EMP-8022" style="padding:4px 8px; font-size:12px;">View Profile</button>
+                                    </td>
+                                </tr>
+                                <tr style="cursor: pointer;" data-id="EMP-8023">
+                                    <td><strong>EMP-8023</strong></td>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:10px;">
+                                            <div class="avatar-tiny" style="width:30px; height:30px; background:#09090b; color:#fff; border-radius:6px; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center;">DV</div>
+                                            <div>
+                                                <strong>Dao Vo</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">Chief Technology Officer (CTO)</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Engineering</td>
+                                    <td>dao.vo@copilot.hr</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>10 Oct 2020</td>
+                                    <td style="text-align:right;">
+                                        <button class="btn-wireframe btn-view-profile" data-id="EMP-8023" style="padding:4px 8px; font-size:12px;">View Profile</button>
+                                    </td>
+                                </tr>
+                                <tr style="cursor: pointer;" data-id="EMP-8024">
+                                    <td><strong>EMP-8024</strong></td>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:10px;">
+                                            <div class="avatar-tiny" style="width:30px; height:30px; background:#09090b; color:#fff; border-radius:6px; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center;">EC</div>
+                                            <div>
+                                                <strong>Emily Chen</strong>
+                                                <div style="font-size:11px; color:var(--text-muted);">Senior Product Designer</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Product & Design</td>
+                                    <td>emily.chen@copilot.hr</td>
+                                    <td><span class="status-pill active">Active</span></td>
+                                    <td>05 Jun 2022</td>
+                                    <td style="text-align:right;">
+                                        <button class="btn-wireframe btn-view-profile" data-id="EMP-8024" style="padding:4px 8px; font-size:12px;">View Profile</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -1616,101 +1690,7 @@
                             <button class="page-btn" id="btnNextPage">Next</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- Bottom Task Board & Quick Actions -->
-                <div class="bottom">
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h2>Directory Activity Log</h2>
-                            <span class="badge-tag">Recent Updates</span>
-                        </div>
-                        <div class="kanban-board">
-                            <div class="kanban-column">
-                                <div class="column-header">
-                                    <span class="column-title">Recent Onboarding</span>
-                                    <span class="column-count">2</span>
-                                </div>
-                                <div class="kanban-card">
-                                    <div class="card-text">Pham Minh Tu joined Engineering</div>
-                                    <div class="card-meta">
-                                        <span class="badge-tag">Joined</span>
-                                        <span>Today</span>
-                                    </div>
-                                </div>
-                                <div class="kanban-card">
-                                    <div class="card-text">Do Hoang Anh completed 30-day review</div>
-                                    <div class="card-meta">
-                                        <span class="badge-tag">Probation</span>
-                                        <span>Yesterday</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="kanban-column">
-                                <div class="column-header">
-                                    <span class="column-title">Profile Updates</span>
-                                    <span class="column-count">2</span>
-                                </div>
-                                <div class="kanban-card">
-                                    <div class="card-text">Lucia Doan updated bank account info</div>
-                                    <div class="card-meta">
-                                        <span class="badge-tag">Payroll</span>
-                                        <span>Today</span>
-                                    </div>
-                                </div>
-                                <div class="kanban-card">
-                                    <div class="card-text">Nguyen Van An updated emergency contact</div>
-                                    <div class="card-meta">
-                                        <span class="badge-tag">Info</span>
-                                        <span>2 days ago</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="kanban-column">
-                                <div class="column-header">
-                                    <span class="column-title">Leave Status</span>
-                                    <span class="column-count">1</span>
-                                </div>
-                                <div class="kanban-card">
-                                    <div class="card-text">Tran Tuan on Annual Leave (3 days)</div>
-                                    <div class="card-meta">
-                                        <span class="badge-tag">On Leave</span>
-                                        <span>Until Aug 12</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h2>Quick Actions</h2>
-                        </div>
-                        <div class="quick-actions-list">
-                            <button class="btn-action" data-action="Add Employee">
-                                <div class="btn-action-left">
-                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-                                    <span>Add New Employee</span>
-                                </div>
-                                <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                            </button>
-                            <button class="btn-action" data-action="Export Directory">
-                                <div class="btn-action-left">
-                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    <span>Export Directory List</span>
-                                </div>
-                                <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                            </button>
-                            <button class="btn-action" data-action="Org Structure">
-                                <div class="btn-action-left">
-                                    <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                                    <span>View Org Hierarchy</span>
-                                </div>
-                                <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                </div>                </div>
 
             </div>
 
@@ -1994,7 +1974,7 @@
 
     <!-- Component Scripts -->
     <script src="js/sidebar.js"></script>
-    <script src="../../js/people_management/EmployeeDirectory.js"></script>
+    <script src="js/EmployeeDirectory.js"></script>
 </body>
 
 </html>

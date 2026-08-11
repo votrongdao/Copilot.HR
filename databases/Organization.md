@@ -14,7 +14,8 @@ erDiagram
     DEPARTMENT ||--o{ POSITION : "defines"
     DEPARTMENT ||--o{ EMPLOYEE : "employs"
     
-    TEAM ||--o{ EMPLOYEE : "allocates"
+    TEAM ||--o{ TEAM_MEMBER : "has_members"
+    EMPLOYEE ||--o{ TEAM_MEMBER : "assigned_to"
     TEAM }|--|| EMPLOYEE : "led_by"
     DEPARTMENT }|--|| EMPLOYEE : "headed_by"
     
@@ -49,6 +50,16 @@ erDiagram
         string department_id FK
         string team_lead_id FK
         string description
+        string status
+    }
+
+    TEAM_MEMBER {
+        string member_id PK
+        string team_id FK
+        string employee_id FK
+        string role_in_team
+        decimal allocation_percentage
+        date joined_date
         string status
     }
 
@@ -103,6 +114,15 @@ erDiagram
 - `team_id` (PK, VARCHAR): Unique team identifier.
 - `department_id` (FK, VARCHAR): Parent department.
 - `team_lead_id` (FK, VARCHAR): Team lead employee.
+
+### 📌 TEAM_MEMBER
+- `member_id` (PK, VARCHAR): Unique membership assignment identifier.
+- `team_id` (FK, VARCHAR): Foreign key to `TEAM`.
+- `employee_id` (FK, VARCHAR): Foreign key to `EMPLOYEE`.
+- `role_in_team` (VARCHAR): Member role within the team (e.g. Core Contributor, Scrum Master, Lead).
+- `allocation_percentage` (DECIMAL): Capacity allocation percentage (e.g. 50%, 100%).
+- `joined_date` (DATE): Date employee joined the team.
+- `status` (VARCHAR): Assignment status (Active, Inactive).
 
 ### 📌 POSITION
 - `position_id` (PK, VARCHAR): Position identifier.

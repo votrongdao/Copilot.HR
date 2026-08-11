@@ -1,25 +1,18 @@
-# Request Management Database Specification
+# HR Request Engine Database Specification (PPT Slide 3)
 
-This document defines the Entity-Relationship Diagram (ERD) and data schema for the **Employee Request Management & Approval Workflow** module in Copilot.HR.
+This document defines the Entity-Relationship Diagram (ERD) and data schema for the **HR Request Engine & Multi-Stage Approval Workflow** module in Copilot.HR.
 
 ---
 
-## 1. Entity-Relationship Diagram (ERD)
+## 1. Presentation Slide ERD Diagram (Slide 3 - 6 Tables)
 
 ```mermaid
 erDiagram
     REQUEST_TYPE ||--o{ HR_REQUEST : "categorizes"
-    EMPLOYEE ||--o{ HR_REQUEST : "submits"
-    EMPLOYEE ||--o{ HR_REQUEST : "handover_assignee"
-    EMPLOYEE ||--o{ EMPLOYEE_QUOTA : "owns"
-
-    HR_REQUEST ||--o{ WORKFLOW_STEP : "executes_in"
-    HR_REQUEST ||--o{ APPROVAL_LOG : "tracks"
+    REQUEST_TYPE ||--o{ WORKFLOW_STEP : "defines_steps"
+    HR_REQUEST ||--o{ APPROVAL_LOG : "tracks_audit"
     HR_REQUEST ||--o{ REQUEST_ATTACHMENT : "includes"
     HR_REQUEST ||--o{ HANDOVER_TASK : "assigns"
-
-    EMPLOYEE ||--o{ APPROVAL_LOG : "approves_or_rejects"
-    WORKFLOW_STEP ||--o{ APPROVAL_LOG : "defines_stage"
 
     REQUEST_TYPE {
         string type_id PK
@@ -71,16 +64,6 @@ erDiagram
         timestamp uploaded_at
     }
 
-    EMPLOYEE_QUOTA {
-        string quota_id PK
-        string employee_id FK
-        int year
-        decimal annual_leave_total
-        decimal annual_leave_used
-        decimal annual_leave_remaining
-        decimal sick_leave_remaining
-    }
-
     HANDOVER_TASK {
         string task_id PK
         string request_id FK
@@ -88,30 +71,17 @@ erDiagram
         string handover_notes
         string status
     }
-
-    EMPLOYEE {
-        string employee_id PK
-        string first_name
-        string last_name
-        string email UK
-    }
 ```
 
 ---
 
-## 2. Data Dictionary
+## 2. Data Dictionary Summary (6 Core Tables)
 
-### 📌 HR_REQUEST
-- `request_id` (PK, VARCHAR): Unique ticket ID (e.g., REQ-1092).
-- `employee_id` (FK, VARCHAR): Requester employee.
-- `type_id` (FK, VARCHAR): FK to `REQUEST_TYPE`.
-- `priority` (VARCHAR): Low, Medium, High.
-- `status` (VARCHAR): Pending, Approved, Rejected, Cancelled.
-- `duration_days` (DECIMAL): Auto-calculated business days requested.
-
-### 📌 APPROVAL_LOG
-- `log_id` (PK, VARCHAR): Log record identifier.
-- `request_id` (FK, VARCHAR): Associated request.
-- `approver_id` (FK, VARCHAR): Employee acting as approver.
-- `action` (VARCHAR): Approved, Rejected, Reminder_Sent.
-- `comment` (TEXT): Approval notes or rejection justification.
+| Entity Name | Function Description | Primary Key (PK) | Foreign Keys (FK) |
+| :--- | :--- | :--- | :--- |
+| **`REQUEST_TYPE`** | Categories & SLA rules for employee requests | `type_id` | *None* |
+| **`HR_REQUEST`** | Employee ticket application instances | `request_id` | `employee_id`, `type_id`, `handover_employee_id` |
+| **`WORKFLOW_STEP`** | Multi-stage approval sequence definition | `step_id` | `type_id` |
+| **`APPROVAL_LOG`** | Immutable audit log of manager approvals & SLA tracking | `log_id` | `request_id`, `step_id`, `approver_id` |
+| **`REQUEST_ATTACHMENT`** | Supporting file attachments for requests | `attachment_id` | `request_id` |
+| **`HANDOVER_TASK`** | Work handover checklist items before request approval | `task_id` | `request_id` |
