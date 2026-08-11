@@ -27,3 +27,6 @@ yarn-debug.log*
 yarn-error.log*
 .env
 exported_screenshots/
+
+# Context
+context.md

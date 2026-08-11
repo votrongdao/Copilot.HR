@@ -339,6 +339,23 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 
 ---
 
+### 📌 Task 42: Git Merge Conflict Resolution & README Section Re-indexing
+- **Resolved Git Merge Conflicts**: Merged `origin/dev` into `khang` and resolved merge conflict in [README.md](file:///d:/Copilot.HR/README.md).
+- **Sequential Section Numbering**: Re-indexed all main sections in [README.md](file:///d:/Copilot.HR/README.md) under standard numerical hierarchy:
+  - **I. System Requirements & Functional Analysis** (I.1 System Actors, I.2 Mindmap)
+  - **II. Information Architecture (IA) Sitemap**
+  - **III. Use Case Diagrams**
+  - **IV. People Management - UI/UX Specifications** (IV.1 Matrix, IV.2 Main Screens, IV.3 Popups & Drawers)
+  - **V. People Management - RESTful API Specifications** (V.1 Directory APIs, V.2 Org & Dept APIs, V.3 Request APIs)
+  - **VI. People Management - Database ERD & Schema** (VI.1 Master Table Matrix, VI.2 ERD Visuals)
+
+---
+
+### 📌 Task 43: Interactive SwaggerHub Link Added to API Specifications Section
+- **Updated API Header Links**: Inserted direct interactive SwaggerHub documentation link `https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents` right above Section V API tables in [README.md](file:///d:/Copilot.HR/README.md).
+
+---
+
 ## 3. Git Activity Summary
 
 ```bash

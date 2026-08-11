@@ -8,13 +8,12 @@
 | --: | :--- | :--- |
 | 1 | **System admin** | Manage user accounts, roles, permissions, system settings, and audit logs. |
 | 2 | **HR Staff** | Manage employee profiles, onboarding/offboarding tasks, leave balances, and day-to-day HR operations. |
-| 3 | **HR Manager** | Manage department structures, define salary bands, sign labor contracts, approve HR requests, and oversee HR policies. |
-| 4 | **Manager** | Manage team members, assign tasks, approve timesheets, approve leave requests, and review employee performance. |
-| 5 | **Staff** | Clock in/out, track working time, submit timesheets, request leave, and manage assigned tasks. |
-| 6 | **Client** | Track assigned project progress, team allocation, milestones, and billing history. |
-| 7 | **Candidate** | Apply for open job positions, submit personal profiles, and track interview status. |
-| 8 | **Third party** | External service integrations (Email provider, Cloud storage, Calendar, Payroll gateway). |
-| 9 | **Tenant admin** | Represents an organization using the platform, with isolated data, organization settings, and company-wide access controls. |
+| 3 | **Manager** | Manage team members, assign tasks, approve timesheets, approve leave requests, and review employee performance. |
+| 4 | **Staff** | Clock in/out, track working time, submit timesheets, request leave, and manage assigned tasks. |
+| 5 | **Client** | Track assigned project progress, team allocation, milestones, and billing history. |
+| 6 | **Candidate** | Apply for open job positions, submit personal profiles, and track interview status. |
+| 7 | **Third party** | External service integrations (Email provider, Cloud storage, Calendar, Payroll gateway). |
+| 8 | **Tenant admin** | Represents an organization using the platform, with isolated data, organization settings, and company-wide access controls. |
 
 ---
 
@@ -378,7 +377,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ## V. People Management - RESTful API Specifications
 
-Comprehensive API inventory for the People Management module divided into Employee Directory, Organization & Department, and Request Management domains. Full OpenAPI 3.2.0 specifications are available in [docs/apis/openapi_people_management.yaml](file:///d:/Copilot.HR/docs/apis/openapi_people_management.yaml).
+Comprehensive API inventory for the People Management module divided into Employee Directory, Organization & Department, and Request Management domains. Interactive Swagger API documentation: [Copilot.HR Employee Directory API - SwaggerHub](https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents).
 
 ### V.1. Employee Directory APIs
 
