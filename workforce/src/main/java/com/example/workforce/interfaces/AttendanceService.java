@@ -1,18 +1,19 @@
 package com.example.workforce.interfaces;
 
-import com.example.workforce.attendance.model.AttendanceBreakDto;
-import com.example.workforce.attendance.model.AttendanceCorrectionCreate;
-import com.example.workforce.attendance.model.AttendanceCorrectionDetail;
-import com.example.workforce.attendance.model.AttendanceCorrectionListItem;
-import com.example.workforce.attendance.model.AttendanceCorrectionSummary;
-import com.example.workforce.attendance.model.AttendanceCorrectionUpdate;
-import com.example.workforce.attendance.model.AttendanceRecordDto;
-import com.example.workforce.attendance.model.ReviewDecision;
-import com.example.workforce.attendance.model.ReviewHistoryEntry;
-import com.example.workforce.attendance.model.ReviewStatus;
 import com.example.workforce.common.EmployeeBrief;
 import com.example.workforce.common.PageResult;
 import com.example.workforce.common.ShiftDto;
+import com.example.workforce.model.AttendanceCorrectionCreate;
+import com.example.workforce.model.AttendanceCorrectionDetail;
+import com.example.workforce.model.AttendanceCorrectionListItem;
+import com.example.workforce.model.AttendanceCorrectionSummary;
+import com.example.workforce.model.AttendanceCorrectionUpdate;
+import com.example.workforce.model.ReviewDecision;
+import com.example.workforce.model.ReviewHistoryEntry;
+import com.example.workforce.model.ReviewStatus;
+import com.example.workforce.model.dtos.AttendanceBreakDto;
+import com.example.workforce.model.dtos.AttendanceRecordDto;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;

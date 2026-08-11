@@ -1,15 +1,16 @@
 package com.example.workforce.interfaces;
 
 import com.example.workforce.common.PageResult;
-import com.example.workforce.leave.model.CalendarDayDto;
-import com.example.workforce.leave.model.HolidayDto;
-import com.example.workforce.leave.model.LeaveBalanceAdjustmentDto;
-import com.example.workforce.leave.model.LeaveBalanceDto;
-import com.example.workforce.leave.model.LeavePolicyDto;
-import com.example.workforce.leave.model.LeaveRequestCreate;
-import com.example.workforce.leave.model.LeaveRequestDto;
-import com.example.workforce.leave.model.LeaveRequestUpdate;
-import com.example.workforce.leave.model.LeaveTypeDto;
+import com.example.workforce.model.LeaveRequestCreate;
+import com.example.workforce.model.LeaveRequestUpdate;
+import com.example.workforce.model.dtos.CalendarDayDto;
+import com.example.workforce.model.dtos.HolidayDto;
+import com.example.workforce.model.dtos.LeaveBalanceAdjustmentDto;
+import com.example.workforce.model.dtos.LeaveBalanceDto;
+import com.example.workforce.model.dtos.LeavePolicyDto;
+import com.example.workforce.model.dtos.LeaveRequestDto;
+import com.example.workforce.model.dtos.LeaveTypeDto;
+
 import java.util.List;
 import java.util.UUID;
 
