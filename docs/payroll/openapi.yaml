@@ -3,20 +3,20 @@ info:
   title: Payroll Management API
   version: 1.0.0
   description: |
-    API specification for Payroll Management.
-    Scope: manage payroll data, payroll items, benefits, payslips, and payslip email logs.
-    This module does not process payroll calculations as a payroll engine.
+    API specification based on the Payroll ERD:
+    Employee, Payroll, Compensation, Payroll Item,
+    Employee Compensation, Payslip, and Email Log.
 
 servers:
   - url: /api
 
 tags:
   - name: Payrolls
-  - name: Catalog Items
-  - name: Benefits
-  - name: Employee Benefits
+  - name: Payroll Items
+  - name: Compensations
+  - name: Employee Compensations
   - name: Payslips
-  - name: Payslip Email
+  - name: Email Logs
 
 paths:
   /payrolls:
@@ -24,20 +24,19 @@ paths:
       tags: [Payrolls]
       summary: Get payroll records
       parameters:
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
         - name: employeeId
           in: query
           schema: { type: string }
         - name: payPeriod
           in: query
-          description: Payroll period in YYYY-MM-01 format.
           schema: { type: string, format: date }
         - name: status
           in: query
           schema:
-            $ref: '#/components/schemas/PayrollStatus'
+            $ref: "#/components/schemas/PayrollStatus"
         - name: department
           in: query
           schema: { type: string }
@@ -54,41 +53,38 @@ paths:
             enum: [asc, desc]
             default: desc
       responses:
-        '200':
+        "200":
           description: Paged payroll records
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedPayrollResponse'
+                $ref: "#/components/schemas/PagedPayrollResponse"
 
     post:
       tags: [Payrolls]
-      summary: Add a payroll record
+      summary: Create payroll record
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePayrollRequest'
+              $ref: "#/components/schemas/CreatePayrollRequest"
       responses:
-        '201':
+        "201":
           description: Payroll created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayrollDetailResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '409':
-          description: Payroll record already exists for employee and pay period
+                $ref: "#/components/schemas/PayrollDetailResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          description: Payroll already exists for the employee and pay period
 
   /payrolls/import:
     post:
       tags: [Payrolls]
       summary: Import payroll records from Excel
-      description: |
-        Upload an .xlsx payroll file. The server validates the rows and returns
-        an import result. Use previewOnly=true to validate without persisting.
       parameters:
         - name: previewOnly
           in: query
@@ -107,388 +103,332 @@ paths:
                   type: string
                   format: binary
       responses:
-        '200':
-          description: Import validation/import result
+        "200":
+          description: Import preview/result
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayrollImportResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/PayrollImportResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
 
   /payrolls/{payrollId}:
     get:
       tags: [Payrolls]
       summary: Get payroll detail
       parameters:
-        - $ref: '#/components/parameters/PayrollId'
+        - $ref: "#/components/parameters/PayrollId"
       responses:
-        '200':
+        "200":
           description: Payroll detail
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayrollDetailResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/PayrollDetailResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
 
     put:
       tags: [Payrolls]
       summary: Update payroll record
       parameters:
-        - $ref: '#/components/parameters/PayrollId'
+        - $ref: "#/components/parameters/PayrollId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatePayrollRequest'
+              $ref: "#/components/schemas/UpdatePayrollRequest"
       responses:
-        '200':
-          description: Updated payroll
+        "200":
+          description: Payroll updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayrollDetailResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/PayrollDetailResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
 
     delete:
       tags: [Payrolls]
       summary: Delete payroll record
       parameters:
-        - $ref: '#/components/parameters/PayrollId'
+        - $ref: "#/components/parameters/PayrollId"
       responses:
-        '204':
-          description: Deleted
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "204":
+          description: Payroll deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
 
   /payrolls/{payrollId}/items:
-    post:
-      tags: [Payrolls]
-      summary: Add payroll item
-      parameters:
-        - $ref: '#/components/parameters/PayrollId'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreatePayrollItemRequest'
-      responses:
-        '201':
-          description: Payroll item added
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayrollItemResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-  /payrolls/{payrollId}/items/{itemId}:
-    put:
-      tags: [Payrolls]
-      summary: Update payroll item
-      parameters:
-        - $ref: '#/components/parameters/PayrollId'
-        - name: itemId
-          in: path
-          required: true
-          schema: { type: integer, format: int32 }
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdatePayrollItemRequest'
-      responses:
-        '200':
-          description: Updated payroll item
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayrollItemResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-    delete:
-      tags: [Payrolls]
-      summary: Remove payroll item
-      parameters:
-        - $ref: '#/components/parameters/PayrollId'
-        - name: itemId
-          in: path
-          required: true
-          schema: { type: integer, format: int32 }
-      responses:
-        '204':
-          description: Deleted
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-  /catalog-items:
     get:
-      tags: [Catalog Items]
-      summary: Get payroll catalog items
+      tags: [Payroll Items]
+      summary: Get payroll items
       parameters:
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: "#/components/parameters/PayrollId"
         - name: type
           in: query
           schema:
-            $ref: '#/components/schemas/CatalogItemType'
-        - name: status
-          in: query
-          schema:
-            type: string
-            enum: [ACTIVE, INACTIVE]
+            $ref: "#/components/schemas/CompensationType"
       responses:
-        '200':
-          description: Paged catalog items
+        "200":
+          description: Payroll items
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedCatalogItemResponse'
+                type: array
+                items:
+                  $ref: "#/components/schemas/PayrollItemResponse"
 
     post:
-      tags: [Catalog Items]
-      summary: Create catalog item
+      tags: [Payroll Items]
+      summary: Add payroll item
+      parameters:
+        - $ref: "#/components/parameters/PayrollId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateCatalogItemRequest'
+              $ref: "#/components/schemas/CreatePayrollItemRequest"
       responses:
-        '201':
-          description: Catalog item created
+        "201":
+          description: Payroll item created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CatalogItemResponse'
+                $ref: "#/components/schemas/PayrollItemResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
 
-  /catalog-items/{catalogItemId}:
-    get:
-      tags: [Catalog Items]
-      summary: Get catalog item detail
-      parameters:
-        - $ref: '#/components/parameters/CatalogItemId'
-      responses:
-        '200':
-          description: Catalog item
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CatalogItemResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
+  /payrolls/{payrollId}/items/{itemId}:
     put:
-      tags: [Catalog Items]
-      summary: Update catalog item
+      tags: [Payroll Items]
+      summary: Update payroll item
       parameters:
-        - $ref: '#/components/parameters/CatalogItemId'
+        - $ref: "#/components/parameters/PayrollId"
+        - $ref: "#/components/parameters/PayrollItemId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateCatalogItemRequest'
+              $ref: "#/components/schemas/UpdatePayrollItemRequest"
       responses:
-        '200':
-          description: Updated catalog item
+        "200":
+          description: Payroll item updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CatalogItemResponse'
+                $ref: "#/components/schemas/PayrollItemResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
 
     delete:
-      tags: [Catalog Items]
-      summary: Delete catalog item
+      tags: [Payroll Items]
+      summary: Delete payroll item
       parameters:
-        - $ref: '#/components/parameters/CatalogItemId'
+        - $ref: "#/components/parameters/PayrollId"
+        - $ref: "#/components/parameters/PayrollItemId"
       responses:
-        '204':
-          description: Deleted
+        "204":
+          description: Payroll item deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
 
-  /benefits:
+  /compensations:
     get:
-      tags: [Benefits]
-      summary: Get benefit plans
+      tags: [Compensations]
+      summary: Get compensations
       parameters:
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PageSize'
-        - name: status
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
+        - name: type
           in: query
           schema:
-            type: string
-            enum: [ACTIVE, INACTIVE]
+            $ref: "#/components/schemas/CompensationType"
         - name: frequency
           in: query
+          schema: { type: string }
+        - name: status
+          in: query
           schema:
-            type: string
-            enum: [MONTHLY, QUARTERLY, YEARLY, ONE_TIME]
+            $ref: "#/components/schemas/ActiveStatus"
       responses:
-        '200':
-          description: Paged benefit plans
+        "200":
+          description: Paged compensations
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedBenefitResponse'
+                $ref: "#/components/schemas/PagedCompensationResponse"
 
     post:
-      tags: [Benefits]
-      summary: Create benefit plan
+      tags: [Compensations]
+      summary: Create compensation
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateBenefitRequest'
+              $ref: "#/components/schemas/CreateCompensationRequest"
       responses:
-        '201':
-          description: Benefit created
+        "201":
+          description: Compensation created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BenefitResponse'
+                $ref: "#/components/schemas/CompensationResponse"
 
-  /benefits/{benefitId}:
+  /compensations/{compensationId}:
     get:
-      tags: [Benefits]
-      summary: Get benefit detail
+      tags: [Compensations]
+      summary: Get compensation detail
       parameters:
-        - $ref: '#/components/parameters/BenefitId'
+        - $ref: "#/components/parameters/CompensationId"
       responses:
-        '200':
-          description: Benefit detail
+        "200":
+          description: Compensation detail
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BenefitResponse'
+                $ref: "#/components/schemas/CompensationResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
 
     put:
-      tags: [Benefits]
-      summary: Update benefit
+      tags: [Compensations]
+      summary: Update compensation
       parameters:
-        - $ref: '#/components/parameters/BenefitId'
+        - $ref: "#/components/parameters/CompensationId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateBenefitRequest'
+              $ref: "#/components/schemas/UpdateCompensationRequest"
       responses:
-        '200':
-          description: Updated benefit
+        "200":
+          description: Compensation updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BenefitResponse'
+                $ref: "#/components/schemas/CompensationResponse"
 
     delete:
-      tags: [Benefits]
-      summary: Delete benefit
+      tags: [Compensations]
+      summary: Delete compensation
       parameters:
-        - $ref: '#/components/parameters/BenefitId'
+        - $ref: "#/components/parameters/CompensationId"
       responses:
-        '204':
-          description: Deleted
+        "204":
+          description: Compensation deleted
 
-  /employee-benefits:
+  /employee-compensations:
     get:
-      tags: [Employee Benefits]
-      summary: Get employee benefit assignments
+      tags: [Employee Compensations]
+      summary: Get employee compensation assignments
       parameters:
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
         - name: employeeId
           in: query
           schema: { type: string }
-        - name: benefitId
+        - name: compensationId
           in: query
           schema: { type: integer }
+        - name: type
+          in: query
+          schema:
+            $ref: "#/components/schemas/CompensationType"
         - name: status
           in: query
           schema:
-            type: string
-            enum: [ACTIVE, INACTIVE, EXPIRED]
+            $ref: "#/components/schemas/AssignmentStatus"
+        - name: effectiveOn
+          in: query
+          description: Return assignments effective on this date.
+          schema: { type: string, format: date }
       responses:
-        '200':
-          description: Paged employee benefit assignments
+        "200":
+          description: Paged employee compensation assignments
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedEmployeeBenefitResponse'
+                $ref: "#/components/schemas/PagedEmployeeCompensationResponse"
 
     post:
-      tags: [Employee Benefits]
-      summary: Assign benefit to employee
+      tags: [Employee Compensations]
+      summary: Assign compensation to employee
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AssignEmployeeBenefitRequest'
+              $ref: "#/components/schemas/AssignEmployeeCompensationRequest"
       responses:
-        '201':
-          description: Benefit assigned
+        "201":
+          description: Compensation assigned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmployeeBenefitResponse'
+                $ref: "#/components/schemas/EmployeeCompensationResponse"
 
-  /employee-benefits/{employeeBenefitId}:
-    put:
-      tags: [Employee Benefits]
-      summary: Update employee benefit assignment
+  /employee-compensations/{employeeCompensationId}:
+    get:
+      tags: [Employee Compensations]
+      summary: Get employee compensation detail
       parameters:
-        - name: employeeBenefitId
-          in: path
-          required: true
-          schema: { type: integer }
+        - $ref: "#/components/parameters/EmployeeCompensationId"
+      responses:
+        "200":
+          description: Employee compensation detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeCompensationResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    put:
+      tags: [Employee Compensations]
+      summary: Update employee compensation assignment
+      parameters:
+        - $ref: "#/components/parameters/EmployeeCompensationId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateEmployeeBenefitRequest'
+              $ref: "#/components/schemas/UpdateEmployeeCompensationRequest"
       responses:
-        '200':
-          description: Updated assignment
+        "200":
+          description: Employee compensation updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmployeeBenefitResponse'
+                $ref: "#/components/schemas/EmployeeCompensationResponse"
 
     delete:
-      tags: [Employee Benefits]
-      summary: Remove employee benefit assignment
+      tags: [Employee Compensations]
+      summary: Remove employee compensation assignment
       parameters:
-        - name: employeeBenefitId
-          in: path
-          required: true
-          schema: { type: integer }
+        - $ref: "#/components/parameters/EmployeeCompensationId"
       responses:
-        '204':
-          description: Removed
+        "204":
+          description: Employee compensation removed
 
   /payslips:
     get:
       tags: [Payslips]
       summary: Get payslips
       parameters:
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
         - name: employeeId
           in: query
           schema: { type: string }
@@ -498,79 +438,75 @@ paths:
         - name: status
           in: query
           schema:
-            $ref: '#/components/schemas/PayslipStatus'
+            $ref: "#/components/schemas/PayslipStatus"
       responses:
-        '200':
+        "200":
           description: Paged payslips
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedPayslipResponse'
+                $ref: "#/components/schemas/PagedPayslipResponse"
+
+  /payrolls/{payrollId}/payslip:
+    post:
+      tags: [Payslips]
+      summary: Generate payslip for payroll
+      parameters:
+        - $ref: "#/components/parameters/PayrollId"
+      responses:
+        "201":
+          description: Payslip generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PayslipResponse"
+        "409":
+          description: Payslip already exists for this payroll
 
   /payslips/{payslipId}:
     get:
       tags: [Payslips]
       summary: Get individual payslip
       parameters:
-        - $ref: '#/components/parameters/PayslipId'
+        - $ref: "#/components/parameters/PayslipId"
       responses:
-        '200':
+        "200":
           description: Payslip detail
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayslipDetailResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-  /payrolls/{payrollId}/payslip:
-    post:
-      tags: [Payslips]
-      summary: Generate payslip for a payroll record
-      parameters:
-        - $ref: '#/components/parameters/PayrollId'
-      responses:
-        '201':
-          description: Payslip generated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayslipResponse'
-        '409':
-          description: Payslip already exists for this payroll
+                $ref: "#/components/schemas/PayslipDetailResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
 
   /payslips/{payslipId}/send-email:
     post:
-      tags: [Payslip Email]
+      tags: [Email Logs]
       summary: Send payslip by email
       parameters:
-        - $ref: '#/components/parameters/PayslipId'
+        - $ref: "#/components/parameters/PayslipId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendPayslipEmailRequest'
+              $ref: "#/components/schemas/SendPayslipEmailRequest"
       responses:
-        '200':
+        "200":
           description: Email sent or queued
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmailLogResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/EmailLogResponse"
 
   /email-logs:
     get:
-      tags: [Payslip Email]
-      summary: Get payslip email logs
+      tags: [Email Logs]
+      summary: Get email logs
       parameters:
-        - $ref: '#/components/parameters/Search'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/PageSize'
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PageSize"
         - name: employeeId
           in: query
           schema: { type: string }
@@ -580,8 +516,7 @@ paths:
         - name: status
           in: query
           schema:
-            type: string
-            enum: [PENDING, SENT, FAILED]
+            $ref: "#/components/schemas/EmailStatus"
         - name: sentFrom
           in: query
           schema: { type: string, format: date-time }
@@ -589,21 +524,20 @@ paths:
           in: query
           schema: { type: string, format: date-time }
       responses:
-        '200':
+        "200":
           description: Paged email logs
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PagedEmailLogResponse'
+                $ref: "#/components/schemas/PagedEmailLogResponse"
 
 components:
   parameters:
     Search:
       name: search
       in: query
-      description: Free-text search where applicable, such as employee name/code, benefit name, or payslip number.
-      schema:
-        type: string
+      schema: { type: string }
+      description: Free-text search where applicable.
 
     Page:
       name: page
@@ -626,33 +560,31 @@ components:
       name: payrollId
       in: path
       required: true
-      schema:
-        type: integer
-        format: int32
+      schema: { type: integer }
 
-    CatalogItemId:
-      name: catalogItemId
+    PayrollItemId:
+      name: itemId
       in: path
       required: true
-      schema:
-        type: integer
-        format: int32
+      schema: { type: integer }
 
-    BenefitId:
-      name: benefitId
+    CompensationId:
+      name: compensationId
       in: path
       required: true
-      schema:
-        type: integer
-        format: int32
+      schema: { type: integer }
+
+    EmployeeCompensationId:
+      name: employeeCompensationId
+      in: path
+      required: true
+      schema: { type: integer }
 
     PayslipId:
       name: payslipId
       in: path
       required: true
-      schema:
-        type: integer
-        format: int32
+      schema: { type: integer }
 
   responses:
     BadRequest:
@@ -660,33 +592,46 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/ProblemDetails'
+            $ref: "#/components/schemas/ProblemDetails"
 
     NotFound:
       description: Resource not found
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/ProblemDetails'
+            $ref: "#/components/schemas/ProblemDetails"
 
   schemas:
+    CompensationType:
+      type: string
+      enum: [ALLOWANCE, BENEFIT, BONUS, DEDUCTION]
+
     PayrollStatus:
       type: string
       enum: [DRAFT, COMPLETED, CANCELLED]
+
+    ActiveStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE]
+
+    AssignmentStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE, EXPIRED]
 
     PayslipStatus:
       type: string
       enum: [GENERATED, SENT]
 
-    CatalogItemType:
+    EmailStatus:
       type: string
-      enum: [ALLOWANCE, BENEFIT, BONUS, DEDUCTION]
+      enum: [PENDING, SENT, FAILED]
 
     EmployeeSummary:
       type: object
       properties:
         id: { type: string, example: EMP-00246 }
         name: { type: string, example: Linh Nguyen }
+        email: { type: string, format: email }
         role: { type: string, example: Software Engineer }
         department: { type: string, example: Engineering }
         employmentType: { type: string, example: Full-time }
@@ -695,81 +640,30 @@ components:
       type: object
       required: [employeeId, payPeriod, baseSalary, currency]
       properties:
-        employeeId:
-          type: string
-          example: EMP-00246
-        payPeriod:
-          type: string
-          format: date
-          example: '2026-08-01'
-        baseSalary:
-          type: number
-          format: decimal
-          example: 3200
-        grossPay:
-          type: number
-          format: decimal
-          example: 3550
-        totalDeductions:
-          type: number
-          format: decimal
-          example: 355
-        netPay:
-          type: number
-          format: decimal
-          example: 3195
-        currency:
-          type: string
-          example: USD
+        employeeId: { type: string, example: EMP-00246 }
+        payPeriod: { type: string, format: date, example: "2026-08-01" }
+        baseSalary: { type: number, format: decimal, example: 3200 }
+        grossPay: { type: number, format: decimal, example: 3550 }
+        totalDeductions: { type: number, format: decimal, example: 355 }
+        netPay: { type: number, format: decimal, example: 3195 }
+        currency: { type: string, example: USD }
         status:
-          $ref: '#/components/schemas/PayrollStatus'
+          $ref: "#/components/schemas/PayrollStatus"
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CreatePayrollItemRequest'
+            $ref: "#/components/schemas/CreatePayrollItemRequest"
 
     UpdatePayrollRequest:
       allOf:
-        - $ref: '#/components/schemas/CreatePayrollRequest'
-
-    CreatePayrollItemRequest:
-      type: object
-      required: [catalogItemId, appliedAmount]
-      properties:
-        catalogItemId:
-          type: integer
-          example: 12
-        appliedAmount:
-          type: number
-          format: decimal
-          example: 80
-
-    UpdatePayrollItemRequest:
-      type: object
-      required: [appliedAmount]
-      properties:
-        appliedAmount:
-          type: number
-          format: decimal
-
-    PayrollItemResponse:
-      type: object
-      properties:
-        id: { type: integer }
-        catalogItemId: { type: integer }
-        type:
-          $ref: '#/components/schemas/CatalogItemType'
-        name: { type: string }
-        appliedAmount:
-          type: number
-          format: decimal
+        - $ref: "#/components/schemas/CreatePayrollRequest"
 
     PayrollResponse:
       type: object
       properties:
         id: { type: integer }
         employee:
-          $ref: '#/components/schemas/EmployeeSummary'
+          $ref: "#/components/schemas/EmployeeSummary"
         payPeriod: { type: string, format: date }
         baseSalary: { type: number, format: decimal }
         grossPay: { type: number, format: decimal }
@@ -777,125 +671,110 @@ components:
         netPay: { type: number, format: decimal }
         currency: { type: string }
         status:
-          $ref: '#/components/schemas/PayrollStatus'
+          $ref: "#/components/schemas/PayrollStatus"
         createdAt: { type: string, format: date-time }
 
     PayrollDetailResponse:
       allOf:
-        - $ref: '#/components/schemas/PayrollResponse'
+        - $ref: "#/components/schemas/PayrollResponse"
         - type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/PayrollItemResponse'
+                $ref: "#/components/schemas/PayrollItemResponse"
             payslip:
               nullable: true
               allOf:
-                - $ref: '#/components/schemas/PayslipResponse'
+                - $ref: "#/components/schemas/PayslipResponse"
 
-    CreateCatalogItemRequest:
+    CreatePayrollItemRequest:
+      type: object
+      required: [compensationId, appliedAmount]
+      properties:
+        compensationId: { type: integer, example: 12 }
+        appliedAmount: { type: number, format: decimal, example: 80 }
+
+    UpdatePayrollItemRequest:
+      type: object
+      required: [appliedAmount]
+      properties:
+        appliedAmount: { type: number, format: decimal, example: 100 }
+
+    PayrollItemResponse:
+      type: object
+      properties:
+        id: { type: integer }
+        compensationId: { type: integer }
+        type:
+          $ref: "#/components/schemas/CompensationType"
+        name: { type: string }
+        appliedAmount: { type: number, format: decimal }
+
+    CreateCompensationRequest:
       type: object
       required: [type, name, defaultAmount]
       properties:
         type:
-          $ref: '#/components/schemas/CatalogItemType'
-        name: { type: string }
+          $ref: "#/components/schemas/CompensationType"
+        name: { type: string, example: Transport Allowance }
         description: { type: string }
-        defaultAmount: { type: number, format: decimal }
+        defaultAmount: { type: number, format: decimal, example: 50 }
+        frequency: { type: string, example: MONTHLY }
         status:
-          type: string
-          enum: [ACTIVE, INACTIVE]
-          default: ACTIVE
+          $ref: "#/components/schemas/ActiveStatus"
 
-    UpdateCatalogItemRequest:
+    UpdateCompensationRequest:
       allOf:
-        - $ref: '#/components/schemas/CreateCatalogItemRequest'
+        - $ref: "#/components/schemas/CreateCompensationRequest"
 
-    CatalogItemResponse:
+    CompensationResponse:
       type: object
       properties:
         id: { type: integer }
         type:
-          $ref: '#/components/schemas/CatalogItemType'
+          $ref: "#/components/schemas/CompensationType"
         name: { type: string }
         description: { type: string }
         defaultAmount: { type: number, format: decimal }
+        frequency: { type: string }
         status:
-          type: string
-          enum: [ACTIVE, INACTIVE]
+          $ref: "#/components/schemas/ActiveStatus"
 
-    CreateBenefitRequest:
+    AssignEmployeeCompensationRequest:
       type: object
-      required: [name, defaultAmount, frequency]
+      required: [employeeId, compensationId, appliedAmount, effectiveFrom]
       properties:
-        name: { type: string, example: Health Insurance }
-        description: { type: string }
-        defaultAmount: { type: number, format: decimal, example: 220 }
-        frequency:
-          type: string
-          enum: [MONTHLY, QUARTERLY, YEARLY, ONE_TIME]
-        status:
-          type: string
-          enum: [ACTIVE, INACTIVE]
-          default: ACTIVE
-
-    UpdateBenefitRequest:
-      allOf:
-        - $ref: '#/components/schemas/CreateBenefitRequest'
-
-    BenefitResponse:
-      type: object
-      properties:
-        id: { type: integer }
-        name: { type: string }
-        description: { type: string }
-        defaultAmount: { type: number, format: decimal }
-        frequency:
-          type: string
-          enum: [MONTHLY, QUARTERLY, YEARLY, ONE_TIME]
-        status:
-          type: string
-          enum: [ACTIVE, INACTIVE]
-
-    AssignEmployeeBenefitRequest:
-      type: object
-      required: [employeeId, benefitId, appliedAmount, effectiveFrom]
-      properties:
-        employeeId: { type: string }
-        benefitId: { type: integer }
-        appliedAmount: { type: number, format: decimal }
+        employeeId: { type: string, example: EMP-00246 }
+        compensationId: { type: integer, example: 12 }
+        appliedAmount: { type: number, format: decimal, example: 80 }
         effectiveFrom: { type: string, format: date }
         effectiveTo: { type: string, format: date, nullable: true }
         status:
-          type: string
-          enum: [ACTIVE, INACTIVE, EXPIRED]
-          default: ACTIVE
+          $ref: "#/components/schemas/AssignmentStatus"
 
-    UpdateEmployeeBenefitRequest:
+    UpdateEmployeeCompensationRequest:
       type: object
       properties:
         appliedAmount: { type: number, format: decimal }
         effectiveFrom: { type: string, format: date }
         effectiveTo: { type: string, format: date, nullable: true }
         status:
-          type: string
-          enum: [ACTIVE, INACTIVE, EXPIRED]
+          $ref: "#/components/schemas/AssignmentStatus"
 
-    EmployeeBenefitResponse:
+    EmployeeCompensationResponse:
       type: object
       properties:
         id: { type: integer }
         employee:
-          $ref: '#/components/schemas/EmployeeSummary'
-        benefit:
-          $ref: '#/components/schemas/BenefitResponse'
+          $ref: "#/components/schemas/EmployeeSummary"
+        compensation:
+          $ref: "#/components/schemas/CompensationResponse"
         appliedAmount: { type: number, format: decimal }
         effectiveFrom: { type: string, format: date }
         effectiveTo: { type: string, format: date, nullable: true }
         status:
-          type: string
-          enum: [ACTIVE, INACTIVE, EXPIRED]
+          $ref: "#/components/schemas/AssignmentStatus"
 
     PayslipResponse:
       type: object
@@ -906,35 +785,30 @@ components:
         issueDate: { type: string, format: date }
         fileUrl: { type: string }
         status:
-          $ref: '#/components/schemas/PayslipStatus'
+          $ref: "#/components/schemas/PayslipStatus"
         generatedAt: { type: string, format: date-time }
 
     PayslipDetailResponse:
       type: object
       properties:
         payslip:
-          $ref: '#/components/schemas/PayslipResponse'
+          $ref: "#/components/schemas/PayslipResponse"
         employee:
-          $ref: '#/components/schemas/EmployeeSummary'
+          $ref: "#/components/schemas/EmployeeSummary"
         payroll:
-          $ref: '#/components/schemas/PayrollResponse'
+          $ref: "#/components/schemas/PayrollResponse"
         items:
           type: array
           items:
-            $ref: '#/components/schemas/PayrollItemResponse'
+            $ref: "#/components/schemas/PayrollItemResponse"
 
     SendPayslipEmailRequest:
       type: object
       required: [recipientEmail, subject, body]
       properties:
-        recipientEmail:
-          type: string
-          format: email
-        subject:
-          type: string
-          example: Payslip - August 2026
-        body:
-          type: string
+        recipientEmail: { type: string, format: email }
+        subject: { type: string, example: Payslip - August 2026 }
+        body: { type: string }
 
     EmailLogResponse:
       type: object
@@ -947,8 +821,7 @@ components:
         body: { type: string }
         sentAt: { type: string, format: date-time, nullable: true }
         status:
-          type: string
-          enum: [PENDING, SENT, FAILED]
+          $ref: "#/components/schemas/EmailStatus"
 
     PayrollImportRowResult:
       type: object
@@ -971,7 +844,7 @@ components:
         rows:
           type: array
           items:
-            $ref: '#/components/schemas/PayrollImportRowResult'
+            $ref: "#/components/schemas/PayrollImportRowResult"
 
     PaginationMeta:
       type: object
@@ -980,8 +853,8 @@ components:
         pageSize: { type: integer, example: 20 }
         totalItems: { type: integer, example: 125 }
         totalPages: { type: integer, example: 7 }
-        hasPreviousPage: { type: boolean, example: false }
-        hasNextPage: { type: boolean, example: true }
+        hasPreviousPage: { type: boolean }
+        hasNextPage: { type: boolean }
 
     PagedPayrollResponse:
       type: object
@@ -989,39 +862,29 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/PayrollResponse'
+            $ref: "#/components/schemas/PayrollResponse"
         pagination:
-          $ref: '#/components/schemas/PaginationMeta'
+          $ref: "#/components/schemas/PaginationMeta"
 
-    PagedCatalogItemResponse:
+    PagedCompensationResponse:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CatalogItemResponse'
+            $ref: "#/components/schemas/CompensationResponse"
         pagination:
-          $ref: '#/components/schemas/PaginationMeta'
+          $ref: "#/components/schemas/PaginationMeta"
 
-    PagedBenefitResponse:
+    PagedEmployeeCompensationResponse:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/BenefitResponse'
+            $ref: "#/components/schemas/EmployeeCompensationResponse"
         pagination:
-          $ref: '#/components/schemas/PaginationMeta'
-
-    PagedEmployeeBenefitResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmployeeBenefitResponse'
-        pagination:
-          $ref: '#/components/schemas/PaginationMeta'
+          $ref: "#/components/schemas/PaginationMeta"
 
     PagedPayslipResponse:
       type: object
@@ -1029,9 +892,9 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/PayslipResponse'
+            $ref: "#/components/schemas/PayslipResponse"
         pagination:
-          $ref: '#/components/schemas/PaginationMeta'
+          $ref: "#/components/schemas/PaginationMeta"
 
     PagedEmailLogResponse:
       type: object
@@ -1039,9 +902,9 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/EmailLogResponse'
+            $ref: "#/components/schemas/EmailLogResponse"
         pagination:
-          $ref: '#/components/schemas/PaginationMeta'
+          $ref: "#/components/schemas/PaginationMeta"
 
     ProblemDetails:
       type: object
