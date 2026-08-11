@@ -233,6 +233,70 @@ Renamed all 28 design images in [images/](file:///d:/Copilot.HR/images) into cle
 
 ---
 
+### 📌 Task 26: Playwright HTML-to-Image Exporter Automation
+- **Updated Export Script**: Modified [export_image.js](file:///d:/Copilot.HR/export_image.js) to dynamically scan [IA/people_management](file:///d:/Copilot.HR/IA/people_management) and export high-resolution (Retina 2x scale) PNG screenshots directly into [images/uiux](file:///d:/Copilot.HR/images/uiux).
+- **Batch Processing Success**: Successfully rendered and overwritten **32/32 HTML screens and modal/drawer components** into PNG image assets.
+
+---
+
+### 📌 Task 27: Breadcrumbs Navigation & Dedicated Full-Page Employee Profile Detail Screen
+- **Standardized Breadcrumbs Navigation**: Added clean, uniform breadcrumbs under headers across all main HTML screens in [IA/people_management](file:///d:/Copilot.HR/IA/people_management) (e.g. `People / Employee Directory`, `People / Org & Department`, `People / Request`, `People / Request / Create Request`, `People / Request / Tracking Request`, `People / Position`, `People / Reporting Lines`, `People / Team`).
+- **Full-Page Profile Detail Screen**: Created [IA/people_management/EmployeeProfileDetail.html](file:///d:/Copilot.HR/IA/people_management/EmployeeProfileDetail.html) as a dedicated 360° employee profile screen replacing slide-over drawers. Includes breadcrumbs (`People / Employee Directory / Profile Detail`), back button, profile header card, and full tab panes (`Overview`, `Employment`, `Contract`, `Education & Certifications`, `Documents`, `Time & Leave`, `History`).
+- **Interactive Routing**: Updated [IA/people_management/js/EmployeeDirectory.js](file:///d:/Copilot.HR/IA/people_management/js/EmployeeDirectory.js) so clicking any employee row navigates directly to `EmployeeProfileDetail.html`.
+
+---
+
+### 📌 Task 28: Layout Fix & Tab Consolidation on Employee Profile Detail Screen
+- **Unified Sidebar & Top Header Fix**: Integrated `#sidebarContainer` (`sidebar.js`) and standard app header (search bar, welcome text, notifications, profile avatar dropdown) into [EmployeeProfileDetail.html](file:///d:/Copilot.HR/IA/people_management/EmployeeProfileDetail.html) to preserve complete UI layout consistency.
+- **Tab Merging & Reorganization**: Consolidated tabs as requested:
+  - **Tab 1: Overview & Employment**: Merged Demographics, Work Location, Org Placement, Job Position, Manager & Annual/Sick Leave Balances.
+  - **Tab 2: Contract & Documents**: Merged Labor Contract details, Base Salary $3,500/mo, PDF Downloads & Scanned Identity/Medical Verification Documents.
+  - **Tab 3: Education & Certifications**: Academic Degrees & Professional AWS/Scrum Certifications.
+  - **Tab 4: History**: Audit Trail & Change Log.
+
+---
+
+### 📌 Task 29: Add Employee & Add Department JS Forms and Org Tree Drag-and-Drop Director Approval PopUp
+- **Add Employee JS Modal**: Added `#addEmployeeModalBackdrop` form to [EmployeeDirectory.html](file:///d:/Copilot.HR/IA/people_management/EmployeeDirectory.html) and JS submit handlers to [EmployeeDirectory.js](file:///d:/Copilot.HR/IA/people_management/js/EmployeeDirectory.js). Dynamically prepends new employee to dataset, updates roster table, and triggers success Toast notification.
+- **Add Department JS Drawer**: Connected `#btnCreateDept` and `#deptForm` submission in [OrgDepartment.js](file:///d:/Copilot.HR/IA/people_management/js/OrgDepartment.js) to open `#deptDrawerOverlay`, append new department to roster table, and trigger Toast notification.
+- **Org Tree Drag-and-Drop Approval Workflow**: Enabled HTML5 dragging (`draggable="true"`) on `.tree-node` elements in [OrgDepartment.js](file:///d:/Copilot.HR/IA/people_management/js/OrgDepartment.js). Dragging an employee/position node onto another node triggers `#approvalModalOverlay` popup displaying **"Org Restructure Request Submitted - Pending approval from Director / CEO (Luu Duong)"**.
+
+---
+
+### 📌 Task 30: UI/UX Master Screenshot Re-export (33/33 Files Generated)
+- **Playwright Batch Export Execution**: Re-ran [export_image.js](file:///d:/Copilot.HR/export_image.js) over all 33 HTML screens and components.
+- **New Asset Added**: Successfully exported high-resolution (Retina 2x) screenshot [images/uiux/EmployeeProfileDetail.png](file:///d:/Copilot.HR/images/uiux/EmployeeProfileDetail.png) containing breadcrumbs navigation, unified sidebar, top header, profile banner, and consolidated 4-tab layout.
+
+---
+
+### 📌 Task 31: Smart Component Auto-Cropping in Export Script (Eliminated White Margins)
+- **Auto-Crop Component Elements**: Updated [export_image.js](file:///d:/Copilot.HR/export_image.js) to locate exact component bounding boxes (`.modal-card`, `.drawer-preview`, `.drawer-content`, `.form-card`, `.profile-card`, `.timeline-card`, `.card`, `#export-container`) for all files in [IA/people_management/detail](file:///d:/Copilot.HR/IA/people_management/detail).
+- **Whitespace Elimination**: Re-exported all 33 UI/UX screenshots. Component detail cards (such as `EmployeeProfileDetail_TimeLeave.png`) are now tightly cropped to the component frame, eliminating 100% of excess empty white space.
+
+---
+
+### 📌 Task 32: UI/UX Documentation README Specification Matrix
+- **Created Documentation Hub**: Built comprehensive UI/UX documentation in [docs/README.md](file:///d:/Copilot.HR/docs/README.md).
+- **Summary Matrix Table**: Categorized 25 official UI/UX assets into `Main Screens` (8), `Sub-Screen (Full Detail)` (1), `PopUp Modals` (7), and `Forms & Drawers` (9), excluding 8 partial tab mockdata snippets as requested.
+- **Embedded Image Galleries**: Added full markdown image galleries linking directly to high-resolution PNG assets in [images/uiux](file:///d:/Copilot.HR/images/uiux).
+
+---
+
+### 📌 Task 33: English UI/UX Specification Documentation & Trigger/Description Formatting
+- **Full English Translation**: Converted [docs/README.md](file:///d:/Copilot.HR/docs/README.md) to 100% professional English.
+- **Removed Icons & Emojis**: Removed all emojis/icons across headings, summary tables, and text sections as requested.
+- **Curated Asset Selection**: Filtered documentation to exclusively include 18 major application screens, full sub-screens, and primary popup modals/drawers (excluding partial mockdata tab snippets).
+- **Structured Specification Format**: Added `Trigger` (how to navigate/open) and `Description` (functional overview) for every single screenshot asset.
+
+---
+
+### 📌 Task 34: UI/UX Documentation Integration into Root README.md
+- **Removed Specified Assets**: Removed `AssignManagerModal`, `AssignMemberModal`, and `RequestDetailDrawer` screenshots from the documentation list.
+- **Root README.md Integration**: Placed the full English UI/UX Specifications document (15 major screens & primary popups with Trigger and Description metadata) directly below `## Use Case Diagrams` in [README.md](file:///d:/Copilot.HR/README.md).
+- **Updated Matrix Summary**: Refreshed the summary matrix table reflecting 9 Main Screens and 6 Major Popups & Drawers (Total 15 assets).
+
+---
+
 ## 3. Git Activity Summary
 
 ```bash

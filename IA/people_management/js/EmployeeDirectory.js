@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 </td>
             `;
 
-            // Row click event -> Open Profile Drawer
+            // Row click event -> Navigate to full-page Employee Profile Detail screen
             tr.addEventListener('click', function (e) {
-                openProfileDrawer(emp);
+                window.location.href = `EmployeeProfileDetail.html?id=${emp.id}`;
             });
 
             tableBody.appendChild(tr);
@@ -138,6 +138,70 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    // Add Employee Modal Logic
+    const btnAddEmployee = document.getElementById('btnAddEmployee');
+    const addModalBackdrop = document.getElementById('addEmployeeModalBackdrop');
+    const btnCloseAddModal = document.getElementById('btnCloseAddEmployeeModal');
+    const btnCancelAddEmp = document.getElementById('btnCancelAddEmp');
+    const addEmployeeForm = document.getElementById('addEmployeeForm');
+
+    function openAddModal() {
+        if (addModalBackdrop) addModalBackdrop.classList.remove('hidden');
+    }
+
+    function closeAddModal() {
+        if (addModalBackdrop) addModalBackdrop.classList.add('hidden');
+    }
+
+    if (btnAddEmployee) btnAddEmployee.addEventListener('click', openAddModal);
+    if (btnCloseAddModal) btnCloseAddModal.addEventListener('click', closeAddModal);
+    if (btnCancelAddEmp) btnCancelAddEmp.addEventListener('click', closeAddModal);
+
+    if (addEmployeeForm) {
+        addEmployeeForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('newEmpName').value;
+            const empId = document.getElementById('newEmpId').value;
+            const email = document.getElementById('newEmpEmail').value;
+            const dept = document.getElementById('newEmpDept').value;
+            const role = document.getElementById('newEmpRole').value;
+
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) || 'EM';
+
+            const newEmp = {
+                id: empId || `EMP-${Math.floor(8000 + Math.random() * 900)}`,
+                name: name,
+                role: role,
+                dept: dept,
+                email: email,
+                status: 'Active',
+                date: 'Today',
+                avatar: initials
+            };
+
+            employees.unshift(newEmp);
+            renderTable(employees);
+            closeAddModal();
+            addEmployeeForm.reset();
+
+            // Show Toast Alert
+            showToast(`✅ Employee profile for "${name}" created successfully!`);
+        });
+    }
+
+    function showToast(message) {
+        const toastContainer = document.getElementById('toastContainer');
+        if (!toastContainer) return;
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.style.cssText = 'background:#09090b; color:#ffffff; padding:12px 20px; border-radius:8px; font-weight:600; font-size:13px; margin-top:10px; box-shadow:0 4px 12px rgba(0,0,0,0.15);';
+        toast.innerText = message;
+        toastContainer.appendChild(toast);
+        setTimeout(() => {
+            toast.remove();
+        }, 3500);
+    }
 
     // Initial render
     renderTable(employees);
