@@ -1,5 +1,24 @@
-## Feature Mindmap
+# Workforce Management System - Copilot.HR
 
+## I. System Requirements & Functional Analysis
+
+### I.1. System Actors
+
+| No. | Actor | Main Responsibilities |
+| --: | :--- | :--- |
+| 1 | **System admin** | Manage user accounts, roles, permissions, system settings, and audit logs. |
+| 2 | **HR Staff** | Manage employee profiles, onboarding/offboarding tasks, leave balances, and day-to-day HR operations. |
+| 3 | **HR Manager** | Manage department structures, define salary bands, sign labor contracts, approve HR requests, and oversee HR policies. |
+| 4 | **Manager** | Manage team members, assign tasks, approve timesheets, approve leave requests, and review employee performance. |
+| 5 | **Staff** | Clock in/out, track working time, submit timesheets, request leave, and manage assigned tasks. |
+| 6 | **Client** | Track assigned project progress, team allocation, milestones, and billing history. |
+| 7 | **Candidate** | Apply for open job positions, submit personal profiles, and track interview status. |
+| 8 | **Third party** | External service integrations (Email provider, Cloud storage, Calendar, Payroll gateway). |
+| 9 | **Tenant admin** | Represents an organization using the platform, with isolated data, organization settings, and company-wide access controls. |
+
+---
+
+### I.2. Feature Functionalities Mindmap
 
 ```mermaid
 flowchart LR
@@ -20,6 +39,7 @@ flowchart LR
     People["People Management"]:::peopleModule
     Performance["Performance"]:::performanceModule
     Integration["Integration"]:::integrationModule
+    Payroll["Payroll"]:::payrollModule
 
 
     %% =====================================================
@@ -29,7 +49,6 @@ flowchart LR
     Onboarding["Onboarding & Offboarding"]:::onboardingModule
     Workforce["Workforce Management"]:::workforceModule
     Project["Project Management"]:::projectModule
-    Payroll["Payroll"]:::payrollModule
 
 
     %% =====================================================
@@ -41,11 +60,11 @@ flowchart LR
     People --> WMS
     Performance --> WMS
     Integration --> WMS
+    Payroll --> WMS
 
     WMS --> Onboarding
     WMS --> Workforce
     WMS --> Project
-    WMS --> Payroll
 
 
     %% =====================================================
@@ -132,6 +151,23 @@ flowchart LR
 
 
     %% =====================================================
+    %% PAYROLL
+    %% =====================================================
+
+    PayslipManagement["Payslip Management"]:::criticalFeature
+    PayCompensation["Pay & Compensation Management"]:::highFeature
+    PayrollDocument["Payroll Document Management"]:::highFeature
+    PayrollHistory["Payroll History Management"]:::highFeature
+    BenefitsManagement["Benefits Management"]:::highFeature
+
+    PayslipManagement --> Payroll
+    PayCompensation --> Payroll
+    PayrollDocument --> Payroll
+    PayrollHistory --> Payroll
+    BenefitsManagement --> Payroll
+
+
+    %% =====================================================
     %% ONBOARDING & OFFBOARDING
     %% =====================================================
 
@@ -155,7 +191,7 @@ flowchart LR
 
 
     %% =====================================================
-    %% WORKFORCE
+    %% WORKFORCE MANAGEMENT
     %% =====================================================
 
     AttendanceManagement["Attendance Management"]:::criticalFeature
@@ -172,37 +208,24 @@ flowchart LR
 
 
     %% =====================================================
-    %% PROJECT
+    %% PROJECT MANAGEMENT
     %% =====================================================
 
     ProjectManagement["Project Management"]:::criticalFeature
     TaskManagement["Task Management"]:::criticalFeature
+    ProjectMemberManagement["Project Member Management"]:::criticalFeature
+    CapabilityManagement["Capability Management"]:::criticalFeature
     ProjectTaskTracking["Project & Task Time Tracking"]:::criticalFeature
     ProductivityMonitoring["Productivity Monitoring"]:::highFeature
     ScreenshotTracking["Screenshot, App & Website Tracking"]:::highFeature
 
     Project --> ProjectManagement
     Project --> TaskManagement
+    Project --> ProjectMemberManagement
+    Project --> CapabilityManagement
     Project --> ProjectTaskTracking
     Project --> ProductivityMonitoring
     Project --> ScreenshotTracking
-
-
-    %% =====================================================
-    %% PAYROLL
-    %% =====================================================
-
-    PayrollProcessing["Payroll Processing Management"]:::criticalFeature
-    CompensationManagement["Pay & Compensation Management"]:::criticalFeature
-    PayrollPayment["Payroll Tax & Payment Management"]:::criticalFeature
-    PayrollHistory["Payroll History Management"]:::highFeature
-    BenefitsManagement["Benefits Management"]:::highFeature
-
-    Payroll --> PayrollProcessing
-    Payroll --> CompensationManagement
-    Payroll --> PayrollPayment
-    Payroll --> PayrollHistory
-    Payroll --> BenefitsManagement
 
 
     %% =====================================================
@@ -216,7 +239,6 @@ flowchart LR
     classDef peopleModule fill:#74b816,stroke:#5c940d,stroke-width:3px,color:#ffffff,font-weight:bold;
     classDef onboardingModule fill:#9c36b5,stroke:#862e9c,stroke-width:3px,color:#ffffff,font-weight:bold;
     classDef workforceModule fill:#f59f00,stroke:#e67700,stroke-width:3px,color:#ffffff,font-weight:bold;
-
     classDef projectModule fill:#4263eb,stroke:#364fc7,stroke-width:3px,color:#ffffff,font-weight:bold;
     classDef payrollModule fill:#0ca678,stroke:#087f5b,stroke-width:3px,color:#ffffff,font-weight:bold;
     classDef performanceModule fill:#e64980,stroke:#c2255c,stroke-width:3px,color:#ffffff,font-weight:bold;
@@ -228,23 +250,23 @@ flowchart LR
 
 ---
 
-## Information Architecture (IA) Sitemap
+## II. Information Architecture (IA) Sitemap
 
 Link Sitemap IA: [Relume Sitemap Project](https://www.relume.ai/app/project/P3513106_M_AsmXcsz2LE9p9i5egRRtV2aMuaJQ4-Pj5YjjiDkKo#mode=sitemap)
 
 ---
 
-## Use Case Diagrams
+## III. Use Case Diagrams
 
 ![People Use Case Diagram](./images/usecase/People.png)
 
 ---
 
-## People Management - UI/UX Specifications
+## IV. People Management - UI/UX Specifications
 
 Comprehensive documentation of user interface screens, major popup modals, and slide-over drawers for the **People Management** module in **Copilot.HR**.
 
-### Summary UI/UX Asset Matrix
+### IV.1. Summary UI/UX Asset Matrix
 
 | Category | Description | Count | Assets List |
 | :--- | :--- | :---: | :--- |
@@ -254,7 +276,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1. Main Screens & Sub-Screens
+### IV.2. Main Screens & Sub-Screens
 
 #### 1.1 Employee Directory Screen
 **Trigger:** Click `People` -> `Employee Directory` in the sidebar.  
@@ -328,7 +350,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 2. Major PopUp Modals & Drawers
+### IV.3. Major PopUp Modals & Drawers
 
 #### 2.1 Add New Employee Profile Modal
 **Trigger:** Click `Add Employee` button on the Employee Directory toolbar.  
@@ -354,11 +376,11 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-## People Management - RESTful API Specifications
+## V. People Management - RESTful API Specifications
 
 Comprehensive API inventory for the People Management module divided into Employee Directory, Organization & Department, and Request Management domains. Full OpenAPI 3.2.0 specifications are available in [docs/apis/openapi_people_management.yaml](file:///d:/Copilot.HR/docs/apis/openapi_people_management.yaml).
 
-### 1. Employee Directory APIs
+### V.1. Employee Directory APIs
 
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -377,7 +399,7 @@ Comprehensive API inventory for the People Management module divided into Employ
 
 ---
 
-### 2. Organization & Department APIs
+### V.2. Organization & Department APIs
 
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -398,7 +420,7 @@ Comprehensive API inventory for the People Management module divided into Employ
 
 ---
 
-### 3. Request Management APIs
+### V.3. Request Management APIs
 
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -414,13 +436,13 @@ Comprehensive API inventory for the People Management module divided into Employ
 
 ---
 
-# People ERD
+## VI. People Management - Database ERD & Schema
 
 **Total System Tables**: **20 Tables**
 
 ---
 
-## 1. Master Table Relationships Matrix
+### VI.1. Master Table Relationships Matrix
 
 | # | Table Name | Description | Primary Key (PK) | Foreign Keys (FK) | Relationships & Cardinality |
 | :---: | :--- | :--- | :--- | :--- | :--- |
@@ -447,17 +469,17 @@ Comprehensive API inventory for the People Management module divided into Employ
 
 ---
 
-## 2. ERD Diagram Images
+### VI.2. ERD Diagram Visuals
 
-### Organization
+#### 2.1 Organization Domain
 ![Organization](./images/database/Organization.png)
 
 ---
 
-### Employee Directory
+#### 2.2 Employee Directory Domain
 ![Employee Directory](./images/database/EmployeeDirectory.png)
 
 ---
 
-### Request
+#### 2.3 Request Management Domain
 ![Request](./images/database/Request_Managment.png)
