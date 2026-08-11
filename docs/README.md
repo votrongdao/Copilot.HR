@@ -1,22 +1,40 @@
-# People Management - UI/UX Specifications & Screenshot Documentation
+# Copilot.HR - Architectural Documentation Hub
 
-Comprehensive documentation of user interface screens, major popup modals, and slide-over drawers for the **People Management** module in **Copilot.HR**.
+Comprehensive system architecture, specifications, and design assets for the **Copilot.HR** Workforce Management System.
 
 ---
 
-## Summary UI/UX Asset Matrix
+## 1. Use Case Diagram
+
+The People Management Use Case Diagram defines the primary system interactions between System Actors (Staff, HR Staff, Manager, HR Manager, Tenant Admin) and core module capabilities (Employee Directory, Profile Management, Org Tree, Request Workflow).
+
+![People Management Use Case Diagram](../images/usecase/People.png)
+
+---
+
+## 2. Information Architecture (IA) Sitemap
+
+Link Sitemap IA: [Relume Sitemap Project](https://www.relume.ai/app/project/P3513106_M_AsmXcsz2LE9p9i5egRRtV2aMuaJQ4-Pj5YjjiDkKo#mode=sitemap)
+
+---
+
+## 3. UI/UX Specifications & Screenshot Documentation
+
+Comprehensive documentation of user interface screens, major popup modals, and slide-over drawers for the **People Management** module in **Copilot.HR**.
+
+### 3.1 Summary UI/UX Asset Matrix
 
 | Category | Description | Count | Assets List |
 | :--- | :--- | :---: | :--- |
 | **Main Screens** | Primary application workflow and dashboard screens | **9** | `EmployeeDirectory`, `EmployeeProfileDetail`, `OrgDepartment`, `RequestManagement`, `CreateRequest`, `TrackingRequest`, `PositionManagement`, `TeamManagement`, `ReportingLines` |
-| **Major Popups & Drawers** | Modal dialogs and slide-over forms for data creation and approval | **6** | `AddEmployeeModal`, `AddDepartmentDrawer`, `AddContractModal`, `CeoApprovalModal`, `ApproveRejectModal`, `ExportEmployeeModal` |
-| **TOTAL** | **Total Key UI/UX Assets Documented** | **15** | **15 Major Screens & Component Modals** |
+| **Major Popups & Drawers** | Modal dialogs and slide-over forms for data creation and approval | **3** | `AddEmployeeModal`, `AddDepartmentDrawer`, `AddContractModal` |
+| **TOTAL** | **Total Key UI/UX Assets Documented** | **12** | **12 Major Screens & Component Modals** |
 
 ---
 
-## 1. Main Screens & Sub-Screens
+### 3.2 Main Screens & Sub-Screens
 
-### 1.1 Employee Directory Screen
+#### Employee Directory Screen
 **Trigger:** Click `People` -> `Employee Directory` in the sidebar.  
 **Description:** Central workforce catalog displaying searchable employee records, KPI metrics, status filters, and quick action toolbars.
 
@@ -24,7 +42,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.2 Employee Profile Detail Screen
+#### Employee Profile Detail Screen
 **Trigger:** Click any employee row in the Employee Directory table.  
 **Description:** Dedicated 360-degree employee profile screen featuring breadcrumbs navigation, employee header banner, and consolidated tabs for Overview & Employment, Contract & Documents, Education & Certifications, and History.
 
@@ -32,7 +50,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.3 Organization & Department Screen
+#### Organization & Department Screen
 **Trigger:** Click `People` -> `Org & Department` in the sidebar.  
 **Description:** Interactive organizational structure canvas featuring department hierarchy tree, roster table view, branch filters, and zoom controls.
 
@@ -40,7 +58,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.4 Request Management Screen
+#### Request Management Screen
 **Trigger:** Click `People` -> `Request` in the sidebar.  
 **Description:** Management dashboard for employee HR requests, leave approvals, status filtering, and workflow processing.
 
@@ -48,7 +66,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.5 Create HR Request Screen
+#### Create HR Request Screen
 **Trigger:** Click `+ Create Request` button on the Request Management page.  
 **Description:** Two-column interactive form for submitting annual leave, equipment, or policy requests with automatic quota validation.
 
@@ -56,7 +74,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.6 Tracking Request Progress Screen
+#### Tracking Request Progress Screen
 **Trigger:** Click `View Timeline` or any request item in the Request Management table.  
 **Description:** Real-time request progress tracker displaying approval workflow steps, reviewer comments, and timeline status.
 
@@ -64,7 +82,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.7 Position & Job Title Management Screen
+#### Position & Job Title Management Screen
 **Trigger:** Click `Position Management` subnav link in Org & Department.  
 **Description:** Management screen defining organizational job titles, competency levels, salary bands, and headcount quotas.
 
@@ -72,7 +90,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.8 Team Management Screen
+#### Team Management Screen
 **Trigger:** Click `Team Management` subnav link in Org & Department.  
 **Description:** Workspace for organizing project teams, designating team leads, and allocating member resources.
 
@@ -80,7 +98,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 1.9 Reporting Lines & Hierarchy Matrix Screen
+#### Reporting Lines & Hierarchy Matrix Screen
 **Trigger:** Click `Reporting Lines` subnav link in Org & Department.  
 **Description:** Organizational matrix displaying direct report managers, functional line supervisors, and reporting relationships.
 
@@ -88,9 +106,9 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-## 2. Major PopUp Modals & Drawers
+### 3.3 Major PopUp Modals & Drawers
 
-### 2.1 Add New Employee Profile Modal
+#### Add New Employee Profile Modal
 **Trigger:** Click `Add Employee` button on the Employee Directory toolbar.  
 **Description:** Modal popup form for registering a new employee profile with personal demographics, corporate email, role, and department assignment.
 
@@ -98,7 +116,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 2.2 Add Department Drawer
+#### Add Department Drawer
 **Trigger:** Click `Add Department` button on the Organization & Department page header.  
 **Description:** Slide-over drawer for configuring new department entities, parent division alignment, location branch, and manager assignments.
 
@@ -106,7 +124,7 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 2.3 Add Labor Contract Modal
+#### Add Labor Contract Modal
 **Trigger:** Click `+ Add Contract` button on the Employee Profile Contract tab.  
 **Description:** Form popup for registering official labor contracts, compensation terms, effective dates, and document attachments.
 
@@ -114,35 +132,42 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 
 ---
 
-### 2.4 Director & CEO Approval Pending Modal
-**Trigger:** Drag and drop any employee or department node within the Org Tree canvas.  
-**Description:** Confirmation popup indicating that an organizational restructuring or employee reassignment request has been submitted for Director/CEO approval.
+## 4. Database Schema ERD
 
-![CEO Approval Modal](../images/uiux/CeoApprovalModal.png)
+Entity Relationship Diagrams (ERD) illustrating the relational schema across Organization, Employee Directory, and Request Management domains.
 
----
+#### Organization Domain Schema ERD
+Database relationship model covering Company Branches, Departments, Teams, Positions, and Reporting Line relationships.
 
-### 2.5 Approve or Reject Decision Modal
-**Trigger:** Click `Approve` or `Reject` on any pending request row.  
-**Description:** Decision modal for approving or rejecting employee HR requests with mandatory reviewer comments.
-
-![Approve Reject Modal](../images/uiux/ApproveRejectModal.png)
+![Organization Domain ERD](../images/databases/Organization.png)
 
 ---
 
-### 2.6 Export Employee Data Modal
-**Trigger:** Click `Export CSV` / `Export Data` button on the Employee Directory toolbar.  
-**Description:** Configuration modal for selecting employee data columns, date ranges, and file format export options.
+#### Employee Directory Domain Schema ERD
+Database entity structure covering Employee Accounts, 1:1 Profiles, Labor Contracts, Verification Documents, Education, and Assets.
 
-![Export Employee Data Modal](../images/uiux/ExportEmployeeModal.png)
+![Employee Directory ERD](../images/databases/EmployeeDirectory.png)
 
 ---
 
-## 3. RESTful API Specifications
+#### Request Management Domain Schema ERD
+Workflow database model covering Ticket Requests, Request Types, Workflow Steps, Multi-Stage Approval Logs, and Attachments.
 
-Comprehensive API inventory for the People Management module divided into Employee Directory, Organization & Department, and Request Management domains. Full OpenAPI 3.2.0 specifications are available in [docs/apis/openapi_people_management.yaml](file:///d:/Copilot.HR/docs/apis/openapi_people_management.yaml).
+![Request Management ERD](../images/databases/Request_Managment.png)
 
-### 3.1 Employee Directory APIs
+---
+
+## 5. RESTful API Specifications & Swagger Documentation
+
+Comprehensive API inventory for the People Management module divided into Employee Directory, Organization & Department, and Request Management domains. Full OpenAPI 3.2.0 specifications are available in [docs/apis/openapi_people_management.yaml](file:///d:/Copilot.HR/docs/apis/openapi_people_management.yaml). Interactive Swagger API documentation: [Copilot.HR Employee Directory API - SwaggerHub](https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents).
+
+### 5.1 API Architecture Tree Structure
+
+![People Management API Architecture Tree](./apis/api_structure.png)
+
+---
+
+### 5.2 Employee Directory APIs
 
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -161,7 +186,7 @@ Comprehensive API inventory for the People Management module divided into Employ
 
 ---
 
-### 3.2 Organization & Department APIs
+### 5.3 Organization & Department APIs
 
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -182,7 +207,7 @@ Comprehensive API inventory for the People Management module divided into Employ
 
 ---
 
-### 3.3 Request Management APIs
+### 5.4 Request Management APIs
 
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -195,8 +220,3 @@ Comprehensive API inventory for the People Management module divided into Employ
 | `POST` | `/api/v1/requests/{id}/cancel` | `Staff, Manager` | Path: `id` | `200`, `400` | Cancel a submitted request by the applicant prior to final approval execution. |
 | `GET` | `/api/v1/requests/{id}/timeline` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Retrieve step-by-step progress tracker timeline, reviewer audit logs, and approval timestamps. |
 | `GET` | `/api/v1/requests/quotas/check` | `Staff, Manager` | Query: `applicantId`, `leaveType`, `requestedDays` | `200`, `400` | Validate available annual or sick leave balance before submitting a leave request. |
-
-
-
-
-

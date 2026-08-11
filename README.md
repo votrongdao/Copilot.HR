@@ -271,8 +271,9 @@ Comprehensive documentation of user interface screens, major popup modals, and s
 | Category | Description | Count | Assets List |
 | :--- | :--- | :---: | :--- |
 | **Main Screens** | Primary application workflow and dashboard screens | **9** | `EmployeeDirectory`, `EmployeeProfileDetail`, `OrgDepartment`, `RequestManagement`, `CreateRequest`, `TrackingRequest`, `PositionManagement`, `TeamManagement`, `ReportingLines` |
-| **Major Popups & Drawers** | Modal dialogs and slide-over forms for data creation and approval | **6** | `AddEmployeeModal`, `AddDepartmentDrawer`, `AddContractModal`, `CeoApprovalModal`, `ApproveRejectModal`, `ExportEmployeeModal` |
-| **TOTAL** | **Total Key UI/UX Assets Documented** | **15** | **15 Major Screens & Component Modals** |
+| **Major Popups & Drawers** | Modal dialogs and slide-over forms for data creation and approval | **3** | `AddEmployeeModal`, `AddDepartmentDrawer`, `AddContractModal` |
+| **TOTAL** | **Total Key UI/UX Assets Documented** | **12** | **12 Major Screens & Component Modals** |
+
 
 ---
 
