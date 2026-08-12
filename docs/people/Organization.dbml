@@ -1,0 +1,90 @@
+// Database Markup Language (DBML) Specification
+// Project: Copilot.HR - Organization Domain
+
+Project Copilot_HR_Organization {
+  database_type: 'PostgreSQL'
+  Note: 'Database schema for Organization & Department module in Copilot.HR'
+}
+
+Table COMPANY_BRANCH {
+  branch_id varchar [pk, note: 'Unique branch identifier']
+  branch_name varchar
+  branch_code varchar [unique, note: 'Short code e.g. HQ-HCMC']
+  address varchar
+  city varchar
+  country varchar
+  status varchar
+
+  Note: 'Company office locations and regional hubs'
+}
+
+Table DEPARTMENT {
+  department_id varchar [pk]
+  name varchar
+  code varchar [unique]
+  parent_department_id varchar [ref: > DEPARTMENT.department_id]
+  department_lead_id varchar [ref: > EMPLOYEE.employee_id]
+  branch_id varchar [ref: > COMPANY_BRANCH.branch_id]
+  budget_headcount int
+  status varchar
+
+  Note: 'Operational departments & division hierarchy'
+}
+
+Table TEAM {
+  team_id varchar [pk]
+  name varchar
+  department_id varchar [ref: > DEPARTMENT.department_id]
+  team_lead_id varchar [ref: > EMPLOYEE.employee_id]
+  description text
+  status varchar
+
+  Note: 'Cross-functional project teams'
+}
+
+Table TEAM_MEMBER {
+  member_id varchar [pk]
+  team_id varchar [ref: > TEAM.team_id]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  role_in_team varchar
+  allocation_percentage decimal(5,2)
+  joined_date date
+  status varchar
+
+  Note: 'Team member allocations and capacity percentage'
+}
+
+Table POSITION {
+  position_id varchar [pk]
+  title varchar
+  job_level varchar [note: 'Competency level L1 to L6']
+  min_salary decimal(12,2)
+  max_salary decimal(12,2)
+  department_id varchar [ref: > DEPARTMENT.department_id]
+  target_headcount int
+  status varchar
+
+  Note: 'Job titles, job levels, and salary band bounds'
+}
+
+Table REPORTING_LINE {
+  reporting_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  manager_id varchar [ref: > EMPLOYEE.employee_id]
+  reporting_type varchar [note: 'DIRECT or MATRIX']
+  effective_date date
+
+  Note: 'Direct report managers and functional matrix supervisors'
+}
+
+Table EMPLOYEE {
+  employee_id varchar [pk]
+  first_name varchar
+  last_name varchar
+  email varchar [unique]
+  department_id varchar [ref: > DEPARTMENT.department_id]
+  position_id varchar [ref: > POSITION.position_id]
+  team_id varchar [ref: > TEAM.team_id]
+
+  Note: 'Employee account reference table in Organization domain'
+}

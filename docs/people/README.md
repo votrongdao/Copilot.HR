@@ -117,31 +117,21 @@ Entity Relationship Diagrams (ERD) illustrating the relational schema across Org
 #### Organization Domain Schema ERD
 Database relationship model covering Company Branches, Departments, Teams, Positions, and Reporting Line relationships.
 
-![Organization Domain ERD](../../images/databases/Organization.png)
+![Organization Domain ERD](../../images/databases/people/Organization.png)
 
 ---
 
 #### Employee Directory Domain Schema ERD
-Database entity structure covering Employee Accounts, 1:1 Profiles, Labor Contracts, Verification Documents, Education, and Assets.
+Database entity structure covering Employee Accounts, 1:1 Profiles, Labor Contracts, Verification Documents, Education, Assets, Leave Types, and Leave Balances.
 
-![Employee Directory ERD](../../images/databases/EmployeeDirectory.png)
+![Employee Directory ERD](../../images/databases/people/EmployeeDirectory.png)
 
 ---
 
 #### Request Management Domain Schema ERD
 Workflow database model covering Ticket Requests, Request Types, Workflow Steps, Multi-Stage Approval Logs, and Attachments.
 
-![Request Management ERD](../../images/databases/Request_Managment.png)
-
----
-
-## 5. API Architecture Tree Structure
-
-High-level tree view of all 35 RESTful API endpoints in the People Management module grouped into logical domain controllers.
-
-Hierarchical API endpoint tree diagram illustrating resource routing for Employees, Contracts, Documents, Quotas, Audit History, Departments, Positions, Teams, Reporting Lines, and Request Management.
-
-![People Management API Architecture Tree](../apis/api_structure.png)
+![Request Management ERD](../../images/databases/people/Request_Managment.png)
 
 ---
 
@@ -149,4 +139,111 @@ Hierarchical API endpoint tree diagram illustrating resource routing for Employe
 
 Access the interactive online Swagger API documentation for real-time request testing, request/response schema inspection, and live endpoint execution:
 
-👉 **[Copilot.HR Employee Directory API - Interactive SwaggerHub Documentation](https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents)**
+[Copilot.HR Employee Directory API - Interactive SwaggerHub Documentation](https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents)
+
+### 6.1 API Endpoint Tree Structure
+
+```text
+Copilot.HR - People Management API
+│
+├── Employees & Profiles
+│   ├── GET     /employees
+│   ├── POST    /employees
+│   ├── POST    /employees/export
+│   ├── GET     /employees/{id}
+│   ├── PUT     /employees/{id}
+│   ├── DELETE  /employees/{id}
+│   ├── GET     /employees/{id}/contracts
+│   ├── POST    /employees/{id}/contracts
+│   ├── GET     /employees/{id}/documents
+│   ├── POST    /employees/{id}/documents
+│   └── GET     /employees/{id}/history
+│
+├── Leave Categories & Balances
+│   ├── GET     /leave-types
+│   ├── POST    /leave-types
+│   ├── GET     /employees/{id}/leave-balance
+│   └── GET     /requests/quotas/check
+│
+├── HR Request Management & Workflows
+│   ├── GET     /requests
+│   ├── POST    /requests
+│   ├── GET     /requests/{id}
+│   ├── PUT     /requests/{id}
+│   ├── POST    /requests/{id}/approve
+│   ├── POST    /requests/{id}/reject
+│   ├── POST    /requests/{id}/cancel
+│   └── GET     /requests/{id}/timeline
+│
+└── Organization & Hierarchy Matrix
+    ├── GET     /departments
+    ├── POST    /departments
+    ├── GET     /departments/{id}
+    ├── PUT     /departments/{id}
+    ├── DELETE  /departments/{id}
+    ├── POST    /departments/restructure
+    ├── GET     /positions
+    ├── POST    /positions
+    ├── PUT     /positions/{id}
+    ├── GET     /teams
+    ├── POST    /teams
+    ├── POST    /teams/{id}/members
+    ├── GET     /reporting-lines
+    └── PUT     /reporting-lines
+```
+
+### 6.2 Swagger UI Endpoint Documentation Screenshots
+
+#### Employee Directory APIs
+Swagger interactive endpoint documentation for searching, creating, and fetching employee profiles.
+
+![Employee Directory APIs](../../images/api-swagger/people/EmployeeApi.png)
+
+---
+
+#### Labor Contracts & Documents APIs
+Swagger documentation for managing labor contracts, salary history, and employee document uploads.
+
+![Labor Contracts and Documents APIs](../../images/api-swagger/people/Contract_Documents.png)
+
+---
+
+#### Leave & Audit History APIs
+Swagger documentation for fetching career audit trails and event logs.
+
+![Leave and Audit History APIs](../../images/api-swagger/people/Leave_History.png)
+
+---
+
+#### Leave Categories & Quotas APIs
+Swagger documentation for leave category configurations and leave balance quota validation.
+
+![Report Quotas APIs](../../images/api-swagger/people/Report_Quotas.png)
+
+---
+
+#### Request Management APIs
+Swagger documentation for submitting, filtering, and managing employee HR requests.
+
+![Request Management APIs](../../images/api-swagger/people/Request.png)
+
+---
+
+#### Approvals & Workflow Tracking APIs
+Swagger documentation for multi-level approval routing, decision processing, and workflow timeline tracking.
+
+![Approvals and Tracking APIs](../../images/api-swagger/people/Approvals_Tracking.png)
+
+---
+
+#### Department Management APIs
+Swagger documentation for department tree hierarchy, creation, modification, and organizational restructuring.
+
+![Department Management APIs](../../images/api-swagger/people/Department.png)
+
+---
+
+#### Positions, Teams & Reporting Lines APIs
+Swagger documentation for position titles, job levels, project teams, and reporting line hierarchy matrix.
+
+![Positions Teams and Reporting Lines APIs](../../images/api-swagger/people/Position_Team.png)

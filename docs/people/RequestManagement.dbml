@@ -1,0 +1,90 @@
+// Database Markup Language (DBML) Specification
+// Project: Copilot.HR - Request Management Domain
+
+Project Copilot_HR_RequestManagement {
+  database_type: 'PostgreSQL'
+  Note: 'Database schema for Request Management & Workflows in Copilot.HR'
+}
+
+Table REQUEST_TYPE {
+  type_id varchar [pk]
+  type_code varchar [unique]
+  type_name varchar
+  category varchar [note: 'Leave, Equipment, Policy, Overtime']
+  description text
+  default_sla_hours int
+  requires_handover boolean
+  requires_attachment boolean
+  is_active boolean
+
+  Note: 'Master category rules, SLAs, and approval flags'
+}
+
+Table TICKET_REQUEST {
+  request_id varchar [pk]
+  employee_id varchar [ref: > EMPLOYEE.employee_id]
+  type_id varchar [ref: > REQUEST_TYPE.type_id]
+  priority varchar
+  status varchar [note: 'Pending, Approved, Rejected, Cancelled']
+  handover_employee_id varchar [ref: > EMPLOYEE.employee_id]
+  submitted_at timestamp
+  start_date date
+  end_date date
+  duration_days decimal(5,2)
+  reason text
+
+  Note: 'Internal ticket application instances'
+}
+
+Table WORKFLOW_STEP {
+  step_id varchar [pk]
+  type_id varchar [ref: > REQUEST_TYPE.type_id]
+  step_order int
+  step_name varchar
+  approver_role varchar
+
+  Note: 'Multi-stage approval sequence definition'
+}
+
+Table APPROVAL_LOG {
+  log_id varchar [pk]
+  request_id varchar [ref: > TICKET_REQUEST.request_id]
+  step_id varchar [ref: > WORKFLOW_STEP.step_id]
+  approver_id varchar [ref: > EMPLOYEE.employee_id]
+  action varchar [note: 'Approve, Reject, Reassign']
+  comment text
+  timestamp timestamp
+  remaining_sla_minutes int
+
+  Note: 'Immutable audit log of manager approvals & SLA tracking'
+}
+
+Table REQUEST_ATTACHMENT {
+  attachment_id varchar [pk]
+  request_id varchar [ref: > TICKET_REQUEST.request_id]
+  file_name varchar
+  file_url varchar
+  file_size_bytes int
+  uploaded_at timestamp
+
+  Note: 'Supporting file attachments for requests'
+}
+
+Table HANDOVER_TASK {
+  task_id varchar [pk]
+  request_id varchar [ref: > TICKET_REQUEST.request_id]
+  task_title varchar
+  handover_notes text
+  status varchar
+
+  Note: 'Work handover checklist items before request approval'
+}
+
+Table EMPLOYEE {
+  employee_id varchar [pk]
+  first_name varchar
+  last_name varchar
+  email varchar [unique]
+
+  Note: 'Employee reference table in Request Management domain'
+}

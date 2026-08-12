@@ -1,0 +1,1814 @@
+openapi: 3.0.3
+
+info:
+  title: Workforce Management - Project Management API
+  version: 1.0.0
+  description: |
+    API documentation for the Project Management module
+    in a Workforce Management System combining BambooHR
+    and Hubstaff-style capabilities.
+
+    Main areas:
+      - Project Management
+      - Project Member & Allocation Management
+      - Capability Management
+      - Project Effort Tracking
+      - Productivity Monitoring
+      - Project Budget Management
+
+    Important:
+      Timesheet creation, submission, approval, overtime,
+      attendance, and work schedule management belong to
+      the Workforce Management module.
+
+      Project Management only consumes recorded time entries
+      for project effort and utilization reporting.
+
+servers:
+  - url: /api/v1
+    description: API v1
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Projects
+  - name: Project Members
+  - name: Capabilities
+  - name: Project Effort
+  - name: Productivity
+  - name: Project Budget
+
+paths:
+
+  /projects:
+    get:
+      tags:
+        - Projects
+      summary: Get projects
+      operationId: getProjects
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/ProjectStatus'
+        - name: managerId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: priority
+          in: query
+          schema:
+            $ref: '#/components/schemas/ProjectPriority'
+      responses:
+        '200':
+          description: Projects retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedProjectResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Projects
+      summary: Create project
+      operationId: createProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+      responses:
+        '201':
+          description: Project created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /projects/{projectId}:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Projects
+      summary: Get project detail
+      operationId: getProjectById
+      responses:
+        '200':
+          description: Project retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+        - Projects
+      summary: Update project
+      operationId: updateProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequest'
+      responses:
+        '200':
+          description: Project updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Projects
+      summary: Archive project
+      description: Soft-archive a project instead of deleting historical data.
+      operationId: archiveProject
+      responses:
+        '204':
+          description: Project archived successfully.
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/members:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Project Members
+      summary: Get project members
+      operationId: getProjectMembers
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/ProjectMemberStatus'
+      responses:
+        '200':
+          description: Project members retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectMember'
+
+    post:
+      tags:
+        - Project Members
+      summary: Assign employee to project
+      operationId: addProjectMember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProjectMemberRequest'
+      responses:
+        '201':
+          description: Employee assigned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectMember'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /projects/{projectId}/members/{memberId}:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/MemberId'
+
+    get:
+      tags:
+        - Project Members
+      summary: Get project member assignment
+      operationId: getProjectMember
+      responses:
+        '200':
+          description: Member retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectMember'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+        - Project Members
+      summary: Update project member assignment
+      operationId: updateProjectMember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectMemberRequest'
+      responses:
+        '200':
+          description: Assignment updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectMember'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Project Members
+      summary: Remove member from project
+      operationId: removeProjectMember
+      responses:
+        '204':
+          description: Member removed successfully.
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/members/{memberId}/allocation:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/MemberId'
+
+    patch:
+      tags:
+        - Project Members
+      summary: Update member allocation
+      operationId: updateMemberAllocation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAllocationRequest'
+      responses:
+        '200':
+          description: Allocation updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectMember'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /capabilities:
+    get:
+      tags:
+        - Capabilities
+      summary: Get capabilities
+      operationId: getCapabilities
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Capabilities retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Capability'
+
+    post:
+      tags:
+        - Capabilities
+      summary: Create capability
+      operationId: createCapability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCapabilityRequest'
+      responses:
+        '201':
+          description: Capability created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capability'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /capabilities/{capabilityId}:
+    parameters:
+      - $ref: '#/components/parameters/CapabilityId'
+
+    patch:
+      tags:
+        - Capabilities
+      summary: Update capability
+      operationId: updateCapability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCapabilityRequest'
+      responses:
+        '200':
+          description: Capability updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capability'
+
+    delete:
+      tags:
+        - Capabilities
+      summary: Delete capability
+      operationId: deleteCapability
+      responses:
+        '204':
+          description: Capability deleted successfully.
+
+  /employees/{employeeId}/capabilities:
+    parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+
+    get:
+      tags:
+        - Capabilities
+      summary: Get employee capabilities
+      operationId: getEmployeeCapabilities
+      responses:
+        '200':
+          description: Employee capabilities retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeCapability'
+
+    post:
+      tags:
+        - Capabilities
+      summary: Add capability to employee
+      operationId: addEmployeeCapability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddEmployeeCapabilityRequest'
+      responses:
+        '201':
+          description: Capability assigned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeCapability'
+
+  /employees/{employeeId}/capabilities/{capabilityId}:
+    parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      - $ref: '#/components/parameters/CapabilityId'
+
+    patch:
+      tags:
+        - Capabilities
+      summary: Update employee capability
+      operationId: updateEmployeeCapability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmployeeCapabilityRequest'
+      responses:
+        '200':
+          description: Employee capability updated successfully.
+
+    delete:
+      tags:
+        - Capabilities
+      summary: Remove capability from employee
+      operationId: removeEmployeeCapability
+      responses:
+        '204':
+          description: Capability removed successfully.
+
+  /projects/{projectId}/required-capabilities:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Capabilities
+      summary: Get project required capabilities
+      operationId: getProjectRequiredCapabilities
+      responses:
+        '200':
+          description: Project requirements retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectRequiredCapability'
+
+    post:
+      tags:
+        - Capabilities
+      summary: Add required capability to project
+      operationId: addProjectRequiredCapability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProjectRequiredCapabilityRequest'
+      responses:
+        '201':
+          description: Project requirement created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRequiredCapability'
+
+  /projects/{projectId}/required-capabilities/{capabilityId}:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/CapabilityId'
+
+    patch:
+      tags:
+        - Capabilities
+      summary: Update project capability requirement
+      operationId: updateProjectRequiredCapability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequiredCapabilityRequest'
+      responses:
+        '200':
+          description: Requirement updated successfully.
+
+    delete:
+      tags:
+        - Capabilities
+      summary: Remove project capability requirement
+      operationId: removeProjectRequiredCapability
+      responses:
+        '204':
+          description: Requirement removed successfully.
+
+  /projects/{projectId}/capability-gap:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Capabilities
+      summary: Get project capability gap
+      operationId: getProjectCapabilityGap
+      responses:
+        '200':
+          description: Capability gap retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CapabilityGap'
+
+  /projects/{projectId}/effort:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Project Effort
+      summary: Get project effort summary
+      description: Calculated from Workforce time-entry data.
+      operationId: getProjectEffort
+      parameters:
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Project effort retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectEffortSummary'
+
+  /projects/{projectId}/effort/members:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Project Effort
+      summary: Get effort by project member
+      operationId: getProjectMemberEffort
+      parameters:
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Member effort retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectMemberEffort'
+
+  /projects/{projectId}/time-entries:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Project Effort
+      summary: Get project time entries
+      description: Read-only view of Workforce time-entry records.
+      operationId: getProjectTimeEntries
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+        - name: employeeId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: timeType
+          in: query
+          schema:
+            $ref: '#/components/schemas/TimeType'
+      responses:
+        '200':
+          description: Time entries retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedTimeEntryResponse'
+
+  /projects/{projectId}/productivity:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Productivity
+      summary: Get project productivity summary
+      operationId: getProjectProductivity
+      parameters:
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: Productivity summary retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductivitySummary'
+
+  /projects/{projectId}/productivity/sessions:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Productivity
+      summary: Get productivity sessions
+      operationId: getProductivitySessions
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+        - name: employeeId
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Productivity sessions retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedProductivitySessionResponse'
+
+  /productivity/sessions:
+    post:
+      tags:
+        - Productivity
+      summary: Start productivity session
+      operationId: startProductivitySession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductivitySessionRequest'
+      responses:
+        '201':
+          description: Productivity session created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductivitySession'
+
+  /productivity/sessions/{sessionId}:
+    parameters:
+      - $ref: '#/components/parameters/SessionId'
+
+    get:
+      tags:
+        - Productivity
+      summary: Get productivity session detail
+      operationId: getProductivitySession
+      responses:
+        '200':
+          description: Session retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductivitySessionDetail'
+
+    patch:
+      tags:
+        - Productivity
+      summary: End or update productivity session
+      operationId: updateProductivitySession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductivitySessionRequest'
+      responses:
+        '200':
+          description: Session updated successfully.
+
+  /productivity/sessions/{sessionId}/apps:
+    parameters:
+      - $ref: '#/components/parameters/SessionId'
+
+    get:
+      tags:
+        - Productivity
+      summary: Get application usage logs
+      operationId: getApplicationLogs
+      responses:
+        '200':
+          description: Application logs retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApplicationLog'
+
+    post:
+      tags:
+        - Productivity
+      summary: Add application usage log
+      operationId: addApplicationLog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationLogRequest'
+      responses:
+        '201':
+          description: Application log created successfully.
+
+  /productivity/sessions/{sessionId}/websites:
+    parameters:
+      - $ref: '#/components/parameters/SessionId'
+
+    get:
+      tags:
+        - Productivity
+      summary: Get website usage logs
+      operationId: getWebsiteLogs
+      responses:
+        '200':
+          description: Website logs retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebsiteLog'
+
+    post:
+      tags:
+        - Productivity
+      summary: Add website usage log
+      operationId: addWebsiteLog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebsiteLogRequest'
+      responses:
+        '201':
+          description: Website log created successfully.
+
+  /productivity/sessions/{sessionId}/screenshots:
+    parameters:
+      - $ref: '#/components/parameters/SessionId'
+
+    get:
+      tags:
+        - Productivity
+      summary: Get productivity screenshots
+      operationId: getProductivityScreenshots
+      responses:
+        '200':
+          description: Screenshots retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductivityScreenshot'
+
+    post:
+      tags:
+        - Productivity
+      summary: Create screenshot record
+      operationId: createProductivityScreenshot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScreenshotRequest'
+      responses:
+        '201':
+          description: Screenshot record created successfully.
+
+  /projects/{projectId}/budget:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Project Budget
+      summary: Get project budget summary
+      operationId: getProjectBudget
+      responses:
+        '200':
+          description: Project budget retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectBudgetSummary'
+
+  /projects/{projectId}/budget-adjustments:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+
+    get:
+      tags:
+        - Project Budget
+      summary: Get budget adjustments
+      operationId: getBudgetAdjustments
+      responses:
+        '200':
+          description: Budget adjustments retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BudgetAdjustment'
+
+    post:
+      tags:
+        - Project Budget
+      summary: Request budget adjustment
+      operationId: createBudgetAdjustment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBudgetAdjustmentRequest'
+      responses:
+        '201':
+          description: Budget adjustment created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetAdjustment'
+
+  /projects/{projectId}/budget-adjustments/{adjustmentId}:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/AdjustmentId'
+
+    get:
+      tags:
+        - Project Budget
+      summary: Get budget adjustment detail
+      operationId: getBudgetAdjustment
+      responses:
+        '200':
+          description: Budget adjustment retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetAdjustment'
+
+  /projects/{projectId}/budget-adjustments/{adjustmentId}/approve:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/AdjustmentId'
+
+    post:
+      tags:
+        - Project Budget
+      summary: Approve budget adjustment
+      operationId: approveBudgetAdjustment
+      responses:
+        '200':
+          description: Budget adjustment approved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetAdjustment'
+
+  /projects/{projectId}/budget-adjustments/{adjustmentId}/reject:
+    parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/AdjustmentId'
+
+    post:
+      tags:
+        - Project Budget
+      summary: Reject budget adjustment
+      operationId: rejectBudgetAdjustment
+      responses:
+        '200':
+          description: Budget adjustment rejected successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetAdjustment'
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+    MemberId:
+      name: memberId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+    EmployeeId:
+      name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+    CapabilityId:
+      name: capabilityId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+    AdjustmentId:
+      name: adjustmentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+    FromDate:
+      name: fromDate
+      in: query
+      schema:
+        type: string
+        format: date
+
+    ToDate:
+      name: toDate
+      in: query
+      schema:
+        type: string
+        format: date
+
+  responses:
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Conflict:
+      description: Resource conflict.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ProjectStatus:
+      type: string
+      enum:
+        - Planned
+        - Active
+        - OnHold
+        - Completed
+        - Cancelled
+
+    ProjectPriority:
+      type: string
+      enum:
+        - Low
+        - Medium
+        - High
+        - Critical
+
+    ProjectMemberStatus:
+      type: string
+      enum:
+        - Planned
+        - Active
+        - Completed
+        - Removed
+
+    TimeType:
+      type: string
+      enum:
+        - Regular
+        - Overtime
+        - Training
+        - Meeting
+        - Other
+
+    CapabilityLevel:
+      type: integer
+      minimum: 1
+      maximum: 5
+      example: 3
+
+    BudgetAdjustmentStatus:
+      type: string
+      enum:
+        - Pending
+        - Approved
+        - Rejected
+
+    EmployeeSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employeeCode:
+          type: string
+          example: EMP001
+        firstName:
+          type: string
+          example: Lucia
+        lastName:
+          type: string
+          example: Doan
+        fullName:
+          type: string
+          example: Lucia Doan
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalItems:
+          type: integer
+        totalPages:
+          type: integer
+
+    CreateProjectRequest:
+      type: object
+      required:
+        - code
+        - name
+        - status
+      properties:
+        code:
+          type: string
+          example: HRP-001
+        name:
+          type: string
+          example: HR Platform
+        description:
+          type: string
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        managerId:
+          type: string
+          format: uuid
+          nullable: true
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+        totalBudget:
+          type: number
+          example: 100000
+        laborBudget:
+          type: number
+          example: 70000
+        budgetWarningThreshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          example: 80
+        expectedTeamSizeFte:
+          type: integer
+          example: 6
+        defaultWeeklyCapacityH:
+          type: integer
+          example: 40
+        client:
+          type: string
+        priority:
+          $ref: '#/components/schemas/ProjectPriority'
+        techStack:
+          type: string
+          example: .NET, React, PostgreSQL
+
+    UpdateProjectRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        managerId:
+          type: string
+          format: uuid
+          nullable: true
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+        totalBudget:
+          type: number
+        laborBudget:
+          type: number
+        budgetWarningThreshold:
+          type: integer
+        expectedTeamSizeFte:
+          type: integer
+        defaultWeeklyCapacityH:
+          type: integer
+        client:
+          type: string
+        priority:
+          $ref: '#/components/schemas/ProjectPriority'
+        techStack:
+          type: string
+
+    ProjectSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        manager:
+          $ref: '#/components/schemas/EmployeeSummary'
+        priority:
+          $ref: '#/components/schemas/ProjectPriority'
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+        memberCount:
+          type: integer
+
+    ProjectDetail:
+      allOf:
+        - $ref: '#/components/schemas/ProjectSummary'
+        - type: object
+          properties:
+            description:
+              type: string
+            totalBudget:
+              type: number
+            laborBudget:
+              type: number
+            budgetWarningThreshold:
+              type: integer
+            expectedTeamSizeFte:
+              type: integer
+            defaultWeeklyCapacityH:
+              type: integer
+            client:
+              type: string
+            techStack:
+              type: string
+            createdBy:
+              $ref: '#/components/schemas/EmployeeSummary'
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+
+    PagedProjectResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectSummary'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    AddProjectMemberRequest:
+      type: object
+      required:
+        - employeeId
+        - projectRole
+        - allocationPct
+        - startDate
+      properties:
+        employeeId:
+          type: string
+          format: uuid
+        projectRole:
+          type: string
+        allocationPct:
+          type: integer
+          minimum: 0
+          maximum: 100
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+
+    UpdateProjectMemberRequest:
+      type: object
+      properties:
+        projectRole:
+          type: string
+        allocationPct:
+          type: integer
+          minimum: 0
+          maximum: 100
+        status:
+          $ref: '#/components/schemas/ProjectMemberStatus'
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+
+    UpdateAllocationRequest:
+      type: object
+      required:
+        - allocationPct
+      properties:
+        allocationPct:
+          type: integer
+          minimum: 0
+          maximum: 100
+
+    ProjectMember:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        employee:
+          $ref: '#/components/schemas/EmployeeSummary'
+        projectRole:
+          type: string
+        allocationPct:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ProjectMemberStatus'
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+        joinedAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Capability:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: ASP.NET Core
+        category:
+          type: string
+          example: Backend
+        description:
+          type: string
+
+    CreateCapabilityRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+
+    UpdateCapabilityRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+
+    AddEmployeeCapabilityRequest:
+      type: object
+      required:
+        - capabilityId
+        - proficiencyLevel
+      properties:
+        capabilityId:
+          type: string
+          format: uuid
+        proficiencyLevel:
+          $ref: '#/components/schemas/CapabilityLevel'
+        yearsExperience:
+          type: number
+
+    UpdateEmployeeCapabilityRequest:
+      type: object
+      properties:
+        proficiencyLevel:
+          $ref: '#/components/schemas/CapabilityLevel'
+        yearsExperience:
+          type: number
+
+    EmployeeCapability:
+      type: object
+      properties:
+        capability:
+          $ref: '#/components/schemas/Capability'
+        proficiencyLevel:
+          $ref: '#/components/schemas/CapabilityLevel'
+        yearsExperience:
+          type: number
+
+    AddProjectRequiredCapabilityRequest:
+      type: object
+      required:
+        - capabilityId
+        - requiredLevel
+        - requiredPeople
+      properties:
+        capabilityId:
+          type: string
+          format: uuid
+        requiredLevel:
+          $ref: '#/components/schemas/CapabilityLevel'
+        requiredPeople:
+          type: integer
+          minimum: 1
+
+    UpdateProjectRequiredCapabilityRequest:
+      type: object
+      properties:
+        requiredLevel:
+          $ref: '#/components/schemas/CapabilityLevel'
+        requiredPeople:
+          type: integer
+          minimum: 1
+
+    ProjectRequiredCapability:
+      type: object
+      properties:
+        capability:
+          $ref: '#/components/schemas/Capability'
+        requiredLevel:
+          $ref: '#/components/schemas/CapabilityLevel'
+        requiredPeople:
+          type: integer
+
+    CapabilityGap:
+      type: object
+      properties:
+        capability:
+          $ref: '#/components/schemas/Capability'
+        requiredLevel:
+          type: integer
+        requiredPeople:
+          type: integer
+        qualifiedPeople:
+          type: integer
+        missingPeople:
+          type: integer
+
+    TimeEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee:
+          $ref: '#/components/schemas/EmployeeSummary'
+        projectId:
+          type: string
+          format: uuid
+          nullable: true
+        workDate:
+          type: string
+          format: date
+        timeType:
+          $ref: '#/components/schemas/TimeType'
+        startTime:
+          type: string
+        endTime:
+          type: string
+        hours:
+          type: number
+        notes:
+          type: string
+          nullable: true
+
+    ProjectEffortSummary:
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        totalMembers:
+          type: integer
+        allocatedHours:
+          type: number
+        actualHours:
+          type: number
+        regularHours:
+          type: number
+        overtimeHours:
+          type: number
+        utilizationPct:
+          type: number
+
+    ProjectMemberEffort:
+      type: object
+      properties:
+        employee:
+          $ref: '#/components/schemas/EmployeeSummary'
+        projectRole:
+          type: string
+        allocationPct:
+          type: integer
+        allocatedHours:
+          type: number
+        actualHours:
+          type: number
+        regularHours:
+          type: number
+        overtimeHours:
+          type: number
+        utilizationPct:
+          type: number
+
+    PagedTimeEntryResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeEntry'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    CreateProductivitySessionRequest:
+      type: object
+      required:
+        - employeeId
+        - startedAt
+      properties:
+        employeeId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+          nullable: true
+        startedAt:
+          type: string
+          format: date-time
+        sessionType:
+          type: string
+          example: Tracked
+
+    UpdateProductivitySessionRequest:
+      type: object
+      properties:
+        endedAt:
+          type: string
+          format: date-time
+        activityPct:
+          type: integer
+          minimum: 0
+          maximum: 100
+
+    ProductivitySession:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee:
+          $ref: '#/components/schemas/EmployeeSummary'
+        projectId:
+          type: string
+          format: uuid
+          nullable: true
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+          nullable: true
+        activityPct:
+          type: integer
+        sessionType:
+          type: string
+
+    ProductivitySessionDetail:
+      allOf:
+        - $ref: '#/components/schemas/ProductivitySession'
+        - type: object
+          properties:
+            apps:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApplicationLog'
+            websites:
+              type: array
+              items:
+                $ref: '#/components/schemas/WebsiteLog'
+            screenshots:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductivityScreenshot'
+
+    ProductivitySummary:
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        trackedHours:
+          type: number
+        averageActivityPct:
+          type: number
+        activeMembers:
+          type: integer
+        screenshotCount:
+          type: integer
+        applicationCount:
+          type: integer
+        websiteCount:
+          type: integer
+
+    CreateApplicationLogRequest:
+      type: object
+      required:
+        - appName
+        - durationMins
+      properties:
+        appName:
+          type: string
+        durationMins:
+          type: integer
+        category:
+          type: string
+
+    ApplicationLog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        appName:
+          type: string
+        durationMins:
+          type: integer
+        category:
+          type: string
+
+    CreateWebsiteLogRequest:
+      type: object
+      required:
+        - domain
+        - durationMins
+      properties:
+        domain:
+          type: string
+        url:
+          type: string
+        durationMins:
+          type: integer
+        category:
+          type: string
+
+    WebsiteLog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        domain:
+          type: string
+        url:
+          type: string
+        durationMins:
+          type: integer
+        category:
+          type: string
+
+    CreateScreenshotRequest:
+      type: object
+      required:
+        - capturedAt
+        - fileUrl
+      properties:
+        capturedAt:
+          type: string
+          format: date-time
+        fileUrl:
+          type: string
+        activityPct:
+          type: integer
+          minimum: 0
+          maximum: 100
+
+    ProductivityScreenshot:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        capturedAt:
+          type: string
+          format: date-time
+        fileUrl:
+          type: string
+        activityPct:
+          type: integer
+
+    PagedProductivitySessionResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductivitySession'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    ProjectBudgetSummary:
+      type: object
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        totalBudget:
+          type: number
+        laborBudget:
+          type: number
+        approvedAdjustments:
+          type: number
+        actualLaborCost:
+          type: number
+        remainingBudget:
+          type: number
+        usagePct:
+          type: number
+        warningThresholdPct:
+          type: integer
+        warning:
+          type: boolean
+
+    CreateBudgetAdjustmentRequest:
+      type: object
+      required:
+        - adjustmentType
+        - amount
+        - reason
+      properties:
+        adjustmentType:
+          type: string
+          enum:
+            - Increase
+            - Decrease
+        amount:
+          type: number
+          minimum: 0
+        budgetCategory:
+          type: string
+          example: Labor
+        reason:
+          type: string
+
+    BudgetAdjustment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        adjustmentType:
+          type: string
+        amount:
+          type: number
+        budgetCategory:
+          type: string
+        reason:
+          type: string
+        status:
+          $ref: '#/components/schemas/BudgetAdjustmentStatus'
+        requestedBy:
+          $ref: '#/components/schemas/EmployeeSummary'
+        approvedBy:
+          allOf:
+            - $ref: '#/components/schemas/EmployeeSummary'
+          nullable: true
+        approvedAt:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: Invalid request.
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
