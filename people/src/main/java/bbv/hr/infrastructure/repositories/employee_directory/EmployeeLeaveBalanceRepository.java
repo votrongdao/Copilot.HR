@@ -38,7 +38,7 @@ public class EmployeeLeaveBalanceRepository {
      * Find all leave balance quotas for a specific employee ID.
      */
     public List<EmployeeLeaveBalance> findByEmployeeId(String employeeId) {
-        return findAll().stream()
+        return balances.stream()
                 .filter(b -> b.getEmployee() != null && b.getEmployee().getEmployeeId() != null
                         && b.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
                 .collect(Collectors.toList());

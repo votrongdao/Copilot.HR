@@ -37,7 +37,7 @@ public class LeaveTypeRepository {
      * Find leave type by unique code (e.g. ANNUAL, SICK).
      */
     public LeaveType findByCode(String code) {
-        return findAll().stream()
+        return leaveTypes.stream()
                 .filter(l -> l.getCode() != null && l.getCode().equalsIgnoreCase(code))
                 .findFirst()
                 .orElse(null);

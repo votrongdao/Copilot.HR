@@ -38,7 +38,7 @@ public class AssetRepository {
      * Find all assigned hardware assets for a specific employee ID.
      */
     public List<Asset> findByEmployeeId(String employeeId) {
-        return findAll().stream()
+        return assets.stream()
                 .filter(a -> a.getEmployee() != null && a.getEmployee().getEmployeeId() != null
                         && a.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
                 .collect(Collectors.toList());

@@ -38,7 +38,7 @@ public class EmployeeDocumentRepository {
      * Find all uploaded verification documents for a specific employee ID.
      */
     public List<EmployeeDocument> findByEmployeeId(String employeeId) {
-        return findAll().stream()
+        return documents.stream()
                 .filter(d -> d.getEmployee() != null && d.getEmployee().getEmployeeId() != null
                         && d.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
                 .collect(Collectors.toList());

@@ -37,7 +37,7 @@ public class EmployeeProfileRepository {
      * Find employee profile by profile ID.
      */
     public EmployeeProfile findById(String profileId) {
-        return findAll().stream()
+        return profiles.stream()
                 .filter(p -> p.getProfileId() != null && p.getProfileId().equalsIgnoreCase(profileId))
                 .findFirst()
                 .orElse(null);
@@ -47,7 +47,7 @@ public class EmployeeProfileRepository {
      * Find profile by associated employee ID.
      */
     public EmployeeProfile findByEmployeeId(String employeeId) {
-        return findAll().stream()
+        return profiles.stream()
                 .filter(p -> p.getEmployee() != null && p.getEmployee().getEmployeeId() != null
                         && p.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
                 .findFirst()

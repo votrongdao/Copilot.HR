@@ -38,7 +38,7 @@ public class EducationRepository {
      * Find all education records for a specific employee ID.
      */
     public List<Education> findByEmployeeId(String employeeId) {
-        return findAll().stream()
+        return educations.stream()
                 .filter(e -> e.getEmployee() != null && e.getEmployee().getEmployeeId() != null
                         && e.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
                 .collect(Collectors.toList());

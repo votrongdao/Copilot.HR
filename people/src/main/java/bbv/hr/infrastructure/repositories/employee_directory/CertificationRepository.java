@@ -38,7 +38,7 @@ public class CertificationRepository {
      * Find all professional certification credentials for a specific employee ID.
      */
     public List<Certification> findByEmployeeId(String employeeId) {
-        return findAll().stream()
+        return certifications.stream()
                 .filter(c -> c.getEmployee() != null && c.getEmployee().getEmployeeId() != null
                         && c.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
                 .collect(Collectors.toList());

@@ -38,7 +38,7 @@ public class ContractRepository {
      * Find contract by contract ID.
      */
     public Contract findById(String contractId) {
-        return findAll().stream()
+        return contracts.stream()
                 .filter(c -> c.getContractId() != null && c.getContractId().equalsIgnoreCase(contractId))
                 .findFirst()
                 .orElse(null);
@@ -48,7 +48,7 @@ public class ContractRepository {
      * Find all contracts for a specific employee ID.
      */
     public List<Contract> findByEmployeeId(String employeeId) {
-        return findAll().stream()
+        return contracts.stream()
                 .filter(c -> c.getEmployee() != null && c.getEmployee().getEmployeeId() != null
                         && c.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
                 .collect(Collectors.toList());
@@ -58,7 +58,7 @@ public class ContractRepository {
      * Find contract by unique contract number.
      */
     public Contract findByContractNumber(String contractNumber) {
-        return findAll().stream()
+        return contracts.stream()
                 .filter(c -> c.getContractNumber() != null && c.getContractNumber().equalsIgnoreCase(contractNumber))
                 .findFirst()
                 .orElse(null);
