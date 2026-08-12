@@ -51,6 +51,62 @@
 ### Offer & Recruitment Template
 ![alt text](<../../images/erd/recruitment/Offer & Recruitment Template.png>)
 
+## Recruitment API
+```text
+BBV HR - Recruitment API
+│
+├── Requirements
+│   ├── GET     /requirements
+│   ├── POST    /requirements
+│   ├── GET     /requirements/{requirementId}
+│   ├── PATCH   /requirements/{requirementId}
+│   └── DELETE  /requirements/{requirementId}
+│
+├── Jobs
+│   ├── GET     /jobs
+│   ├── POST    /jobs
+│   ├── GET     /jobs/{jobId}
+│   ├── PATCH   /jobs/{jobId}
+│   ├── DELETE  /jobs/{jobId}
+│   └── POST    /jobs/{jobId}/publish
+│
+├── Applications
+│   ├── GET     /applications
+│   ├── POST    /applications
+│   ├── GET     /applications/{applicationId}
+│   ├── PATCH   /applications/{applicationId}
+│   ├── PATCH   /applications/{applicationId}/stage
+│   └── POST    /applications/{applicationId}/reject
+│
+├── Schedules
+│   ├── GET     /schedules
+│   ├── POST    /schedules
+│   ├── GET     /schedules/{scheduleId}
+│   ├── PATCH   /schedules/{scheduleId}
+│   └── POST    /schedules/{scheduleId}/cancel
+│
+├── Interviews
+│   ├── GET     /interviews
+│   ├── GET     /interviews/{interviewId}
+│   ├── PATCH   /interviews/{interviewId}
+│   ├── POST    /interviews/{interviewId}/evaluations
+│   └── POST    /interviews/{interviewId}/decision
+│
+├── Offers
+│   ├── GET     /offers
+│   ├── POST    /offers
+│   ├── GET     /offers/{offerId}
+│   ├── PATCH   /offers/{offerId}
+│   └── POST    /offers/{offerId}/send
+│
+└── Templates
+    ├── GET     /templates
+    ├── POST    /templates
+    ├── GET     /templates/{templateId}
+    ├── PATCH   /templates/{templateId}
+    └── DELETE  /templates/{templateId}
+```
+
 ## API Swagger
 
 ### Requirement & Job
