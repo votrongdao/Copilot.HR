@@ -1,4 +1,4 @@
-package com.copilothr.onboarding;
+package bbv.hr.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.copilothr.onboarding.model;
+package bbv.hr.infrastructure.entities.onboarding;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
