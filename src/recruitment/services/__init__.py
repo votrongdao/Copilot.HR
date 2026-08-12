@@ -1,3 +1,4 @@
+import random
 from recruitment.repositories import (
     RequirementRepository, JobRepository, ApplicationRepository,
     ScheduleRepository, InterviewRepository, OfferRepository, RecruitmentTemplateRepository
@@ -50,8 +51,42 @@ class JobService:
 
     def publish_job(self, job_id, integration_ids=None):
         job = self.repo.get_by_id(job_id)
-        if job:
-            return self.repo.update(job, status='PUBLISHED')
-        return None
+        if not job:
+            return {"error": "Not Found"}
 
-__all__ = ['RequirementService', 'JobService']
+        if not job.get("title") or not job.get('requirement_id'):
+            return {"error": "Missing title or requirement_id"}
+
+        job['status'] = "Published"
+
+        update_job = self.repo.update(job_id, **job)
+        return {"success": True, "data": update_job}
+
+    def delete(self, job_id):
+        job = self.repo.get_by_id(job_id)
+        if not job:
+            return {"error": "Not Found"}
+        if job.get("status") == "Published":
+            return {"error": "LOCKED", "msg" :"Job is Published"}
+        
+        self.repo.delete(job)
+        return {"success":True}
+
+class ApplicationService:
+    def __init__(self):
+        self.repo = ApplicationRepository()
+    
+    def create(self, data):
+        if not data.get("job_id") or not data.get("candidate_id"):
+            return {"error": "MISSING_FIELDS", "msg": "Missing job_id or candidate_id"}
+
+        data['status'] = "New"
+        data['stage'] = "Applied"
+        
+        if 'ai_score' not in data:
+            data['ai_score'] = round(random.uniform(50.0, 99.0), 1)
+
+        new_cv = self.repo.create(**data)
+        return {"success": True, "data": new_cv}
+
+__all__ = ['RequirementService', 'JobService', 'ApplicationService']

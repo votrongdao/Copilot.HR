@@ -1,7 +1,7 @@
 from django.urls import path
 from recruitment.controllers import (
     RequirementController, RequirementDetailController,
-    JobController, JobDetailController, JobPublishController
+    JobController, JobDetailController, JobPublishController, ApplicationController
 )
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('jobs/', JobController.as_view(), name='jobs-list'),
     path('jobs/<uuid:pk>/', JobDetailController.as_view(), name='jobs-detail'),
     path('jobs/<uuid:pk>/publish/', JobPublishController.as_view(), name='jobs-publish'),
+    path('applications/', ApplicationController.as_view(), name='applications-list'),
 ]
