@@ -6,9 +6,9 @@ info:
     Strictly aligned with the updated database schema (`db.md`).
     Covers the full employee onboarding lifecycle from recruitment application management, 
     offer generation & candidate form templates, document intake & OCR field mappings, 
-    generated contract outputs, day-one readiness tracking, role-based task assignments & comments, 
-    probation tracking, to multi-round evaluation panels and labor contract confirmation.
-  version: 1.1.0
+    generated outputs, day-one readiness tracking, role-based task assignments & comments,
+    contract lifecycle management, probation tracking, multi-round evaluation panels, and onboarding completion.
+  version: 1.2.0
   contact:
     name: Copilot HR Development Team
     email: support@copilothr.com
@@ -26,17 +26,19 @@ security:
 
 tags:
   - name: Application Management
-    description: Candidate profiles, job applications, interview scheduling, and multi-criteria evaluation scores.
+    description: Manage applications, interviews, and evaluations.
   - name: Offer Management
-    description: Offer templates, email templates, candidate form templates, offer dispatches, and candidate responses.
-  - name: Intake Review & Document Submission
-    description: Digital document submissions, OCR field extraction/verification, generated outputs, and HR intake review.
-  - name: Onboarding Board & Case Management
-    description: Employee profiles, onboarding cases, Kanban stage transitions, readiness checklists, and blockers.
-  - name: Task Assignment & Workflows
-    description: Task templates, departmental assignments, task comments, and role-based permissions.
-  - name: Probation & Performance Tracking
-    description: Probation monitoring, self-reviews, evaluation rounds, review panel recommendations, and completion.
+    description: Manage offers, templates, and candidate responses.
+  - name: Onboarding Intake Review
+    description: Review submitted information, documents, and AI mappings.
+  - name: Onboarding Board
+    description: Manage onboarding cases, readiness, stages, and blockers.
+  - name: My Assigned Tasks
+    description: Manage onboarding tasks, assignments, and comments.
+  - name: Contract Management
+    description: Manage probation and official contract lifecycles.
+  - name: Tracking Onboarding Progress
+    description: Track probation, self-review, evaluations, and outcomes.
 
 paths:
   # =========================================================================
@@ -387,12 +389,12 @@ paths:
                 $ref: '#/components/schemas/OfferResponse'
 
   # =========================================================================
-  # 3. INTAKE REVIEW & DOCUMENT SUBMISSION
+  # 3. ONBOARDING INTAKE REVIEW
   # =========================================================================
   /onboarding/submissions:
     post:
       tags:
-        - Intake Review & Document Submission
+        - Onboarding Intake Review
       summary: Submit candidate onboarding intake profile
       description: Candidate creates an intake submission record linked to an accepted offer.
       requestBody:
@@ -418,7 +420,7 @@ paths:
   /onboarding/submissions/{submissionId}:
     get:
       tags:
-        - Intake Review & Document Submission
+        - Onboarding Intake Review
       summary: Get onboarding submission details
       description: Fetch intake submission details, uploaded documents, field mappings, and generated outputs.
       parameters:
@@ -439,7 +441,7 @@ paths:
   /onboarding/submissions/{submissionId}/documents:
     post:
       tags:
-        - Intake Review & Document Submission
+        - Onboarding Intake Review
       summary: Upload onboarding document
       description: Upload identity, degree, tax code, or banking document files.
       parameters:
@@ -475,7 +477,7 @@ paths:
   /onboarding/submissions/{submissionId}/field-mappings/parse:
     post:
       tags:
-        - Intake Review & Document Submission
+        - Onboarding Intake Review
       summary: AI/OCR document field parsing
       description: Trigger AI auto-extraction to populate source values, mapped values, and confidence scores.
       parameters:
@@ -498,7 +500,7 @@ paths:
   /onboarding/submissions/{submissionId}/generated-outputs:
     get:
       tags:
-        - Intake Review & Document Submission
+        - Onboarding Intake Review
       summary: List generated outputs (contracts & forms)
       description: Retrieve generated documents (e.g. populated probation contract PDF, welcome pack).
       parameters:
@@ -521,7 +523,7 @@ paths:
   /onboarding/submissions/{submissionId}/reviews:
     post:
       tags:
-        - Intake Review & Document Submission
+        - Onboarding Intake Review
       summary: Submit HR intake review
       description: HR reviews submitted documents and mappings, approving or requesting revisions.
       parameters:
@@ -559,12 +561,12 @@ paths:
                 $ref: '#/components/schemas/IntakeReview'
 
   # =========================================================================
-  # 4. ONBOARDING BOARD & CASE MANAGEMENT
+  # 4. ONBOARDING BOARD
   # =========================================================================
   /onboarding/cases:
     post:
       tags:
-        - Onboarding Board & Case Management
+        - Onboarding Board
       summary: Initialize onboarding case
       description: Create an onboarding case linked to offer, employee record, and initial stage.
       requestBody:
@@ -583,7 +585,7 @@ paths:
 
     get:
       tags:
-        - Onboarding Board & Case Management
+        - Onboarding Board
       summary: List onboarding cases (Kanban board view)
       description: Fetch onboarding cases grouped by stage, priority, or manager.
       parameters:
@@ -614,7 +616,7 @@ paths:
   /onboarding/cases/{caseId}:
     get:
       tags:
-        - Onboarding Board & Case Management
+        - Onboarding Board
       summary: Get onboarding case details
       description: Fetch comprehensive case details including tasks, checklist, blockers, and probation.
       parameters:
@@ -635,7 +637,7 @@ paths:
   /onboarding/cases/{caseId}/readiness-checklist:
     get:
       tags:
-        - Onboarding Board & Case Management
+        - Onboarding Board
       summary: Get Day One readiness checklist items
       description: Retrieve readiness items with `is_required` flags and completion timestamps.
       parameters:
@@ -658,7 +660,7 @@ paths:
   /onboarding/cases/{caseId}/blockers:
     get:
       tags:
-        - Onboarding Board & Case Management
+        - Onboarding Board
       summary: Get case blockers
       description: List blockers with severity, status, reported timestamp, and linked task ID.
       parameters:
@@ -680,7 +682,7 @@ paths:
 
     post:
       tags:
-        - Onboarding Board & Case Management
+        - Onboarding Board
       summary: Report onboarding blocker
       description: Flag a blocker with type, severity (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), and linked task ID.
       parameters:
@@ -721,12 +723,12 @@ paths:
                 $ref: '#/components/schemas/OnboardingBlocker'
 
   # =========================================================================
-  # 5. TASK ASSIGNMENT & WORKFLOWS
+  # 5. MY ASSIGNED TASKS
   # =========================================================================
   /onboarding/cases/{caseId}/tasks:
     get:
       tags:
-        - Task Assignment & Workflows
+        - My Assigned Tasks
       summary: List tasks for onboarding case
       description: Retrieve onboarding tasks with priority, due date, started_at, and completed_at.
       parameters:
@@ -748,7 +750,7 @@ paths:
 
     post:
       tags:
-        - Task Assignment & Workflows
+        - My Assigned Tasks
       summary: Create onboarding task
       description: Create a task manually or from template.
       parameters:
@@ -795,7 +797,7 @@ paths:
   /onboarding/tasks/{taskId}/assignments:
     post:
       tags:
-        - Task Assignment & Workflows
+        - My Assigned Tasks
       summary: Assign task to user
       description: Assign an onboarding task to a specific department user and record `assigned_by_user_id`.
       parameters:
@@ -832,7 +834,7 @@ paths:
   /onboarding/tasks/{taskId}/comments:
     get:
       tags:
-        - Task Assignment & Workflows
+        - My Assigned Tasks
       summary: List task comments
       description: Get discussion comments for an onboarding task.
       parameters:
@@ -854,7 +856,7 @@ paths:
 
     post:
       tags:
-        - Task Assignment & Workflows
+        - My Assigned Tasks
       summary: Add task comment
       description: Post a comment or update on an onboarding task.
       parameters:
@@ -888,12 +890,247 @@ paths:
                 $ref: '#/components/schemas/TaskComment'
 
   # =========================================================================
-  # 6. PROBATION & PERFORMANCE TRACKING
+  # 6. CONTRACT MANAGEMENT
+  # =========================================================================
+  /contract-templates:
+    get:
+      tags:
+        - Contract Management
+      summary: List contract templates
+      description: Retrieve active probation and official contract templates.
+      responses:
+        '200':
+          description: Contract templates retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContractTemplate'
+
+  /contracts:
+    get:
+      tags:
+        - Contract Management
+      summary: List contracts
+      description: Retrieve contracts filtered by onboarding case, contract type, or lifecycle status.
+      parameters:
+        - name: onboarding_case_id
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: contract_type
+          in: query
+          schema:
+            type: string
+            enum: [PROBATION, OFFICIAL]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [DRAFT, IN_REVIEW, READY_TO_SIGN, SIGNED, CANCELLED]
+      responses:
+        '200':
+          description: Contracts retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contract'
+
+    post:
+      tags:
+        - Contract Management
+      summary: Create contract
+      description: Create a probation or official contract for an onboarding case from a contract template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContractRequest'
+      responses:
+        '201':
+          description: Contract created in DRAFT status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+
+  /contracts/{contractId}:
+    get:
+      tags:
+        - Contract Management
+      summary: Get contract details
+      parameters:
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Contract details retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+        - Contract Management
+      summary: Update contract draft
+      description: Update editable contract fields before signing.
+      parameters:
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContractRequest'
+      responses:
+        '200':
+          description: Contract updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+
+  /contracts/{contractId}/submit-for-approval:
+    post:
+      tags:
+        - Contract Management
+      summary: Submit contract for approval
+      description: Move a draft contract to IN_REVIEW and create a pending approval request.
+      parameters:
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContractApprovalRequest'
+      responses:
+        '201':
+          description: Approval request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractApproval'
+
+  /contracts/{contractId}/approvals:
+    get:
+      tags:
+        - Contract Management
+      summary: List contract approval history
+      parameters:
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Contract approval history retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContractApproval'
+
+  /contract-approvals/{approvalId}/decision:
+    post:
+      tags:
+        - Contract Management
+      summary: Record contract approval decision
+      description: Approve, reject, or request changes for a contract approval request.
+      parameters:
+        - name: approvalId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [APPROVED, REJECTED, CHANGES_REQUESTED]
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: Approval decision recorded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractApproval'
+
+  /contracts/{contractId}/mark-signed:
+    post:
+      tags:
+        - Contract Management
+      summary: Mark contract as signed
+      description: Record the signed document and transition the contract to SIGNED.
+      parameters:
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document_url:
+                  type: string
+                  example: "https://storage.copilothr.com/contracts/CON-2026-0042-signed.pdf"
+                signed_at:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Contract marked as signed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+
+  # =========================================================================
+  # 7. TRACKING ONBOARDING PROGRESS
   # =========================================================================
   /onboarding/cases/{caseId}/probation:
     post:
       tags:
-        - Probation & Performance Tracking
+        - Tracking Onboarding Progress
       summary: Initiate probation tracking
       description: Create probation tracking record for an onboarding case.
       parameters:
@@ -929,7 +1166,7 @@ paths:
 
     get:
       tags:
-        - Probation & Performance Tracking
+        - Tracking Onboarding Progress
       summary: Get probation details
       description: Fetch probation status, extension count, completed timestamp, and review rounds.
       parameters:
@@ -950,7 +1187,7 @@ paths:
   /probation/{probationId}/self-reviews:
     post:
       tags:
-        - Probation & Performance Tracking
+        - Tracking Onboarding Progress
       summary: Submit self-review
       description: Candidate submits probation self-review content.
       parameters:
@@ -986,7 +1223,7 @@ paths:
   /probation/{probationId}/evaluations:
     post:
       tags:
-        - Probation & Performance Tracking
+        - Tracking Onboarding Progress
       summary: Schedule probation evaluation meeting round
       description: Schedule evaluation meeting round (`evaluation_round`) and specify meeting location.
       parameters:
@@ -1025,7 +1262,7 @@ paths:
   /probation/evaluations/{evaluationId}/reviewers:
     post:
       tags:
-        - Probation & Performance Tracking
+        - Tracking Onboarding Progress
       summary: Submit reviewer feedback & numerical score
       description: Review panel member submits recommendation, text feedback, and numerical score.
       parameters:
@@ -1069,9 +1306,9 @@ paths:
   /probation/evaluations/{evaluationId}/finalize:
     post:
       tags:
-        - Probation & Performance Tracking
-      summary: Finalize evaluation & issue official labor contract
-      description: Record evaluation summary, final result (`PASSED`, `EXTENDED`, `TERMINATED`), and complete probation.
+        - Tracking Onboarding Progress
+      summary: Finalize probation evaluation
+      description: Record evaluation summary and final result (`PASSED`, `EXTENDED`, `TERMINATED`). A passed result enables creation of an official contract through Contract Management.
       parameters:
         - name: evaluationId
           in: path
@@ -1093,7 +1330,7 @@ paths:
                   example: "PASSED"
                 summary:
                   type: string
-                  example: "Candidate passed probation evaluation unanimously. Official contract issued."
+                  example: "Candidate passed probation evaluation unanimously and is eligible for an official contract."
       responses:
         '200':
           description: Probation evaluation finalized.
@@ -2133,6 +2370,170 @@ components:
         created_at:
           type: string
           format: date-time
+
+    ContractTemplate:
+      type: object
+      properties:
+        contract_template_id:
+          type: integer
+          format: int64
+          example: 210
+        template_name:
+          type: string
+          example: "Standard Probation Contract 2026"
+        contract_type:
+          type: string
+          enum: [PROBATION, OFFICIAL]
+          example: "PROBATION"
+        content:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+          example: "ACTIVE"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Contract:
+      type: object
+      properties:
+        contract_id:
+          type: integer
+          format: int64
+          example: 9901
+        onboarding_case_id:
+          type: integer
+          format: int64
+          example: 9001
+        contract_template_id:
+          type: integer
+          format: int64
+          example: 210
+        owner_user_id:
+          type: integer
+          format: int64
+          example: 12
+        contract_code:
+          type: string
+          example: "CON-2026-0042"
+        contract_type:
+          type: string
+          enum: [PROBATION, OFFICIAL]
+          example: "PROBATION"
+        status:
+          type: string
+          enum: [DRAFT, IN_REVIEW, READY_TO_SIGN, SIGNED, CANCELLED]
+          example: "IN_REVIEW"
+        effective_date:
+          type: string
+          format: date
+          example: "2026-09-01"
+        expiration_date:
+          type: string
+          format: date
+          example: "2026-11-01"
+        document_url:
+          type: string
+          example: "https://storage.copilothr.com/contracts/CON-2026-0042.pdf"
+        signed_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    CreateContractRequest:
+      type: object
+      required: [onboarding_case_id, contract_template_id, owner_user_id, contract_type, effective_date]
+      properties:
+        onboarding_case_id:
+          type: integer
+          format: int64
+        contract_template_id:
+          type: integer
+          format: int64
+        owner_user_id:
+          type: integer
+          format: int64
+        contract_type:
+          type: string
+          enum: [PROBATION, OFFICIAL]
+        effective_date:
+          type: string
+          format: date
+        expiration_date:
+          type: string
+          format: date
+
+    UpdateContractRequest:
+      type: object
+      properties:
+        contract_template_id:
+          type: integer
+          format: int64
+        owner_user_id:
+          type: integer
+          format: int64
+        effective_date:
+          type: string
+          format: date
+        expiration_date:
+          type: string
+          format: date
+        document_url:
+          type: string
+
+    ContractApproval:
+      type: object
+      properties:
+        contract_approval_id:
+          type: integer
+          format: int64
+          example: 7601
+        contract_id:
+          type: integer
+          format: int64
+          example: 9901
+        approver_user_id:
+          type: integer
+          format: int64
+          example: 5
+        requested_by_user_id:
+          type: integer
+          format: int64
+          example: 12
+        status:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED, CHANGES_REQUESTED]
+          example: "PENDING"
+        comment:
+          type: string
+        requested_at:
+          type: string
+          format: date-time
+        reviewed_at:
+          type: string
+          format: date-time
+
+    CreateContractApprovalRequest:
+      type: object
+      required: [approver_user_id, requested_by_user_id]
+      properties:
+        approver_user_id:
+          type: integer
+          format: int64
+        requested_by_user_id:
+          type: integer
+          format: int64
+        comment:
+          type: string
 
     Probation:
       type: object
