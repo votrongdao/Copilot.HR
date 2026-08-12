@@ -1,0 +1,67 @@
+{
+  "company_branch": [
+    {
+      "branch_id": "BR-HCMC",
+      "branch_name": "Headquarters - Ho Chi Minh City",
+      "branch_code": "HQ-HCMC",
+      "address": "123 Le Loi Street, District 1",
+      "city": "Ho Chi Minh City",
+      "country": "Vietnam",
+      "status": "Active"
+    }
+  ],
+  "department": [
+    {
+      "department_id": "DEPT-ENG",
+      "name": "Software Engineering",
+      "code": "ENG",
+      "parent_department": null,
+      "department_lead": "Alex Manager",
+      "branch": "Headquarters - Ho Chi Minh City",
+      "budget_headcount": 50,
+      "status": "Active"
+    }
+  ],
+  "team": [
+    {
+      "team_id": "TEAM-CORE",
+      "name": "Core Platform Engineering Team",
+      "department": "Software Engineering",
+      "team_lead": "Alex Manager",
+      "description": "Responsible for core system architecture and backend APIs",
+      "status": "Active"
+    }
+  ],
+  "team_member": [
+    {
+      "member_id": "TM-0024",
+      "team": "Core Platform Engineering Team",
+      "employee": "John Doe",
+      "role_in_team": "Senior Backend Engineer",
+      "allocation_percentage": 100.00,
+      "joined_date": "2022-03-01",
+      "status": "Active"
+    }
+  ],
+  "position": [
+    {
+      "position_id": "POS-SWE-L3",
+      "title": "Software Engineer (Level 3)",
+      "job_level": "L3",
+      "min_salary": 1500.00,
+      "max_salary": 3000.00,
+      "department": "Software Engineering",
+      "target_headcount": 15,
+      "status": "Active"
+    }
+  ],
+  "reporting_line": [
+    {
+      "reporting_id": "RPT-0024",
+      "employee": "John Doe",
+      "manager": "Alex Manager",
+      "reporting_type": "DIRECT",
+      "effective_date": "2022-03-01"
+    }
+  ]
+}

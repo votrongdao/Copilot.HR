@@ -1,0 +1,115 @@
+{
+  "employee": [
+    {
+      "employee_id": "EMP-0001",
+      "email": "alex.manager@company.com",
+      "join_date": "2020-01-15",
+      "employment_status": "Active",
+      "department": "Software Engineering",
+      "position": "Engineering Manager (L5)",
+      "team": "Core Platform Engineering Team",
+      "direct_manager": null
+    },
+    {
+      "employee_id": "EMP-0024",
+      "email": "john.doe@company.com",
+      "join_date": "2022-03-01",
+      "employment_status": "Active",
+      "department": "Software Engineering",
+      "position": "Software Engineer (L3)",
+      "team": "Core Platform Engineering Team",
+      "direct_manager": "Alex Manager"
+    }
+  ],
+  "employee_profile": [
+    {
+      "profile_id": "PROF-0024",
+      "employee": "John Doe",
+      "first_name": "John",
+      "last_name": "Doe",
+      "phone": "+84901234567",
+      "avatar_url": "https://cdn.copilothr.com/avatars/emp-0024.png",
+      "gender": "Male",
+      "date_of_birth": "1995-08-20"
+    }
+  ],
+  "contract": [
+    {
+      "contract_id": "CTR-0024",
+      "employee": "John Doe",
+      "contract_number": "LC-2024-0024",
+      "contract_type": "Full-Time Permanent",
+      "start_date": "2022-03-01",
+      "end_date": "2025-03-01",
+      "base_salary": 2500.00,
+      "status": "Active",
+      "signed_document_url": "https://cdn.copilothr.com/contracts/lc-2024-0024.pdf"
+    }
+  ],
+  "education": [
+    {
+      "education_id": "EDU-0024",
+      "employee": "John Doe",
+      "degree": "Bachelor of Computer Science",
+      "institution": "Ho Chi Minh City University of Technology",
+      "field_of_study": "Software Engineering",
+      "start_year": 2013,
+      "end_year": 2017
+    }
+  ],
+  "certification": [
+    {
+      "certification_id": "CERT-0024",
+      "employee": "John Doe",
+      "name": "AWS Certified Solutions Architect - Associate",
+      "issuing_organization": "Amazon Web Services",
+      "issue_date": "2023-05-10",
+      "expiry_date": "2026-05-10",
+      "credential_id": "AWS-ASA-998822"
+    }
+  ],
+  "asset": [
+    {
+      "asset_id": "AST-0024",
+      "employee": "John Doe",
+      "asset_name": "MacBook Pro 16-inch M2 Max",
+      "serial_number": "SN-MBP16-2023-0024",
+      "asset_type": "Laptop",
+      "issue_date": "2022-03-01",
+      "status": "Issued"
+    }
+  ],
+  "employee_document": [
+    {
+      "document_id": "DOC-0024",
+      "employee": "John Doe",
+      "document_name": "National ID Card Scan",
+      "document_type": "Identity Card",
+      "file_url": "https://cdn.copilothr.com/docs/id-emp-0024.pdf",
+      "uploaded_at": "2022-03-01T09:30:00"
+    }
+  ],
+  "leave_type": [
+    {
+      "leave_type_id": "LT-ANNUAL",
+      "code": "ANNUAL",
+      "name": "Annual Paid Leave",
+      "is_paid": true,
+      "default_days_per_year": 12.00,
+      "status": "Active"
+    }
+  ],
+  "employee_leave_balance": [
+    {
+      "balance_id": "BAL-0024-2026",
+      "employee": "John Doe",
+      "leave_type": "Annual Paid Leave",
+      "year": 2026,
+      "allocated_days": 12.00,
+      "carried_over_days": 2.00,
+      "used_days": 3.00,
+      "pending_days": 1.00,
+      "remaining_days": 10.00
+    }
+  ]
+}
