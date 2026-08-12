@@ -1,5 +1,8 @@
 package bbv.hr.application.services.employee_directory;
 
+import bbv.hr.api.dtos.employee_directory.requests.CreateEmployeeRequest;
+import bbv.hr.api.dtos.employee_directory.requests.UpdateEmployeeProfileRequest;
+import bbv.hr.api.dtos.employee_directory.responses.*;
 import bbv.hr.application.interfaces.employee_directory.EmployeeService;
 import bbv.hr.infrastructure.entities.employee_directory.*;
 import bbv.hr.infrastructure.repositories.employee_directory.*;
@@ -39,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * Search and retrieve paginated list of employees matching status or search term.
      */
     @Override
-    public List<Employee> getEmployees(String search, String status, int page, int size) {
+    public List<EmployeeSummaryResponse> getEmployees(String search, String status, int page, int size) {
         List<Employee> allEmployees = employeeRepository.findAll();
 
         return allEmployees.stream()
@@ -49,6 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         || (e.getEmployeeId() != null && e.getEmployeeId().toLowerCase().contains(search.toLowerCase())))
                 .skip((long) Math.max(0, page) * size)
                 .limit(Math.max(1, size))
+                .map(this::mapToSummary)
                 .collect(Collectors.toList());
     }
 
@@ -56,53 +60,108 @@ public class EmployeeServiceImpl implements EmployeeService {
      * Register a new employee account and profile after checking duplicate email.
      */
     @Override
-    public Employee createEmployee(Employee employee, EmployeeProfile profile) {
-        if (employeeRepository.existsByEmail(employee.getEmail())) {
-            throw new IllegalArgumentException("Corporate email already exists: " + employee.getEmail());
+    public EmployeeSummaryResponse createEmployee(CreateEmployeeRequest request) {
+        if (employeeRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Corporate email already exists: " + request.getEmail());
         }
-        if (profile != null) {
-            profile.setEmployee(employee);
-        }
-        return employee;
+
+        Employee employee = Employee.builder()
+                .employeeId(request.getEmployeeId())
+                .email(request.getEmail())
+                .departmentId(request.getDepartmentId())
+                .positionId(request.getPositionId())
+                .employmentStatus(request.getEmploymentStatus() != null ? request.getEmploymentStatus() : "Active")
+                .joinDate(request.getJoinDate())
+                .build();
+
+        return EmployeeSummaryResponse.builder()
+                .employeeId(employee.getEmployeeId())
+                .email(employee.getEmail())
+                .departmentId(employee.getDepartmentId())
+                .positionId(employee.getPositionId())
+                .employmentStatus(employee.getEmploymentStatus())
+                .joinDate(employee.getJoinDate())
+                .fullName(request.getFirstName() + " " + request.getLastName())
+                .build();
     }
 
     /**
-     * Fetch 360-degree full profile details (including Education, Certifications, Assets) for a given employee ID.
+     * Fetch 360-degree full profile details for a given employee ID.
      */
     @Override
-    public EmployeeProfile getEmployeeById(String employeeId) {
-        EmployeeProfile profile = employeeProfileRepository.findByEmployeeId(employeeId);
-        if (profile == null) {
-            throw new IllegalArgumentException("Employee profile not found with ID: " + employeeId);
+    public EmployeeDetailResponse getEmployeeById(String employeeId) {
+        Employee employee = employeeRepository.findById(employeeId);
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee not found with ID: " + employeeId);
         }
 
-        // Aggregate 360-degree details from Education, Certification, and Asset repositories
+        EmployeeProfile profile = employeeProfileRepository.findByEmployeeId(employeeId);
         List<Education> educations = educationRepository.findByEmployeeId(employeeId);
         List<Certification> certifications = certificationRepository.findByEmployeeId(employeeId);
         List<Asset> assets = assetRepository.findByEmployeeId(employeeId);
 
-        return profile;
+        List<EducationResponse> educationResponses = educations.stream().map(e -> EducationResponse.builder()
+                .educationId(e.getEducationId())
+                .institutionName(e.getInstitution())
+                .degree(e.getDegree())
+                .major(e.getFieldOfStudy())
+                .startYear(e.getStartYear())
+                .endYear(e.getEndYear())
+                .build()).collect(Collectors.toList());
+
+        List<CertificationResponse> certificationResponses = certifications.stream().map(c -> CertificationResponse.builder()
+                .certificationId(c.getCertificationId())
+                .certificateName(c.getName())
+                .issuingOrganization(c.getIssuingOrganization())
+                .issueDate(c.getIssueDate())
+                .expiryDate(c.getExpiryDate())
+                .build()).collect(Collectors.toList());
+
+        List<AssetResponse> assetResponses = assets.stream().map(a -> AssetResponse.builder()
+                .assetId(a.getAssetId())
+                .assetName(a.getAssetName())
+                .serialNumber(a.getSerialNumber())
+                .assignedDate(a.getIssueDate())
+                .build()).collect(Collectors.toList());
+
+        return EmployeeDetailResponse.builder()
+                .employeeId(employee.getEmployeeId())
+                .email(employee.getEmail())
+                .departmentId(employee.getDepartmentId())
+                .positionId(employee.getPositionId())
+                .employmentStatus(employee.getEmploymentStatus())
+                .joinDate(employee.getJoinDate())
+                .profile(profile != null ? EmployeeProfileResponse.builder()
+                        .profileId(profile.getProfileId())
+                        .firstName(profile.getFirstName())
+                        .lastName(profile.getLastName())
+                        .phone(profile.getPhone())
+                        .avatarUrl(profile.getAvatarUrl())
+                        .dateOfBirth(profile.getDateOfBirth())
+                        .gender(profile.getGender())
+                        .build() : null)
+                .educations(educationResponses)
+                .certifications(certificationResponses)
+                .assets(assetResponses)
+                .build();
     }
 
     /**
      * Update employee contact details and demographic information.
      */
     @Override
-    public EmployeeProfile updateEmployee(String employeeId, EmployeeProfile profileUpdate) {
-        EmployeeProfile existingProfile = getEmployeeById(employeeId);
-        if (profileUpdate.getFirstName() != null) {
-            existingProfile.setFirstName(profileUpdate.getFirstName());
+    public EmployeeDetailResponse updateEmployee(String employeeId, UpdateEmployeeProfileRequest request) {
+        EmployeeDetailResponse existing = getEmployeeById(employeeId);
+
+        if (existing.getProfile() != null) {
+            if (request.getFirstName() != null) existing.getProfile().setFirstName(request.getFirstName());
+            if (request.getLastName() != null) existing.getProfile().setLastName(request.getLastName());
+            if (request.getPhone() != null) existing.getProfile().setPhone(request.getPhone());
+            if (request.getAvatarUrl() != null) existing.getProfile().setAvatarUrl(request.getAvatarUrl());
+            if (request.getDateOfBirth() != null) existing.getProfile().setDateOfBirth(request.getDateOfBirth());
+            if (request.getGender() != null) existing.getProfile().setGender(request.getGender());
         }
-        if (profileUpdate.getLastName() != null) {
-            existingProfile.setLastName(profileUpdate.getLastName());
-        }
-        if (profileUpdate.getPhone() != null) {
-            existingProfile.setPhone(profileUpdate.getPhone());
-        }
-        if (profileUpdate.getAvatarUrl() != null) {
-            existingProfile.setAvatarUrl(profileUpdate.getAvatarUrl());
-        }
-        return existingProfile;
+        return existing;
     }
 
     /**
@@ -132,5 +191,22 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .append(e.getDepartmentId()).append("\n");
         }
         return new ByteArrayInputStream(csv.toString().getBytes(StandardCharsets.UTF_8));
+    }
+
+    private EmployeeSummaryResponse mapToSummary(Employee employee) {
+        EmployeeProfile profile = employeeProfileRepository.findByEmployeeId(employee.getEmployeeId());
+        String fullName = profile != null ? profile.getFirstName() + " " + profile.getLastName() : "N/A";
+        String avatarUrl = profile != null ? profile.getAvatarUrl() : null;
+
+        return EmployeeSummaryResponse.builder()
+                .employeeId(employee.getEmployeeId())
+                .email(employee.getEmail())
+                .departmentId(employee.getDepartmentId())
+                .positionId(employee.getPositionId())
+                .employmentStatus(employee.getEmploymentStatus())
+                .joinDate(employee.getJoinDate())
+                .fullName(fullName)
+                .avatarUrl(avatarUrl)
+                .build();
     }
 }

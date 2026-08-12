@@ -1,7 +1,7 @@
 package bbv.hr.api.controllers.employee_directory;
 
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeLeaveBalanceResponse;
 import bbv.hr.application.interfaces.employee_directory.LeaveBalanceService;
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeLeaveBalance;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,9 +25,9 @@ public class EmployeeLeaveBalanceController {
     @GetMapping
     @Operation(summary = "TC-11: Retrieve Leave Quotas", description = "Retrieve annual leave quotas, carried over days, used days, and remaining balances per leave type.")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved leave balance quotas")
-    public ResponseEntity<List<EmployeeLeaveBalance>> getLeaveBalance(
+    public ResponseEntity<List<EmployeeLeaveBalanceResponse>> getLeaveBalance(
             @Parameter(description = "Employee ID (e.g. EMP-0024)") @PathVariable("id") String employeeId) {
-        List<EmployeeLeaveBalance> balances = leaveBalanceService.getLeaveBalance(employeeId);
+        List<EmployeeLeaveBalanceResponse> balances = leaveBalanceService.getLeaveBalance(employeeId);
         return ResponseEntity.ok(balances);
     }
 }

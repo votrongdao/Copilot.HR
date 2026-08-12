@@ -1,8 +1,10 @@
 package bbv.hr.api.controllers.employee_directory;
 
+import bbv.hr.api.dtos.employee_directory.requests.CreateEmployeeRequest;
+import bbv.hr.api.dtos.employee_directory.requests.UpdateEmployeeProfileRequest;
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeDetailResponse;
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeSummaryResponse;
 import bbv.hr.application.interfaces.employee_directory.EmployeeService;
-import bbv.hr.infrastructure.entities.employee_directory.Employee;
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeProfile;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,12 +33,12 @@ public class EmployeeController {
     @GetMapping
     @Operation(summary = "TC-01: Search & Paginated Employees List", description = "Retrieve a paginated list of employees filtered by status and search query.")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved paginated employee list")
-    public ResponseEntity<List<Employee>> getEmployees(
+    public ResponseEntity<List<EmployeeSummaryResponse>> getEmployees(
             @Parameter(description = "Keyword search for email or employee ID") @RequestParam(required = false) String search,
             @Parameter(description = "Employment status (e.g. Active, Probation, Terminated)") @RequestParam(required = false) String status,
             @Parameter(description = "Page index (0-based)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Page size limit") @RequestParam(defaultValue = "10") int size) {
-        List<Employee> employees = employeeService.getEmployees(search, status, page, size);
+        List<EmployeeSummaryResponse> employees = employeeService.getEmployees(search, status, page, size);
         return ResponseEntity.ok(employees);
     }
 
@@ -45,9 +47,9 @@ public class EmployeeController {
     @ApiResponse(responseCode = "201", description = "Employee profile created successfully")
     @ApiResponse(responseCode = "409", description = "Corporate email already exists")
     public ResponseEntity<?> createEmployee(
-            @RequestBody Employee employee) {
+            @RequestBody CreateEmployeeRequest request) {
         try {
-            Employee created = employeeService.createEmployee(employee, null);
+            EmployeeSummaryResponse created = employeeService.createEmployee(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(created);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -61,7 +63,7 @@ public class EmployeeController {
     public ResponseEntity<?> getEmployeeById(
             @Parameter(description = "Employee ID (e.g. EMP-0024)") @PathVariable("id") String employeeId) {
         try {
-            EmployeeProfile profile = employeeService.getEmployeeById(employeeId);
+            EmployeeDetailResponse profile = employeeService.getEmployeeById(employeeId);
             return ResponseEntity.ok(profile);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -74,9 +76,9 @@ public class EmployeeController {
     @ApiResponse(responseCode = "404", description = "Employee not found")
     public ResponseEntity<?> updateEmployee(
             @Parameter(description = "Employee ID (e.g. EMP-0024)") @PathVariable("id") String employeeId,
-            @RequestBody EmployeeProfile profileUpdate) {
+            @RequestBody UpdateEmployeeProfileRequest request) {
         try {
-            EmployeeProfile updated = employeeService.updateEmployee(employeeId, profileUpdate);
+            EmployeeDetailResponse updated = employeeService.updateEmployee(employeeId, request);
             return ResponseEntity.ok(updated);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

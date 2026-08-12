@@ -1,6 +1,6 @@
 package bbv.hr.application.interfaces.employee_directory;
 
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeLeaveBalance;
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeLeaveBalanceResponse;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ public interface LeaveBalanceService {
     /**
      * Retrieve annual leave quotas and remaining balances for a given employee ID.
      */
-    List<EmployeeLeaveBalance> getLeaveBalance(String employeeId);
+    List<EmployeeLeaveBalanceResponse> getLeaveBalance(String employeeId);
 }

@@ -1,6 +1,7 @@
 package bbv.hr.application.interfaces.employee_directory;
 
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeDocument;
+import bbv.hr.api.dtos.employee_directory.requests.UploadDocumentRequest;
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeDocumentResponse;
 
 import java.util.List;
 
@@ -12,10 +13,10 @@ public interface EmployeeDocumentService {
     /**
      * Fetch all uploaded verification documents for a given employee ID.
      */
-    List<EmployeeDocument> getEmployeeDocuments(String employeeId);
+    List<EmployeeDocumentResponse> getEmployeeDocuments(String employeeId);
 
     /**
      * Upload a new verification document file for an employee.
      */
-    EmployeeDocument uploadDocument(String employeeId, EmployeeDocument document);
+    EmployeeDocumentResponse uploadDocument(String employeeId, UploadDocumentRequest request);
 }

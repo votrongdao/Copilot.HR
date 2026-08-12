@@ -1,7 +1,9 @@
 package bbv.hr.application.interfaces.employee_directory;
 
-import bbv.hr.infrastructure.entities.employee_directory.Employee;
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeProfile;
+import bbv.hr.api.dtos.employee_directory.requests.CreateEmployeeRequest;
+import bbv.hr.api.dtos.employee_directory.requests.UpdateEmployeeProfileRequest;
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeDetailResponse;
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeSummaryResponse;
 
 import java.io.InputStream;
 import java.util.List;
@@ -14,22 +16,22 @@ public interface EmployeeService {
     /**
      * Search and retrieve paginated list of employees.
      */
-    List<Employee> getEmployees(String search, String status, int page, int size);
+    List<EmployeeSummaryResponse> getEmployees(String search, String status, int page, int size);
 
     /**
      * Register a new employee account and profile.
      */
-    Employee createEmployee(Employee employee, EmployeeProfile profile);
+    EmployeeSummaryResponse createEmployee(CreateEmployeeRequest request);
 
     /**
      * Fetch 360-degree full profile details for a given employee ID.
      */
-    EmployeeProfile getEmployeeById(String employeeId);
+    EmployeeDetailResponse getEmployeeById(String employeeId);
 
     /**
      * Update employee contact details and demographic information.
      */
-    EmployeeProfile updateEmployee(String employeeId, EmployeeProfile profileUpdate);
+    EmployeeDetailResponse updateEmployee(String employeeId, UpdateEmployeeProfileRequest request);
 
     /**
      * Offboard employee and deactivate system account.

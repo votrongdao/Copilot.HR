@@ -1,7 +1,8 @@
 package bbv.hr.api.controllers.employee_directory;
 
+import bbv.hr.api.dtos.employee_directory.requests.CreateContractRequest;
+import bbv.hr.api.dtos.employee_directory.responses.ContractResponse;
 import bbv.hr.application.interfaces.employee_directory.ContractService;
-import bbv.hr.infrastructure.entities.employee_directory.Contract;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,9 +27,9 @@ public class EmployeeContractController {
     @GetMapping
     @Operation(summary = "TC-07: Fetch Contract History", description = "Retrieve all labor contract records and salary terms for a given employee ID.")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved contract history")
-    public ResponseEntity<List<Contract>> getEmployeeContracts(
+    public ResponseEntity<List<ContractResponse>> getEmployeeContracts(
             @Parameter(description = "Employee ID (e.g. EMP-0024)") @PathVariable("id") String employeeId) {
-        List<Contract> contracts = contractService.getEmployeeContracts(employeeId);
+        List<ContractResponse> contracts = contractService.getEmployeeContracts(employeeId);
         return ResponseEntity.ok(contracts);
     }
 
@@ -38,9 +39,9 @@ public class EmployeeContractController {
     @ApiResponse(responseCode = "400", description = "Invalid request or duplicate contract number")
     public ResponseEntity<?> createContract(
             @Parameter(description = "Employee ID (e.g. EMP-0024)") @PathVariable("id") String employeeId,
-            @RequestBody Contract contract) {
+            @RequestBody CreateContractRequest request) {
         try {
-            Contract created = contractService.createContract(employeeId, contract);
+            ContractResponse created = contractService.createContract(employeeId, request);
             return ResponseEntity.status(HttpStatus.CREATED).body(created);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

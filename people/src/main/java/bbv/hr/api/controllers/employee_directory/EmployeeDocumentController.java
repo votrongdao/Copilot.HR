@@ -1,7 +1,8 @@
 package bbv.hr.api.controllers.employee_directory;
 
+import bbv.hr.api.dtos.employee_directory.requests.UploadDocumentRequest;
+import bbv.hr.api.dtos.employee_directory.responses.EmployeeDocumentResponse;
 import bbv.hr.application.interfaces.employee_directory.EmployeeDocumentService;
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeDocument;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,9 +27,9 @@ public class EmployeeDocumentController {
     @GetMapping
     @Operation(summary = "TC-09: Fetch Verification Documents", description = "Retrieve list of scanned personal identity documents and files for an employee.")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved verification document list")
-    public ResponseEntity<List<EmployeeDocument>> getEmployeeDocuments(
+    public ResponseEntity<List<EmployeeDocumentResponse>> getEmployeeDocuments(
             @Parameter(description = "Employee ID (e.g. EMP-0024)") @PathVariable("id") String employeeId) {
-        List<EmployeeDocument> documents = employeeDocumentService.getEmployeeDocuments(employeeId);
+        List<EmployeeDocumentResponse> documents = employeeDocumentService.getEmployeeDocuments(employeeId);
         return ResponseEntity.ok(documents);
     }
 
@@ -38,9 +39,9 @@ public class EmployeeDocumentController {
     @ApiResponse(responseCode = "400", description = "Invalid employee or document metadata")
     public ResponseEntity<?> uploadDocument(
             @Parameter(description = "Employee ID (e.g. EMP-0024)") @PathVariable("id") String employeeId,
-            @RequestBody EmployeeDocument document) {
+            @RequestBody UploadDocumentRequest request) {
         try {
-            EmployeeDocument uploaded = employeeDocumentService.uploadDocument(employeeId, document);
+            EmployeeDocumentResponse uploaded = employeeDocumentService.uploadDocument(employeeId, request);
             return ResponseEntity.status(HttpStatus.CREATED).body(uploaded);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
