@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service implementation for Labor Contract operations.
+ * Service implementation for Labor Contract operations querying PostgreSQL database.
  */
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -28,7 +28,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     /**
-     * Fetch complete contract history for a given employee ID.
+     * Fetch complete contract history from PostgreSQL for a given employee ID.
      */
     @Override
     public List<ContractResponse> getEmployeeContracts(String employeeId) {
@@ -39,20 +39,21 @@ public class ContractServiceImpl implements ContractService {
     }
 
     /**
-     * Register a new labor contract and base salary record for an employee.
+     * Register a new labor contract and base salary record in PostgreSQL.
      */
     @Override
     public ContractResponse createContract(String employeeId, CreateContractRequest request) {
-        Employee employee = employeeRepository.findById(employeeId);
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
         if (employee == null) {
             throw new IllegalArgumentException("Employee not found with ID: " + employeeId);
         }
-        if (contractRepository.findByContractNumber(request.getContractNumber()) != null) {
+        if (contractRepository.findByContractNumber(request.getContractNumber()).isPresent()) {
             throw new IllegalArgumentException("Contract number already exists: " + request.getContractNumber());
         }
 
-        return ContractResponse.builder()
+        Contract contract = Contract.builder()
                 .contractId("CNT-" + System.currentTimeMillis())
+                .employee(employee)
                 .contractNumber(request.getContractNumber())
                 .contractType(request.getContractType())
                 .startDate(request.getStartDate())
@@ -60,6 +61,9 @@ public class ContractServiceImpl implements ContractService {
                 .baseSalary(request.getBaseSalary())
                 .status(request.getStatus() != null ? request.getStatus() : "Active")
                 .build();
+
+        Contract saved = contractRepository.save(contract);
+        return mapToResponse(saved);
     }
 
     private ContractResponse mapToResponse(Contract c) {

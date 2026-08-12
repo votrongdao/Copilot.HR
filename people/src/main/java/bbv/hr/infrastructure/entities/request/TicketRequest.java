@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"employee", "requestType", "handoverEmployee"})
+@ToString(exclude = {"requester", "requestType", "handoverEmployee"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TicketRequest {
 
@@ -25,11 +25,11 @@ public class TicketRequest {
     private String requestId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    @JoinColumn(name = "requester_id")
+    private Employee requester;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_id", nullable = false)
+    @JoinColumn(name = "request_type_id")
     private RequestType requestType;
 
     @Column(name = "priority", length = 50)

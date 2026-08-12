@@ -16,14 +16,14 @@ public class RequestType {
 
     @Id
     @EqualsAndHashCode.Include
-    @Column(name = "type_id", nullable = false, length = 50)
-    private String typeId;
+    @Column(name = "request_type_id", nullable = false, length = 50)
+    private String requestTypeId;
 
-    @Column(name = "type_code", nullable = false, unique = true, length = 50)
-    private String typeCode;
+    @Column(name = "code", length = 50)
+    private String code;
 
-    @Column(name = "type_name", length = 100)
-    private String typeName;
+    @Column(name = "name", length = 100)
+    private String name;
 
     @Column(name = "category", length = 50)
     private String category;

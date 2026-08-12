@@ -1,46 +1,19 @@
 package bbv.hr.infrastructure.repositories.employee_directory;
 
 import bbv.hr.infrastructure.entities.employee_directory.EmployeeDocument;
-import bbv.hr.infrastructure.repositories.GetData;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * JSON-backed Repository for EmployeeDocument entity querying GetData component with in-memory caching.
+ * Spring Data JPA Repository for EmployeeDocument entity querying PostgreSQL database.
  */
 @Repository
-public class EmployeeDocumentRepository {
+public interface EmployeeDocumentRepository extends JpaRepository<EmployeeDocument, String> {
 
-    private final GetData getData;
-    private final List<EmployeeDocument> documents = new ArrayList<>();
-
-    public EmployeeDocumentRepository(GetData getData) {
-        this.getData = getData;
-    }
-
-    /**
-     * Retrieve all verification document records lazily cached from JSON mock data.
-     */
-    public List<EmployeeDocument> findAll() {
-        if (documents.isEmpty()) {
-            List<EmployeeDocument> loaded = getData.getEmployeeDirectoryEntities("employee_document", EmployeeDocument.class);
-            if (loaded != null) {
-                documents.addAll(loaded);
-            }
-        }
-        return documents;
-    }
-
-    /**
-     * Find all uploaded verification documents for a specific employee ID.
-     */
-    public List<EmployeeDocument> findByEmployeeId(String employeeId) {
-        return documents.stream()
-                .filter(d -> d.getEmployee() != null && d.getEmployee().getEmployeeId() != null
-                        && d.getEmployee().getEmployeeId().equalsIgnoreCase(employeeId))
-                .collect(Collectors.toList());
-    }
+    @Query("SELECT d FROM EmployeeDocument d WHERE d.employee.employeeId = :employeeId")
+    List<EmployeeDocument> findByEmployeeId(@Param("employeeId") String employeeId);
 }

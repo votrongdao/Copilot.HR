@@ -21,11 +21,11 @@ public class Position {
     @Column(name = "position_id", nullable = false, length = 50)
     private String positionId;
 
-    @Column(name = "title", length = 100)
-    private String title;
+    @Column(name = "position_title", length = 150)
+    private String positionTitle;
 
-    @Column(name = "job_level", length = 50)
-    private String jobLevel;
+    @Column(name = "level", length = 50)
+    private String level;
 
     @Column(name = "min_salary", precision = 12, scale = 2)
     private BigDecimal minSalary;

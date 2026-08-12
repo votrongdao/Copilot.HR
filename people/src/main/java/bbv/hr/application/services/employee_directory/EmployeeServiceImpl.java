@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service implementation for Employee Directory management operations.
+ * Service implementation for Employee Directory management querying PostgreSQL database via JPA.
  */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     * Search and retrieve paginated list of employees matching status or search term.
+     * Search and retrieve paginated list of employees matching status or search term from PostgreSQL.
      */
     @Override
     public List<EmployeeSummaryResponse> getEmployees(String search, String status, int page, int size) {
@@ -57,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     * Register a new employee account and profile after checking duplicate email.
+     * Register a new employee account and profile in PostgreSQL after checking duplicate email.
      */
     @Override
     public EmployeeSummaryResponse createEmployee(CreateEmployeeRequest request) {
@@ -74,28 +74,30 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .joinDate(request.getJoinDate())
                 .build();
 
+        Employee saved = employeeRepository.save(employee);
+
         return EmployeeSummaryResponse.builder()
-                .employeeId(employee.getEmployeeId())
-                .email(employee.getEmail())
-                .departmentId(employee.getDepartmentId())
-                .positionId(employee.getPositionId())
-                .employmentStatus(employee.getEmploymentStatus())
-                .joinDate(employee.getJoinDate())
+                .employeeId(saved.getEmployeeId())
+                .email(saved.getEmail())
+                .departmentId(saved.getDepartmentId())
+                .positionId(saved.getPositionId())
+                .employmentStatus(saved.getEmploymentStatus())
+                .joinDate(saved.getJoinDate())
                 .fullName(request.getFirstName() + " " + request.getLastName())
                 .build();
     }
 
     /**
-     * Fetch 360-degree full profile details for a given employee ID.
+     * Fetch 360-degree full profile details from PostgreSQL for a given employee ID.
      */
     @Override
     public EmployeeDetailResponse getEmployeeById(String employeeId) {
-        Employee employee = employeeRepository.findById(employeeId);
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
         if (employee == null) {
             throw new IllegalArgumentException("Employee not found with ID: " + employeeId);
         }
 
-        EmployeeProfile profile = employeeProfileRepository.findByEmployeeId(employeeId);
+        EmployeeProfile profile = employeeProfileRepository.findByEmployeeId(employeeId).orElse(null);
         List<Education> educations = educationRepository.findByEmployeeId(employeeId);
         List<Certification> certifications = certificationRepository.findByEmployeeId(employeeId);
         List<Asset> assets = assetRepository.findByEmployeeId(employeeId);
@@ -147,7 +149,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     * Update employee contact details and demographic information.
+     * Update employee contact details and demographic information in PostgreSQL.
      */
     @Override
     public EmployeeDetailResponse updateEmployee(String employeeId, UpdateEmployeeProfileRequest request) {
@@ -165,13 +167,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     * Offboard employee and deactivate system account.
+     * Offboard employee and deactivate system account in PostgreSQL.
      */
     @Override
     public boolean deleteEmployee(String employeeId) {
-        Employee employee = employeeRepository.findById(employeeId);
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
         if (employee != null) {
             employee.setEmploymentStatus("Terminated");
+            employeeRepository.save(employee);
             return true;
         }
         return false;
@@ -194,7 +197,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private EmployeeSummaryResponse mapToSummary(Employee employee) {
-        EmployeeProfile profile = employeeProfileRepository.findByEmployeeId(employee.getEmployeeId());
+        EmployeeProfile profile = employeeProfileRepository.findByEmployeeId(employee.getEmployeeId()).orElse(null);
         String fullName = profile != null ? profile.getFirstName() + " " + profile.getLastName() : "N/A";
         String avatarUrl = profile != null ? profile.getAvatarUrl() : null;
 

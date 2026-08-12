@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Service implementation for Career Audit Trail & History operations.
+ * Service implementation for Career Audit Trail & History operations querying PostgreSQL.
  */
 @Service
 public class EmployeeHistoryServiceImpl implements EmployeeHistoryService {
@@ -24,18 +24,18 @@ public class EmployeeHistoryServiceImpl implements EmployeeHistoryService {
     }
 
     /**
-     * Fetch career audit trail logs and status timeline for a given employee ID.
+     * Fetch career audit trail logs and status timeline from PostgreSQL for a given employee ID.
      */
     @Override
     public List<Map<String, Object>> getEmployeeHistory(String employeeId) {
-        Employee employee = employeeRepository.findById(employeeId);
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
         List<Map<String, Object>> history = new ArrayList<>();
 
         if (employee != null) {
             Map<String, Object> joinLog = new HashMap<>();
             joinLog.put("event", "EMPLOYEE_JOINED");
             joinLog.put("timestamp", employee.getJoinDate() != null ? employee.getJoinDate().atStartOfDay() : LocalDateTime.now());
-            joinLog.put("details", "Employee onboarded into " + employee.getDepartmentId());
+            joinLog.put("details", "Employee onboarded into department " + employee.getDepartmentId());
             history.add(joinLog);
 
             Map<String, Object> statusLog = new HashMap<>();

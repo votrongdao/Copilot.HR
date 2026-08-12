@@ -20,7 +20,7 @@ public class WorkflowStep {
     private String stepId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_id", nullable = false)
+    @JoinColumn(name = "request_type_id")
     private RequestType requestType;
 
     @Column(name = "step_order")

@@ -22,13 +22,13 @@ public class Asset {
     private String assetId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
     @Column(name = "asset_name", length = 150)
     private String assetName;
 
-    @Column(name = "serial_number", nullable = false, unique = true, length = 100)
+    @Column(name = "serial_number", length = 100)
     private String serialNumber;
 
     @Column(name = "asset_type", length = 50)

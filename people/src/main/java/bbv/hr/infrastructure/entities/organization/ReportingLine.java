@@ -19,15 +19,15 @@ public class ReportingLine {
 
     @Id
     @EqualsAndHashCode.Include
-    @Column(name = "reporting_id", nullable = false, length = 50)
-    private String reportingId;
+    @Column(name = "line_id", nullable = false, length = 50)
+    private String lineId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "manager_id", nullable = false)
+    @JoinColumn(name = "manager_id")
     private Employee manager;
 
     @Column(name = "reporting_type", length = 50)

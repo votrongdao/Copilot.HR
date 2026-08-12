@@ -19,10 +19,10 @@ public class CompanyBranch {
     @Column(name = "branch_id", nullable = false, length = 50)
     private String branchId;
 
-    @Column(name = "branch_name", length = 100)
+    @Column(name = "branch_name", length = 150)
     private String branchName;
 
-    @Column(name = "branch_code", nullable = false, unique = true, length = 50)
+    @Column(name = "branch_code", nullable = true, length = 50)
     private String branchCode;
 
     @Column(name = "address", length = 255)

@@ -21,7 +21,7 @@ public class Employee {
     @Column(name = "employee_id", nullable = false, length = 50)
     private String employeeId;
 
-    @Column(name = "email", nullable = false, unique = true, length = 100)
+    @Column(name = "email", length = 100)
     private String email;
 
     @Column(name = "join_date")

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service implementation for Leave Quota and Balance operations.
+ * Service implementation for Leave Quota and Balance operations querying PostgreSQL.
  */
 @Service
 public class LeaveBalanceServiceImpl implements LeaveBalanceService {
@@ -28,7 +28,7 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
     }
 
     /**
-     * Retrieve annual leave quotas and remaining balances for a given employee ID.
+     * Retrieve annual leave quotas and remaining balances from PostgreSQL for a given employee ID.
      */
     @Override
     public List<EmployeeLeaveBalanceResponse> getLeaveBalance(String employeeId) {
@@ -38,7 +38,7 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
             String leaveTypeCode = b.getLeaveType() != null ? b.getLeaveType().getCode() : "ANNUAL";
             String leaveTypeName = "Annual Leave";
             if (b.getLeaveType() != null && b.getLeaveType().getCode() != null) {
-                LeaveType leaveType = leaveTypeRepository.findByCode(b.getLeaveType().getCode());
+                LeaveType leaveType = leaveTypeRepository.findByCode(b.getLeaveType().getCode()).orElse(null);
                 if (leaveType != null && leaveType.getName() != null) {
                     leaveTypeName = leaveType.getName();
                 }

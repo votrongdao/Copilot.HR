@@ -21,17 +21,20 @@ public class LeaveType {
     @Column(name = "leave_type_id", nullable = false, length = 50)
     private String leaveTypeId;
 
-    @Column(name = "code", nullable = false, unique = true, length = 50)
+    @Column(name = "code", length = 50)
     private String code;
 
     @Column(name = "name", length = 100)
     private String name;
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
     @Column(name = "is_paid")
     private Boolean isPaid;
 
-    @Column(name = "default_days_per_year", precision = 5, scale = 2)
-    private BigDecimal defaultDaysPerYear;
+    @Column(name = "default_quota", precision = 5, scale = 2)
+    private BigDecimal defaultQuota;
 
     @Column(name = "status", length = 50)
     private String status;

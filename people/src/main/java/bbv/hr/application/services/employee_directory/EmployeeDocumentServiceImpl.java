@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service implementation for Employee Document management operations.
+ * Service implementation for Employee Document management querying PostgreSQL.
  */
 @Service
 public class EmployeeDocumentServiceImpl implements EmployeeDocumentService {
@@ -29,7 +29,7 @@ public class EmployeeDocumentServiceImpl implements EmployeeDocumentService {
     }
 
     /**
-     * Fetch all uploaded verification documents for a given employee ID.
+     * Fetch all uploaded verification documents from PostgreSQL for a given employee ID.
      */
     @Override
     public List<EmployeeDocumentResponse> getEmployeeDocuments(String employeeId) {
@@ -40,22 +40,26 @@ public class EmployeeDocumentServiceImpl implements EmployeeDocumentService {
     }
 
     /**
-     * Upload a new verification document file for an employee.
+     * Upload a new verification document record into PostgreSQL for an employee.
      */
     @Override
     public EmployeeDocumentResponse uploadDocument(String employeeId, UploadDocumentRequest request) {
-        Employee employee = employeeRepository.findById(employeeId);
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
         if (employee == null) {
             throw new IllegalArgumentException("Employee not found with ID: " + employeeId);
         }
 
-        return EmployeeDocumentResponse.builder()
+        EmployeeDocument document = EmployeeDocument.builder()
                 .documentId("DOC-" + System.currentTimeMillis())
+                .employee(employee)
                 .documentType(request.getDocumentType())
                 .documentName(request.getDocumentName())
-                .documentUrl(request.getDocumentUrl())
+                .fileUrl(request.getDocumentUrl())
                 .uploadedAt(LocalDateTime.now())
                 .build();
+
+        EmployeeDocument saved = employeeDocumentRepository.save(document);
+        return mapToResponse(saved);
     }
 
     private EmployeeDocumentResponse mapToResponse(EmployeeDocument d) {
@@ -64,6 +68,7 @@ public class EmployeeDocumentServiceImpl implements EmployeeDocumentService {
                 .documentType(d.getDocumentType())
                 .documentName(d.getDocumentName())
                 .documentUrl(d.getFileUrl())
+                .uploadedAt(d.getUploadedAt())
                 .build();
     }
 }

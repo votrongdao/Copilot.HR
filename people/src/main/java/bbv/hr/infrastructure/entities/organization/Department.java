@@ -20,10 +20,10 @@ public class Department {
     @Column(name = "department_id", nullable = false, length = 50)
     private String departmentId;
 
-    @Column(name = "name", length = 100)
-    private String name;
+    @Column(name = "department_name", length = 150)
+    private String departmentName;
 
-    @Column(name = "code", nullable = false, unique = true, length = 50)
+    @Column(name = "code", nullable = true, length = 50)
     private String code;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -23,10 +23,10 @@ public class Contract {
     private String contractId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @Column(name = "contract_number", nullable = false, unique = true, length = 50)
+    @Column(name = "contract_number", length = 50)
     private String contractNumber;
 
     @Column(name = "contract_type", length = 50)
@@ -38,7 +38,7 @@ public class Contract {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "base_salary", precision = 12, scale = 2)
+    @Column(name = "base_salary", precision = 15, scale = 2)
     private BigDecimal baseSalary;
 
     @Column(name = "status", length = 50)

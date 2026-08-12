@@ -20,8 +20,8 @@ public class Team {
     @Column(name = "team_id", nullable = false, length = 50)
     private String teamId;
 
-    @Column(name = "name", length = 100)
-    private String name;
+    @Column(name = "team_name", length = 150)
+    private String teamName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
