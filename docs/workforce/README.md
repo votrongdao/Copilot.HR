@@ -40,7 +40,11 @@
 ![alt text](../../images/erd/workforce/time-sheet-review.png)
 
 ## V. API docs
-### Attendence Management (27)
+### Entire Workforce API docs
+
+[Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/index-workforce/1.0.0)
+
+#### Attendence Management (27)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/Attendence-management/1.0.0)
 ```text
 Workforce
@@ -90,7 +94,7 @@ Workforce
             └── GET    /shifts/{shiftId}
 ```
 
-### Leave Management (12)
+#### Leave Management (12)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/leave-management)
 ```text
 Leave Management API 
@@ -116,7 +120,7 @@ Leave Management API
     └── GET /holidays
 ```
 
-### Time Sheet View (10)
+#### Time Sheet View (10)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/time-sheet-review/1.0.0)
 ```text
 Timesheet Review API
