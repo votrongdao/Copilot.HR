@@ -1,4 +1,4 @@
-## I. Analyze and determine system requirements
+# I. Analyze and determine system requirements
 ## I.1. Actors
 
 | No. | Actor            | Main Responsibilities                                                                                  |
@@ -293,3 +293,29 @@ flowchart LR
 |  46 | **Integration**              | External Integration Management     | High     | Manage integrations with external email, calendar, storage, accounting, and workforce services.       |
 |  47 | **Integration**              | API & Webhook Management            | High     | Manage public APIs and webhook-based integrations.                                                    |
 |  48 | **Integration**              | Approval Workflow Management        | High     | Manage configurable multi-level approval workflows across business processes.                         |
+
+# II. Use Case:
+
+### 28. Attendance Management
+![Attendance Management use case](images/usecase/workforce/attendance.png)
+
+### 29. Leave Management
+![Leave Management use case](images/usecase/workforce/leave-management.png)
+
+### 30. Timesheet and Overtime Management
+![Timesheet and Overtime Management use case](images/usecase/workforce/timesheet-and-overtime.png)
+
+### 32. Work Schedule Management
+![Work Schedule Management use case](images/usecase/workforce/work-schedule-management.png)
+
+
+## III. Information Architecture
+
+## IV. UI/UX design
+
+## V. Entity diagram
+
+## VI. API docs
+
+## VII. API testcase
+
