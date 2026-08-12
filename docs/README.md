@@ -1,6 +1,6 @@
 # Copilot.HR - System Documentation
 
-Comprehensive architecture, specification, and API documentation for **Copilot.HR**, consolidated across all core operational modules: **Integration Management**, **Onboarding Management**, **Payroll Management**, **People Management**, **Project Management**, **Recruitment Management**, and **Workforce Management**.
+Comprehensive architecture, specification, and API documentation for **Copilot.HR**, consolidated across all core operational modules: **Integration Management**, **Onboarding Management**, **Payroll Management**, **People Management**, **Performance Management**, **Project Management**, **Recruitment Management**, and **Workforce Management**.
 
 ---
 
@@ -10,41 +10,46 @@ Comprehensive architecture, specification, and API documentation for **Copilot.H
    - [1.2 Onboarding Management](#12-onboarding-management)
    - [1.3 Payroll Management](#13-payroll-management)
    - [1.4 People Management](#14-people-management)
-   - [1.5 Project Management](#15-project-management)
-   - [1.6 Recruitment Management](#16-recruitment-management)
-   - [1.7 Workforce Management](#17-workforce-management)
+   - [1.5 Performance Management](#15-performance-management)
+   - [1.6 Project Management](#16-project-management)
+   - [1.7 Recruitment Management](#17-recruitment-management)
+   - [1.8 Workforce Management](#18-workforce-management)
 2. [2. Sitemaps (Information Architecture)](#2-sitemaps-information-architecture)
    - [2.1 Integration Management](#21-integration-management)
    - [2.2 Onboarding Management](#22-onboarding-management)
    - [2.3 Payroll Management](#23-payroll-management)
    - [2.4 People Management](#24-people-management)
-   - [2.5 Project Management](#25-project-management)
-   - [2.6 Recruitment Management](#26-recruitment-management)
-   - [2.7 Workforce Management](#27-workforce-management)
+   - [2.5 Performance Management](#25-performance-management)
+   - [2.6 Project Management](#26-project-management)
+   - [2.7 Recruitment Management](#27-recruitment-management)
+   - [2.8 Workforce Management](#28-workforce-management)
 3. [3. UI/UX Specifications](#3-uiux-specifications)
    - [3.1 Integration Management](#31-integration-management)
    - [3.2 Onboarding Management](#32-onboarding-management)
    - [3.3 Payroll Management](#33-payroll-management)
    - [3.4 People Management](#34-people-management)
-   - [3.5 Project Management](#35-project-management)
-   - [3.6 Recruitment Management](#36-recruitment-management)
-   - [3.7 Workforce Management](#37-workforce-management)
+   - [3.5 Performance Management](#35-performance-management)
+   - [3.6 Project Management](#36-project-management)
+   - [3.7 Recruitment Management](#37-recruitment-management)
+   - [3.8 Workforce Management](#38-workforce-management)
 4. [4. Entity Relationship Diagrams (ERD) & Database Schemas](#4-entity-relationship-diagrams-erd--database-schemas)
    - [4.1 Integration Management](#41-integration-management)
    - [4.2 Onboarding Management](#42-onboarding-management)
    - [4.3 Payroll Management](#43-payroll-management)
    - [4.4 People Management](#44-people-management)
-   - [4.5 Project Management](#45-project-management)
-   - [4.6 Recruitment Management](#46-recruitment-management)
-   - [4.7 Workforce Management](#47-workforce-management)
+   - [4.5 Performance Management](#45-performance-management)
+   - [4.6 Project Management](#46-project-management)
+   - [4.7 Recruitment Management](#47-recruitment-management)
+   - [4.8 Workforce Management](#48-workforce-management)
 5. [5. API Documentation & Test Cases](#5-api-documentation--test-cases)
    - [5.1 Integration Management](#51-integration-management)
    - [5.2 Onboarding Management](#52-onboarding-management)
    - [5.3 Payroll Management](#53-payroll-management)
    - [5.4 People Management](#54-people-management)
-   - [5.5 Project Management](#55-project-management)
-   - [5.6 Recruitment Management](#56-recruitment-management)
-   - [5.7 Workforce Management](#57-workforce-management)
+   - [5.5 Performance Management](#55-performance-management)
+   - [5.6 Project Management](#56-project-management)
+   - [5.7 Recruitment Management](#57-recruitment-management)
+   - [5.8 Workforce Management](#58-workforce-management)
 
 ---
 
@@ -64,24 +69,34 @@ The People Management Use Case Diagram defines the primary system interactions b
 
 ![People Management Use Case Diagram](../images/usecase/People.png)
 
-### 1.5 Project Management
+### 1.5 Performance Management
+#### Goal Management
+![Goal Management Use Case](../images/usecase/performance/GoalManagement.png)
+
+#### Performance Review
+![Performance Review Use Case](../images/usecase/performance/PerformanceReview.png)
+
+#### 1-on-1 Coaching
+![1-on-1 Coaching Use Case](../images/usecase/performance/1on1coaching.png)
+
+### 1.6 Project Management
 ![Project Management Use Case](../images/usecase/project-management/Project-Management.drawio.png)
 
-### 1.6 Recruitment Management
+### 1.7 Recruitment Management
 ![Recruitment Use Case](../images/usecase/recruitment.png)
 
-### 1.7 Workforce Management
-#### 1.7.1 Attendance Management
-![Attendance Management](../images/usecase/workforce/attendance.png)
+### 1.8 Workforce Management
+#### Attendance Management
+![Attendance Management](../workforce/docs/usecases/attendance.png)
 
-#### 1.7.2 Leave Management
-![Leave Management](../images/usecase/workforce/leave-management.png)
+#### Leave Management
+![Leave Management](../workforce/docs/usecases/leave-management.png)
 
-#### 1.7.3 Timesheet and Overtime Management
-![Timesheet and Overtime Management](../images/usecase/workforce/timesheet-and-overtime.png)
+#### Timesheet and Overtime Management
+![Timesheet and Overtime Management](../workforce/docs/usecases/timesheet-and-overtime.png)
 
-#### 1.7.4 Work Schedule Management
-![Work Schedule Management](../images/usecase/workforce/work-schedule-management.png)
+#### Work Schedule Management
+![Work Schedule Management](../workforce/docs/usecases/work-schedule-management.png)
 
 ---
 
@@ -99,7 +114,10 @@ The People Management Use Case Diagram defines the primary system interactions b
 ### 2.4 People Management
 ![People Management Information Architecture Sitemap](../images/sitemap/people-sitemap.png)
 
-### 2.5 Project Management
+### 2.5 Performance Management
+![Performance Review Sitemap](../images/sitemap/performancereview.png)
+
+### 2.6 Project Management
 #### Staff Sitemap
 ![Staff Sitemap](../images/sitemap/project-management/staff.png)
 
@@ -109,10 +127,10 @@ The People Management Use Case Diagram defines the primary system interactions b
 #### HR Sitemap
 ![HR Sitemap](../images/sitemap/project-management/hr.png)
 
-### 2.6 Recruitment Management
+### 2.7 Recruitment Management
 ![Recruitment Sitemap](../images/sitemap/recruitment_sitemap.png)
 
-### 2.7 Workforce Management
+### 2.8 Workforce Management
 ![Workforce Sitemap](../images/sitemap/image.png)
 
 ---
@@ -120,65 +138,65 @@ The People Management Use Case Diagram defines the primary system interactions b
 ## 3. UI/UX Specifications
 
 ### 3.1 Integration Management
-#### 3.1.1 Integration Overview
+#### Integration Overview
 ![Integration](<../images/uiux/integration/Integration.png>)
 
-#### 3.1.2 Calendar Integration
+#### Calendar Integration
 ![Calendar Integration](<../images/uiux/integration/Calendar%20Integration.png>)
 
-#### 3.1.3 Email Integration
+#### Email Integration
 ![Email Integration](<../images/uiux/integration/Email%20Integration.png>)
 
-#### 3.1.4 Recruitment Integration
+#### Recruitment Integration
 ![Recruitment Integration](<../images/uiux/integration/Recruiment%20Integration.png>)
 
-#### 3.1.5 Sync History
+#### Sync History
 ![Sync History](<../images/uiux/integration/Sync%20History.png>)
 
 ---
 
 ### 3.2 Onboarding Management
-#### 3.2.1 Application Management
+#### Application Management
 ![Application Management UI](../images/uiux/onboard/application-screen.png)
 
-#### 3.2.2 Offer Management
+#### Offer Management
 ![Offer Management UI](../images/uiux/onboard/offer-management-screen.png)
 ![Offer Template UI](../images/uiux/onboard/offer-template-screen.png)
 
-#### 3.2.3 Contract Management
+#### Contract Management
 ![Contract Management UI](../images/uiux/onboard/contract-screen.png)
 
-#### 3.2.4 Intake Review
+#### Intake Review
 ![Intake Review UI](../images/uiux/onboard/intake-screen.png)
 
-#### 3.2.5 Onboarding Board
+#### Onboarding Board
 ![Onboarding Board UI](../images/uiux/onboard/onboard-board-screen.png)
 
-#### 3.2.6 Assigned Task by Role
+#### Assigned Task by Role
 ![Assigned Task UI](../images/uiux/onboard/assigned-task-screen.png)
 
-#### 3.2.7 Tracking Onboard Progress
+#### Tracking Onboard Progress
 ![Tracking Onboard Progress UI](../images/uiux/onboard/tracking-screen.png)
 
 ---
 
 ### 3.3 Payroll Management
-#### 3.3.1 Payroll Management
-![Payroll Management](<../images/uiux/payroll/Payroll%20Management%20(1).png>)
+#### Payroll Management
+![Payroll Management](../images/uiux/payroll/Payroll%20Management%20(1).png)
 
-#### 3.3.2 Add Payroll
+#### Add Payroll
 ![Add Payroll](../images/uiux/payroll/Add%20Payroll.png)
 
-#### 3.3.3 Payslips
+#### Payslips
 ![Payslips](../images/uiux/payroll/Payslips.png)
 
-#### 3.3.4 Individual Payslip
-![Payslip](../images/uiux/payroll/payslip.png)
+#### Individual Payslip
+![Payslip](../images/api-swagger/payroll/payslip.png)
 
-#### 3.3.5 Compensation
+#### Compensation
 ![Compensation](../images/uiux/payroll/Compensation.png)
 
-#### 3.3.6 Send Email
+#### Send Email
 ![Send Email](../images/uiux/payroll/Send%20Email.png)
 
 ---
@@ -239,21 +257,42 @@ The People Management Use Case Diagram defines the primary system interactions b
 
 ---
 
-### 3.5 Project Management
-#### 3.5.1 Staff UI/UX
+### 3.5 Performance Management
+#### Performance Dashboard
+![Performance Dashboard](../images/uiux/performance/dashboard.png)
+
+#### Goal Directory
+![Goal Directory](../images/uiux/performance/goal.png)
+
+#### Goal Detail
+![Goal Detail](../images/uiux/performance/goaldetail.png)
+
+#### Self Assessment
+![Self Assessment](../images/uiux/performance/self-assesmented.png)
+
+#### 360 Feedback Portal
+![360 Feedback Portal](../images/uiux/performance/360feedback.png)
+
+#### Manager Evaluation
+![Manager Evaluation](../images/uiux/performance/managereval.png)
+
+---
+
+### 3.6 Project Management
+#### Staff UI/UX
 ![Employee My Capacity](../images/uiux/project-management/Employee-My-Capacity.png)
 ![Employee My Productivity](../images/uiux/project-management/Employee-My-Productivity.png)
 ![Employee My Project](../images/uiux/project-management/Employee-My-Project.png)
 ![Employee My Time](../images/uiux/project-management/Employee-My-Time.png)
 ![Employee Project Detail](../images/uiux/project-management/Employee-Project-Detail.png)
 
-#### 3.5.2 HR UI/UX
+#### HR UI/UX
 ![HR Capacity Overview](../images/uiux/project-management/HR-Capacity-Overview.png)
 ![HR Overtime & Training](../images/uiux/project-management/HR-Overtime-%26-Training.png)
 ![HR Resource Overview](../images/uiux/project-management/HR-Resource-Overview.png)
 ![HR Utilization](../images/uiux/project-management/HR-Utilization.png)
 
-#### 3.5.3 Manager UI/UX
+#### Manager UI/UX
 ![PM Add Project Member Drawer](../images/uiux/project-management/PM-Add-Project-Member-Drawer.png)
 ![PM Create Project Form](../images/uiux/project-management/PM-Create-Project-Form.png)
 ![PM Employee Productivity Detail](../images/uiux/project-management/PM-Employee-Productivity-Detail.png)
@@ -269,45 +308,45 @@ The People Management Use Case Diagram defines the primary system interactions b
 
 ---
 
-### 3.6 Recruitment Management
-#### 3.6.1 Recruitment Management
+### 3.7 Recruitment Management
+#### Recruitment Management
 ![Recruitment Management](../images/uiux/recruitment/Recruitment%20Management.png)
 
-#### 3.6.2 Requirement Management
+#### Requirement Management
 ![Requirement Management](../images/uiux/recruitment/Requirement%20Management.png)
 
-#### 3.6.3 Job Management
+#### Job Management
 ![Job Management](../images/uiux/recruitment/Job%20Management.png)
 
-#### 3.6.4 Application Management
+#### Application Management
 ![Application Management](../images/uiux/recruitment/Application%20Management.png)
 
-#### 3.6.5 Interview Management
+#### Interview Management
 ![Interview Management](../images/uiux/recruitment/Interview%20Management.png)
 
-#### 3.6.6 Schedule Management
+#### Schedule Management
 ![Schedule Management](../images/uiux/recruitment/Schedule%20Management.png)
 
-#### 3.6.7 Offer Management
+#### Offer Management
 ![Offer Management](../images/uiux/recruitment/Offer%20Management.png)
 
-#### 3.6.8 Template Management
+#### Template Management
 ![Template Management](../images/uiux/recruitment/Template%20Management.png)
 
 ---
 
-### 3.7 Workforce Management
-#### 3.7.1 Attendance Dashboard
+### 3.8 Workforce Management
+#### Attendance Dashboard
 ![Attendance Dashboard](../images/uiux/workforce/attendance/attendance-dashboard.png)
 
-#### 3.7.2 Attendance Corrections & Working State
+#### Attendance Corrections & Working State
 ![Attendance Corrections Manager View](../images/uiux/workforce/attendance/attendance-corrections-manager-view.png)
 ![My Attendance Working State](../images/uiux/workforce/attendance/my-attendance-working-state.png)
 
-#### 3.7.3 Leave Management
+#### Leave Management
 ![Leave Management UI](../images/uiux/workforce/leave-management/leave-management.png)
 
-#### 3.7.4 Timesheet Review Detail
+#### Timesheet Review Detail
 ![Timesheet Review Detail](../images/uiux/workforce/timesheet/timesheet-review-detail.png)
 
 ---
@@ -315,10 +354,10 @@ The People Management Use Case Diagram defines the primary system interactions b
 ## 4. Entity Relationship Diagrams (ERD) & Database Schemas
 
 ### 4.1 Integration Management
-#### 4.1.1 System ERD Overview
+#### System ERD Overview
 ![Integration ERD](../images/erd/integration.png)
 
-#### 4.1.2 Sub-Domain Schemas
+#### Sub-Domain Schemas
 
 ##### Integration Overview
 ```mermaid
@@ -546,34 +585,34 @@ erDiagram
 ---
 
 ### 4.2 Onboarding Management
-#### 4.2.1 Application Management ERD
+#### Application Management ERD
 ![Application Management ERD](../images/erd/onboard/application-erd.png)
 
-#### 4.2.2 Offer Management ERD
+#### Offer Management ERD
 ![Offer Management ERD](../images/erd/onboard/offer-erd.png)
 
-#### 4.2.3 Contract Management ERD
+#### Contract Management ERD
 ![Contract Management ERD](../images/erd/onboard/contract-erd.png)
 
-#### 4.2.4 Intake Review ERD
+#### Intake Review ERD
 ![Intake Review ERD](../images/erd/onboard/intake-review-erd.png)
 
-#### 4.2.5 Onboarding Board ERD
+#### Onboarding Board ERD
 ![Onboarding Board ERD](../images/erd/onboard/board-erd.png)
 
-#### 4.2.6 Assigned Task ERD
+#### Assigned Task ERD
 ![Assigned Task ERD](../images/erd/onboard/assigned-task-erd.png)
 
-#### 4.2.7 Tracking Onboard Progress ERD
+#### Tracking Onboard Progress ERD
 ![Tracking Onboard Progress ERD](../images/erd/onboard/tracking-erd.png)
 
 ---
 
 ### 4.3 Payroll Management
-#### 4.3.1 System ERD Overview
+#### System ERD Overview
 ![Payroll ERD](../images/erd/Payroll-erd.png)
 
-#### 4.3.2 Sub-Domain Schemas
+#### Sub-Domain Schemas
 
 ##### Payroll Management
 ```mermaid
@@ -857,67 +896,76 @@ erDiagram
 ---
 
 ### 4.4 People Management
-#### 4.4.1 Organization Domain Schema ERD
+#### Organization Domain Schema ERD
 Database relationship model covering Company Branches, Departments, Teams, Positions, and Reporting Line relationships.
 ![Organization Domain ERD](../images/databases/people/Organization.png)
 
-#### 4.4.2 Employee Directory Domain Schema ERD
+#### Employee Directory Domain Schema ERD
 Database entity structure covering Employee Accounts, 1:1 Profiles, Labor Contracts, Verification Documents, Education, Assets, Leave Types, and Leave Balances.
 ![Employee Directory ERD](../images/databases/people/EmployeeDirectory.png)
 
-#### 4.4.3 Request Management Domain Schema ERD
+#### Request Management Domain Schema ERD
 Workflow database model covering Ticket Requests, Request Types, Workflow Steps, Multi-Stage Approval Logs, and Attachments.
 ![Request Management ERD](../images/databases/people/Request_Managment.png)
 
 ---
 
-### 4.5 Project Management
-#### 4.5.1 System ERD Overview
+### 4.5 Performance Management
+#### Performance Review ERD
+![Performance Review ERD](../images/erd/performance/performance_review.png)
+
+#### 1-on-1 Coaching ERD
+![1-on-1 Coaching ERD](../images/erd/performance/1on1.png)
+
+---
+
+### 4.6 Project Management
+#### System ERD Overview
 ![Project Management Overview ERD](../images/erd/project-management/project-management.png)
 
-#### 4.5.2 Project Setup & Management, Member & Allocation, Effort / Time Tracking
+#### Project Setup & Management, Member & Allocation, Effort / Time Tracking
 ![Project Setup ERD](../images/erd/project-management/project-setup.png)
 
-#### 4.5.3 Capability Management + Budget Management
+#### Capability Management + Budget Management
 ![Capacity Management ERD](../images/erd/project-management/capacity-management.png)
 
-#### 4.5.4 Productivity Monitoring
+#### Productivity Monitoring
 ![Productivity Monitoring ERD](../images/erd/project-management/productivity-monitoring.png)
 
 ---
 
-### 4.6 Recruitment Management
-#### 4.6.1 Recruitment DB Overview
+### 4.7 Recruitment Management
+#### Recruitment DB Overview
 ![Recruitment DB Overview](<../images/erd/recruitment/Recruitment db.png>)
 
-#### 4.6.2 Organization & Recruitment Requirement
+#### Organization & Recruitment Requirement
 ![Organization & Recruitment Requirement](<../images/erd/recruitment/Organization & Recruitment Requirement.png>)
 
-#### 4.6.3 Job & Application
+#### Job & Application
 ![Job & Application](<../images/erd/recruitment/Job & Application.png>)
 
-#### 4.6.4 Interview Schedule & Evaluation
+#### Interview Schedule & Evaluation
 ![Interview Schedule & Evaluation](<../images/erd/recruitment/Interview Schedule & Evaluation.png>)
 
-#### 4.6.5 Offer & Recruitment Template
+#### Offer & Recruitment Template
 ![Offer & Recruitment Template](<../images/erd/recruitment/Offer & Recruitment Template.png>)
 
 ---
 
-### 4.7 Workforce Management
-#### 4.7.1 Attendance Corrections ERD
+### 4.8 Workforce Management
+#### Attendance Corrections ERD
 ![Attendance Corrections ERD](../images/erd/workforce/attendence-corrections.png)
 
-#### 4.7.2 Attendance Record ERD
+#### Attendance Record ERD
 ![Attendance Record ERD](../images/erd/workforce/attendance-record.png)
 
-#### 4.7.3 My Attendance ERD
+#### My Attendance ERD
 ![My Attendance ERD](../images/erd/workforce/my-attendance.png)
 
-#### 4.7.4 Leave Management ERD
+#### Leave Management ERD
 ![Leave Management ERD](../images/erd/workforce/leave-management.png)
 
-#### 4.7.5 Timesheet Review ERD
+#### Timesheet Review ERD
 ![Timesheet Review ERD](../images/erd/workforce/time-sheet-review.png)
 
 ---
@@ -1099,7 +1147,7 @@ BBV HR - Payroll Management API
 Access the interactive online Swagger API documentation:  
 🔗 [Copilot.HR Employee Directory API - Interactive SwaggerHub Documentation](https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents)
 
-#### 5.4.1 API Endpoint Tree Structure
+#### API Endpoint Tree Structure
 ```text
 Copilot.HR - People Management API
 │
@@ -1149,7 +1197,7 @@ Copilot.HR - People Management API
     └── PUT     /reporting-lines
 ```
 
-#### 5.4.2 API Endpoint Tables
+#### API Endpoint Tables
 
 ##### Employee Directory APIs
 | Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
@@ -1198,7 +1246,7 @@ Copilot.HR - People Management API
 | `GET` | `/api/v1/requests/{id}/timeline` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Retrieve step-by-step progress tracker timeline, reviewer audit logs, and approval timestamps. |
 | `GET` | `/api/v1/requests/quotas/check` | `Staff, Manager` | Query: `applicantId`, `leaveType`, `requestedDays` | `200`, `400` | Validate available annual or sick leave balance before submitting a leave request. |
 
-#### 5.4.3 Swagger UI Endpoint Screenshots
+#### Swagger UI Endpoint Screenshots
 ![Employee Directory APIs](../images/api-swagger/people/EmployeeApi.png)
 ![Labor Contracts and Documents APIs](../images/api-swagger/people/Contract_Documents.png)
 ![Leave and Audit History APIs](../images/api-swagger/people/Leave_History.png)
@@ -1210,7 +1258,71 @@ Copilot.HR - People Management API
 
 ---
 
-### 5.5 Project Management
+### 5.5 Performance Management
+#### Performance Swagger API Screenshots
+![Performance Review API Swagger](../images/api-swagger/payroll/performance/performancereview.png)
+![1-on-1 Coaching API Swagger](../images/api-swagger/payroll/performance/1on1.png)
+
+#### API Endpoint Tree Structure
+```text
+Performance
+└── Performance Management
+    ├── Goal Management
+    │   ├── Goal Cycles
+    │   │   ├── GET    /goal-cycles
+    │   │   ├── POST   /goal-cycles
+    │   │   └── GET    /goal-cycles/{cycleId}
+    │   ├── Performance Goals
+    │   │   ├── GET    /goals
+    │   │   ├── POST   /goals
+    │   │   ├── GET    /goals/{goalId}
+    │   │   ├── PUT    /goals/{goalId}
+    │   │   └── PATCH  /goals/{goalId}/progress
+    │   └── Goal Workflow & History
+    │       ├── POST   /goals/{goalId}/approvals
+    │       ├── POST   /goals/{goalId}/revisions
+    │       └── GET    /goals/{goalId}/history
+    ├── Performance Review Management
+    │   ├── Review Cycles & Templates
+    │   │   ├── GET    /review-cycles
+    │   │   ├── POST   /review-cycles
+    │   │   ├── GET    /review-cycles/{cycleId}
+    │   │   ├── GET    /review-templates
+    │   │   ├── POST   /review-templates
+    │   │   └── GET    /review-templates/{templateId}/sections
+    │   ├── Performance Reviews & Feedback
+    │   │   ├── GET    /performance-reviews
+    │   │   ├── POST   /performance-reviews
+    │   │   ├── GET    /performance-reviews/{reviewId}
+    │   │   ├── PATCH  /performance-reviews/{reviewId}/status
+    │   │   ├── GET    /performance-reviews/{reviewId}/participants
+    │   │   └── POST   /performance-reviews/{reviewId}/feedback
+    │   └── Approvals & Corrections
+    │       ├── POST   /performance-reviews/{reviewId}/approvals
+    │       ├── POST   /performance-reviews/{reviewId}/corrections
+    │       └── GET    /performance-reviews/{reviewId}/history
+    ├── One-on-One Coaching Management
+    │   ├── Coaching Templates & Sessions
+    │   │   ├── GET    /coaching-templates
+    │   │   ├── POST   /coaching-templates
+    │   │   ├── GET    /one-on-ones
+    │   │   ├── POST   /one-on-ones
+    │   │   ├── GET    /one-on-ones/{sessionId}
+    │   │   └── PATCH  /one-on-ones/{sessionId}/status
+    │   └── Session Artifacts & Follow-ups
+    │       ├── POST   /one-on-ones/{sessionId}/agenda-items
+    │       ├── POST   /one-on-ones/{sessionId}/notes
+    │       ├── POST   /one-on-ones/{sessionId}/action-items
+    │       └── GET    /one-on-ones/{sessionId}/history
+    └── Performance Reporting & Summaries
+        └── Performance Summaries
+            ├── GET    /employees/{employeeId}/performance-summary
+            └── POST   /employees/{employeeId}/performance-summary/recalculate
+```
+
+---
+
+### 5.6 Project Management
 ```text
 BBV HR - Project Management API
 
@@ -1293,7 +1405,7 @@ BBV HR - Project Management API
 
 ---
 
-### 5.6 Recruitment Management
+### 5.7 Recruitment Management
 ```text
 BBV HR - Recruitment API
 │
@@ -1356,13 +1468,13 @@ BBV HR - Recruitment API
 
 ---
 
-### 5.7 Workforce Management
-#### 5.7.1 Interactive Swagger Docs Links
+### 5.8 Workforce Management
+#### Interactive Swagger Docs Links
 - 🔗 [Attendance Management API](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/Attendence-management/1.0.0)
 - 🔗 [Leave Management API](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/leave-management)
 - 🔗 [Timesheet Review API](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/time-sheet-review/1.0.0)
 
-#### 5.7.2 API Endpoint Trees
+#### API Endpoint Trees
 
 ##### Attendance Management API
 ```text
@@ -1459,7 +1571,7 @@ Timesheet Review API
     └── GET /departments/{departmentId}
 ```
 
-#### 5.7.3 API Test Cases Specifications
+#### API Test Cases Specifications
 
 ##### Attendance Management Test Cases
 - **`GET /attendance/dashboard/summary`**: Valid request, zero values fallback, token missing, unauthorized.
