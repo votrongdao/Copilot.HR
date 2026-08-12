@@ -1,4 +1,4 @@
-package bbv.hr.infrastructure.entities.onboarding;
+package bbv.hr.infrastructure.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Application {
+public class JobApplication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
