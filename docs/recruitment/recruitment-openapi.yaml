@@ -1,0 +1,1291 @@
+openapi: 3.0.4
+
+tags:
+  - name: Requirements
+  - name: Jobs
+  - name: Applications
+  - name: Schedules
+  - name: Interviews
+  - name: Offers
+  - name: Templates
+
+paths:
+
+  /requirements:
+    get:
+      tags: [Requirements]
+      summary: List recruitment requirements
+      operationId: listRecruitmentRequirements
+      parameters:
+        - $ref: '#/components/parameters/Search'
+        - name: department_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: position_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: hiring_manager_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: priority
+          in: query
+          schema: { type: string }
+        - name: employment_type
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Recruitment requirement list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Requirement'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+    post:
+      tags: [Requirements]
+      summary: Create recruitment requirement
+      operationId: createRecruitmentRequirement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequirementCreate'
+      responses:
+        '201':
+          description: Requirement created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requirement'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /requirements/{requirementId}:
+    parameters:
+      - $ref: '#/components/parameters/RequirementId'
+
+    get:
+      tags: [Requirements]
+      summary: Get recruitment requirement detail
+      operationId: getRecruitmentRequirement
+      responses:
+        '200':
+          description: Requirement detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requirement'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Requirements]
+      summary: Update recruitment requirement
+      operationId: updateRecruitmentRequirement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequirementUpdate'
+      responses:
+        '200':
+          description: Requirement updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requirement'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags: [Requirements]
+      summary: Delete draft recruitment requirement
+      description: Delete is allowed only for a draft requirement that has not been used to create a job.
+      operationId: deleteRecruitmentRequirement
+      responses:
+        '204':
+          description: Requirement deleted
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /jobs:
+    get:
+      tags: [Jobs]
+      summary: List job openings
+      operationId: listJobs
+      parameters:
+        - $ref: '#/components/parameters/Search'
+        - name: department_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: position_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: hiring_manager_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: employment_type
+          in: query
+          schema: { type: string }
+        - name: work_mode
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Job list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+
+    post:
+      tags: [Jobs]
+      summary: Create job opening
+      operationId: createJob
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCreate'
+      responses:
+        '201':
+          description: Job created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /jobs/{jobId}:
+    parameters:
+      - $ref: '#/components/parameters/JobId'
+
+    get:
+      tags: [Jobs]
+      summary: Get job detail
+      operationId: getJob
+      responses:
+        '200':
+          description: Job detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Jobs]
+      summary: Update job information
+      operationId: updateJob
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobUpdate'
+      responses:
+        '200':
+          description: Job updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags: [Jobs]
+      summary: Delete draft job
+      description: Delete is allowed only for a draft job that has not been published and has no active recruitment history.
+      operationId: deleteJob
+      responses:
+        '204':
+          description: Job deleted
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /jobs/{jobId}/publish:
+    parameters:
+      - $ref: '#/components/parameters/JobId'
+    post:
+      tags: [Jobs]
+      summary: Publish job opening
+      operationId: publishJob
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                integration_ids:
+                  type: array
+                  items: { type: string, format: uuid }
+                publish_to_career_site:
+                  type: boolean
+                  default: true
+      responses:
+        '200':
+          description: Job published or publication started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /applications:
+    get:
+      tags: [Applications]
+      summary: List candidate applications
+      operationId: listApplications
+      parameters:
+        - $ref: '#/components/parameters/Search'
+        - name: candidate_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: job_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: stage_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: source_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: owner_user_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: status
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Application list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
+
+    post:
+      tags: [Applications]
+      summary: Create or submit candidate application
+      operationId: createApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreate'
+      responses:
+        '201':
+          description: Application created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /applications/{applicationId}:
+    parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+
+    get:
+      tags: [Applications]
+      summary: Get application detail
+      operationId: getApplication
+      responses:
+        '200':
+          description: Application detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Applications]
+      summary: Update application information
+      operationId: updateApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationUpdate'
+      responses:
+        '200':
+          description: Application updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /applications/{applicationId}/stage:
+    parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+    patch:
+      tags: [Applications]
+      summary: Move application to another recruitment stage
+      operationId: updateApplicationStage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationStageUpdate'
+      responses:
+        '200':
+          description: Application stage updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /applications/{applicationId}/reject:
+    parameters:
+      - $ref: '#/components/parameters/ApplicationId'
+    post:
+      tags: [Applications]
+      summary: Reject candidate application
+      operationId: rejectApplication
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationRejectRequest'
+      responses:
+        '200':
+          description: Application rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /schedules:
+    get:
+      tags: [Schedules]
+      summary: List recruitment schedules
+      operationId: listRecruitmentSchedules
+      parameters:
+        - name: application_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: interviewer_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: status
+          in: query
+          schema: { type: string }
+        - name: date_from
+          in: query
+          schema: { type: string, format: date }
+        - name: date_to
+          in: query
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: Schedule list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+
+    post:
+      tags: [Schedules]
+      summary: Create recruitment interview schedule
+      operationId: createRecruitmentSchedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleCreate'
+      responses:
+        '201':
+          description: Schedule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /schedules/{scheduleId}:
+    parameters:
+      - $ref: '#/components/parameters/ScheduleId'
+
+    get:
+      tags: [Schedules]
+      summary: Get recruitment schedule detail
+      operationId: getRecruitmentSchedule
+      responses:
+        '200':
+          description: Schedule detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Schedules]
+      summary: Update or reschedule recruitment interview
+      operationId: updateRecruitmentSchedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleUpdate'
+      responses:
+        '200':
+          description: Schedule updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /schedules/{scheduleId}/cancel:
+    parameters:
+      - $ref: '#/components/parameters/ScheduleId'
+    post:
+      tags: [Schedules]
+      summary: Cancel recruitment schedule
+      operationId: cancelRecruitmentSchedule
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+      responses:
+        '200':
+          description: Schedule cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /interviews:
+    get:
+      tags: [Interviews]
+      summary: List interviews
+      operationId: listInterviews
+      parameters:
+        - name: application_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: interviewer_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: round
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string }
+        - name: date_from
+          in: query
+          schema: { type: string, format: date }
+        - name: date_to
+          in: query
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: Interview list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interview'
+
+  /interviews/{interviewId}:
+    parameters:
+      - $ref: '#/components/parameters/InterviewId'
+
+    get:
+      tags: [Interviews]
+      summary: Get interview detail
+      operationId: getInterview
+      responses:
+        '200':
+          description: Interview detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Interviews]
+      summary: Update interview information
+      operationId: updateInterview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewUpdate'
+      responses:
+        '200':
+          description: Interview updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /interviews/{interviewId}/evaluations:
+    parameters:
+      - $ref: '#/components/parameters/InterviewId'
+    post:
+      tags: [Interviews]
+      summary: Submit interview evaluation
+      operationId: createInterviewEvaluation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewEvaluationCreate'
+      responses:
+        '201':
+          description: Evaluation submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterviewEvaluation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /interviews/{interviewId}/decision:
+    parameters:
+      - $ref: '#/components/parameters/InterviewId'
+    post:
+      tags: [Interviews]
+      summary: Record hiring decision after interview
+      operationId: createInterviewDecision
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewDecisionRequest'
+      responses:
+        '200':
+          description: Hiring decision recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /offers:
+    get:
+      tags: [Offers]
+      summary: List job offers
+      operationId: listOffers
+      parameters:
+        - $ref: '#/components/parameters/Search'
+        - name: application_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: recruiter_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: status
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Offer list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offer'
+
+    post:
+      tags: [Offers]
+      summary: Prepare a job offer
+      operationId: createOffer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfferCreate'
+      responses:
+        '201':
+          description: Offer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /offers/{offerId}:
+    parameters:
+      - $ref: '#/components/parameters/OfferId'
+
+    get:
+      tags: [Offers]
+      summary: Get offer detail
+      operationId: getOffer
+      responses:
+        '200':
+          description: Offer detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Offers]
+      summary: Update draft offer
+      operationId: updateOffer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfferUpdate'
+      responses:
+        '200':
+          description: Offer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /offers/{offerId}/send:
+    parameters:
+      - $ref: '#/components/parameters/OfferId'
+    post:
+      tags: [Offers]
+      summary: Send offer to candidate
+      operationId: sendOffer
+      responses:
+        '200':
+          description: Offer sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /templates:
+    get:
+      tags: [Templates]
+      summary: List recruitment templates
+      operationId: listRecruitmentTemplates
+      parameters:
+        - $ref: '#/components/parameters/Search'
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [JOB_DESCRIPTION, EMAIL, OFFER]
+        - name: status
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Template list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecruitmentTemplate'
+
+    post:
+      tags: [Templates]
+      summary: Create recruitment template
+      operationId: createRecruitmentTemplate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecruitmentTemplateCreate'
+      responses:
+        '201':
+          description: Template created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecruitmentTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /templates/{templateId}:
+    parameters:
+      - $ref: '#/components/parameters/TemplateId'
+
+    get:
+      tags: [Templates]
+      summary: Get recruitment template detail
+      operationId: getRecruitmentTemplate
+      responses:
+        '200':
+          description: Template detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecruitmentTemplate'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [Templates]
+      summary: Update recruitment template
+      operationId: updateRecruitmentTemplate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecruitmentTemplateUpdate'
+      responses:
+        '200':
+          description: Template updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecruitmentTemplate'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags: [Templates]
+      summary: Delete recruitment template
+      operationId: deleteRecruitmentTemplate
+      responses:
+        '204':
+          description: Template deleted
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+
+  parameters:
+    Search:
+      name: search
+      in: query
+      description: Free-text search
+      schema:
+        type: string
+
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+    RequirementId:
+      name: requirementId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+    JobId:
+      name: jobId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+    ApplicationId:
+      name: applicationId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+    ScheduleId:
+      name: scheduleId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+    InterviewId:
+      name: interviewId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+    OfferId:
+      name: offerId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+    TemplateId:
+      name: templateId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Conflict:
+      description: Resource cannot be modified because of its current state or existing references
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          example: VALIDATION_ERROR
+        message:
+          type: string
+          example: Request validation failed
+        details:
+          type: object
+          additionalProperties: true
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    Requirement:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        department_id: { type: string, format: uuid }
+        position_id: { type: string, format: uuid }
+        hiring_manager_id: { type: string, format: uuid }
+        title: { type: string }
+        hiring_quantity: { type: integer }
+        priority: { type: string, example: HIGH }
+        employment_type: { type: string, example: FULL_TIME }
+        work_location: { type: string }
+        expected_start_date: { type: string, format: date }
+        target_close_date: { type: string, format: date }
+        reason_for_hiring: { type: string }
+        description: { type: string }
+        salary_min: { type: number, format: double }
+        salary_max: { type: number, format: double }
+        status: { type: string, example: DRAFT }
+
+    RequirementCreate:
+      type: object
+      required: [department_id, position_id, hiring_manager_id, title]
+      properties:
+        department_id: { type: string, format: uuid }
+        position_id: { type: string, format: uuid }
+        hiring_manager_id: { type: string, format: uuid }
+        title: { type: string }
+        hiring_quantity: { type: integer, minimum: 1 }
+        priority: { type: string }
+        employment_type: { type: string }
+        work_location: { type: string }
+        expected_start_date: { type: string, format: date }
+        target_close_date: { type: string, format: date }
+        reason_for_hiring: { type: string }
+        description: { type: string }
+        salary_min: { type: number }
+        salary_max: { type: number }
+
+    RequirementUpdate:
+      type: object
+      properties:
+        title: { type: string }
+        hiring_quantity: { type: integer, minimum: 1 }
+        priority: { type: string }
+        employment_type: { type: string }
+        work_location: { type: string }
+        expected_start_date: { type: string, format: date }
+        target_close_date: { type: string, format: date }
+        reason_for_hiring: { type: string }
+        description: { type: string }
+        salary_min: { type: number }
+        salary_max: { type: number }
+        status: { type: string }
+
+    Job:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        requirement_id: { type: string, format: uuid }
+        department_id: { type: string, format: uuid }
+        position_id: { type: string, format: uuid }
+        hiring_manager_id: { type: string, format: uuid }
+        title: { type: string }
+        description: { type: string }
+        location: { type: string }
+        employment_type: { type: string }
+        work_mode: { type: string }
+        experience_level: { type: string }
+        benefits: { type: string }
+        status: { type: string }
+
+    JobCreate:
+      type: object
+      required: [title]
+      properties:
+        requirement_id: { type: string, format: uuid }
+        department_id: { type: string, format: uuid }
+        position_id: { type: string, format: uuid }
+        hiring_manager_id: { type: string, format: uuid }
+        title: { type: string }
+        description: { type: string }
+        location: { type: string }
+        employment_type: { type: string }
+        work_mode: { type: string }
+        experience_level: { type: string }
+        benefits: { type: string }
+
+    JobUpdate:
+      type: object
+      properties:
+        title: { type: string }
+        description: { type: string }
+        location: { type: string }
+        employment_type: { type: string }
+        work_mode: { type: string }
+        experience_level: { type: string }
+        benefits: { type: string }
+        status: { type: string }
+
+    Application:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        candidate_id: { type: string, format: uuid }
+        job_id: { type: string, format: uuid }
+        application_stage_id: { type: string, format: uuid }
+        source_id: { type: string, format: uuid }
+        owner_user_id: { type: string, format: uuid }
+        applied_at: { type: string, format: date-time }
+        ai_score: { type: number }
+        hr_notes: { type: string }
+        ai_processing_result: { type: string }
+        evaluation: { type: string }
+        status: { type: string }
+
+    ApplicationCreate:
+      type: object
+      required: [candidate_id, job_id]
+      properties:
+        candidate_id: { type: string, format: uuid }
+        job_id: { type: string, format: uuid }
+        source_id: { type: string, format: uuid }
+        owner_user_id: { type: string, format: uuid }
+
+    ApplicationUpdate:
+      type: object
+      properties:
+        source_id: { type: string, format: uuid }
+        owner_user_id: { type: string, format: uuid }
+        hr_notes: { type: string }
+        evaluation: { type: string }
+        status: { type: string }
+
+    ApplicationStageUpdate:
+      type: object
+      required: [application_stage_id]
+      properties:
+        application_stage_id: { type: string, format: uuid }
+        reason: { type: string }
+
+    ApplicationRejectRequest:
+      type: object
+      properties:
+        reason: { type: string }
+        notify_candidate:
+          type: boolean
+          default: true
+
+    Schedule:
+      type: object
+      description: API-level schedule representation backed by interview/calendar data.
+      properties:
+        id: { type: string, format: uuid }
+        application_id: { type: string, format: uuid }
+        round: { type: string }
+        interview_date: { type: string, format: date }
+        start_time: { type: string, example: "10:00:00" }
+        duration_minutes: { type: integer }
+        room: { type: string }
+        meeting_link: { type: string, format: uri }
+        meeting_type: { type: string }
+        status: { type: string }
+
+    ScheduleCreate:
+      type: object
+      required: [application_id, interview_date, start_time]
+      properties:
+        application_id: { type: string, format: uuid }
+        round: { type: string }
+        interview_date: { type: string, format: date }
+        start_time: { type: string, example: "10:00:00" }
+        duration_minutes: { type: integer, default: 60 }
+        room: { type: string }
+        meeting_link: { type: string, format: uri }
+        meeting_type: { type: string }
+        interviewer_ids:
+          type: array
+          items: { type: string, format: uuid }
+
+    ScheduleUpdate:
+      type: object
+      properties:
+        interview_date: { type: string, format: date }
+        start_time: { type: string, example: "14:30:00" }
+        duration_minutes: { type: integer }
+        room: { type: string }
+        meeting_link: { type: string, format: uri }
+        meeting_type: { type: string }
+        status: { type: string }
+        reschedule_reason: { type: string }
+
+    CancelRequest:
+      type: object
+      properties:
+        reason: { type: string }
+        notify_participants:
+          type: boolean
+          default: true
+
+    Interview:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        application_id: { type: string, format: uuid }
+        round: { type: string }
+        interview_date: { type: string, format: date }
+        start_time: { type: string }
+        duration_minutes: { type: integer }
+        room: { type: string }
+        meeting_link: { type: string }
+        meeting_type: { type: string }
+        status: { type: string }
+
+    InterviewUpdate:
+      type: object
+      properties:
+        round: { type: string }
+        room: { type: string }
+        meeting_link: { type: string }
+        meeting_type: { type: string }
+        status: { type: string }
+
+    InterviewEvaluation:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        interview_id: { type: string, format: uuid }
+        evaluator_id: { type: string, format: uuid }
+        score: { type: integer, minimum: 1, maximum: 5 }
+        comments: { type: string }
+        recommendation: { type: string }
+
+    InterviewEvaluationCreate:
+      type: object
+      required: [evaluator_id, score, recommendation]
+      properties:
+        evaluator_id: { type: string, format: uuid }
+        score: { type: integer, minimum: 1, maximum: 5 }
+        comments: { type: string }
+        recommendation:
+          type: string
+          example: STRONG_HIRE
+
+    InterviewDecisionRequest:
+      type: object
+      required: [decision]
+      properties:
+        decision:
+          type: string
+          enum: [NEXT_ROUND, PROCEED_TO_OFFER, REJECTED, ON_HOLD]
+        reason: { type: string }
+
+    Offer:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        offer_code: { type: string }
+        application_id: { type: string, format: uuid }
+        template_id: { type: string, format: uuid }
+        recruiter_id: { type: string, format: uuid }
+        salary: { type: number }
+        currency: { type: string, example: VND }
+        employment_type: { type: string }
+        start_date: { type: string, format: date }
+        final_start_date: { type: string, format: date }
+        expiry_date: { type: string, format: date }
+        response_deadline: { type: string, format: date-time }
+        benefits_notes: { type: string }
+        email_subject: { type: string }
+        email_body: { type: string }
+        status: { type: string }
+        sent_at: { type: string, format: date-time }
+
+    OfferCreate:
+      type: object
+      required: [application_id, salary, currency, start_date]
+      properties:
+        application_id: { type: string, format: uuid }
+        template_id: { type: string, format: uuid }
+        recruiter_id: { type: string, format: uuid }
+        salary: { type: number }
+        currency: { type: string, minLength: 3, maxLength: 3 }
+        employment_type: { type: string }
+        start_date: { type: string, format: date }
+        expiry_date: { type: string, format: date }
+        response_deadline: { type: string, format: date-time }
+        benefits_notes: { type: string }
+        email_subject: { type: string }
+        email_body: { type: string }
+
+    OfferUpdate:
+      type: object
+      properties:
+        template_id: { type: string, format: uuid }
+        salary: { type: number }
+        currency: { type: string, minLength: 3, maxLength: 3 }
+        employment_type: { type: string }
+        start_date: { type: string, format: date }
+        final_start_date: { type: string, format: date }
+        expiry_date: { type: string, format: date }
+        response_deadline: { type: string, format: date-time }
+        benefits_notes: { type: string }
+        email_subject: { type: string }
+        email_body: { type: string }
+        status: { type: string }
+
+    RecruitmentTemplate:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        type:
+          type: string
+          enum: [JOB_DESCRIPTION, EMAIL, OFFER]
+        description: { type: string }
+        email_subject: { type: string }
+        content: { type: string }
+        variable_definitions: { type: string }
+        status: { type: string }
+
+    RecruitmentTemplateCreate:
+      type: object
+      required: [name, type, content]
+      properties:
+        name: { type: string }
+        type:
+          type: string
+          enum: [JOB_DESCRIPTION, EMAIL, OFFER]
+        description: { type: string }
+        email_subject: { type: string }
+        content: { type: string }
+        variable_definitions: { type: string }
+        status: { type: string, default: DRAFT }
+
+    RecruitmentTemplateUpdate:
+      type: object
+      properties:
+        name: { type: string }
+        type:
+          type: string
+          enum: [JOB_DESCRIPTION, EMAIL, OFFER]
+        description: { type: string }
+        email_subject: { type: string }
+        content: { type: string }
+        variable_definitions: { type: string }
+        status: { type: string }
