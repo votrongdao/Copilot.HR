@@ -1,986 +1,813 @@
-# Copilot.HR - System Documentation
+# Copilot.HR - Master System Documentation
 
-Comprehensive architecture, specification, and API documentation for **Copilot.HR**, consolidated across all core operational modules: **Integration Management**, **Onboarding Management**, **Payroll Management**, **People Management**, **Project Management**, **Recruitment Management**, and **Workforce Management**.
-
----
-
-# Table of Contents
-1. [1. Use Cases](#1-use-cases)
-   - [1.1 Integration Management](#11-integration-management)
-   - [1.2 Onboarding Management](#12-onboarding-management)
-   - [1.3 Payroll Management](#13-payroll-management)
-   - [1.4 People Management](#14-people-management)
-   - [1.5 Project Management](#15-project-management)
-   - [1.6 Recruitment Management](#16-recruitment-management)
-   - [1.7 Workforce Management](#17-workforce-management)
-2. [2. Sitemaps (Information Architecture)](#2-sitemaps-information-architecture)
-   - [2.1 Integration Management](#21-integration-management)
-   - [2.2 Onboarding Management](#22-onboarding-management)
-   - [2.3 Payroll Management](#23-payroll-management)
-   - [2.4 People Management](#24-people-management)
-   - [2.5 Project Management](#25-project-management)
-   - [2.6 Recruitment Management](#26-recruitment-management)
-   - [2.7 Workforce Management](#27-workforce-management)
-3. [3. UI/UX Specifications](#3-uiux-specifications)
-   - [3.1 Integration Management](#31-integration-management)
-   - [3.2 Onboarding Management](#32-onboarding-management)
-   - [3.3 Payroll Management](#33-payroll-management)
-   - [3.4 People Management](#34-people-management)
-   - [3.5 Project Management](#35-project-management)
-   - [3.6 Recruitment Management](#36-recruitment-management)
-   - [3.7 Workforce Management](#37-workforce-management)
-4. [4. Entity Relationship Diagrams (ERD) & Database Schemas](#4-entity-relationship-diagrams-erd--database-schemas)
-   - [4.1 Integration Management](#41-integration-management)
-   - [4.2 Onboarding Management](#42-onboarding-management)
-   - [4.3 Payroll Management](#43-payroll-management)
-   - [4.4 People Management](#44-people-management)
-   - [4.5 Project Management](#45-project-management)
-   - [4.6 Recruitment Management](#46-recruitment-management)
-   - [4.7 Workforce Management](#47-workforce-management)
-5. [5. API Documentation & Test Cases](#5-api-documentation--test-cases)
-   - [5.1 Integration Management](#51-integration-management)
-   - [5.2 Onboarding Management](#52-onboarding-management)
-   - [5.3 Payroll Management](#53-payroll-management)
-   - [5.4 People Management](#54-people-management)
-   - [5.5 Project Management](#55-project-management)
-   - [5.6 Recruitment Management](#56-recruitment-management)
-   - [5.7 Workforce Management](#57-workforce-management)
+Welcome to the master technical documentation for **Copilot.HR**. This consolidated document organizes system architecture, use case diagrams, sitemaps, UI/UX designs, database ERDs, and API route specifications across all core modules.
 
 ---
 
-## 1. Use Cases
+## Table of Contents
+1. [I. Use Cases](#i-use-cases)
+2. [II. Sitemaps](#ii-sitemaps)
+3. [III. UI/UX Specifications](#iii-uiux-specifications)
+4. [IV. Database Schema ERDs](#iv-database-schema-erds)
+5. [V. API Specifications & Swagger Documentation](#v-api-specifications--swagger-documentation)
 
-### 1.1 Integration Management
-![Integration Use Case](../images/usecase/Integration-usecase.png)
+---
 
-### 1.2 Onboarding Management
-![Onboarding Use Case](<../images/usecase/HR Platform Usecase-Onboarding.png>)
+## I. Use Cases
 
-### 1.3 Payroll Management
-![Payroll Use Case](../images/usecase/payroll-usecase.png)
-
-### 1.4 People Management
-The People Management Use Case Diagram defines the primary system interactions between System Actors (Staff, HR Staff, Manager, HR Manager, Tenant Admin) and key module capabilities (Directory, Profile, Org Tree, Request Workflow).
+### 1. People Management Use Case
+*Illustrates primary system interactions between System Actors (Staff, HR Staff, Manager, HR Manager, Tenant Admin) and core workforce capabilities including Employee Directory, Profile Management, Org Tree structure, and Request Approval Workflows.*
 
 ![People Management Use Case Diagram](../images/usecase/People.png)
 
-### 1.5 Project Management
-![Project Management Use Case](../images/usecase/project-management/Project-Management.drawio.png)
+---
 
-### 1.6 Recruitment Management
+### 2. Recruitment Management Use Case
+*Defines job posting requisitions, candidate sourcing, applicant tracking (ATS), candidate screening, interview scheduling, and formal job offer approval workflows.*
+
 ![Recruitment Use Case](../images/usecase/recruitment.png)
-
-### 1.7 Workforce Management
-#### 1.7.1 Attendance Management
-![Attendance Management](../images/usecase/workforce/attendance.png)
-
-#### 1.7.2 Leave Management
-![Leave Management](../images/usecase/workforce/leave-management.png)
-
-#### 1.7.3 Timesheet and Overtime Management
-![Timesheet and Overtime Management](../images/usecase/workforce/timesheet-and-overtime.png)
-
-#### 1.7.4 Work Schedule Management
-![Work Schedule Management](../images/usecase/workforce/work-schedule-management.png)
 
 ---
 
-## 2. Sitemaps (Information Architecture)
+### 3. Onboarding Management Use Case
+*Maps the digital candidate onboarding journey from offer acceptance, information submission, required document uploads, AI/OCR verification, day-one readiness tracking, to probation initiation.*
 
-### 2.1 Integration Management
-![Integration Sitemap](../images/sitemap/integration.png)
+![Onboarding Use Case](../images/usecase/HR%20Platform%20Usecase-Onboarding.png)
 
-### 2.2 Onboarding Management
-![Onboarding Sitemap](../images/sitemap/onboard-sitemap.png)
+---
 
-### 2.3 Payroll Management
-![Payroll Sitemap](../images/sitemap/payroll_sitemap.png)
+### 4. Payroll Management Use Case
+*Details pay period processing workflows, base salary calculations, compensation allowances, statutory tax deductions, payslip generation, and automated email distribution.*
 
-### 2.4 People Management
+![Payroll Use Case](../images/usecase/payroll-usecase.png)
+
+---
+
+### 5. Workforce Management Use Cases
+
+#### 5.1 Attendance Management Use Case
+*Covers daily clock-in/out tracking, attendance exceptions, manual entry requests, and manager timekeeping correction workflows.*
+
+![Attendance Management Use Case](../images/usecase/workforce/attendance.png)
+
+#### 5.2 Leave Management Use Case
+*Handles employee leave request submissions, leave balance quota tracking, policy rules, holiday calendars, and approval routing.*
+
+![Leave Management Use Case](../images/usecase/workforce/leave-management.png)
+
+#### 5.3 Timesheet & Overtime Management Use Case
+*Tracks daily project effort hours, timesheet submissions, overtime request approvals, and manager review processes.*
+
+![Timesheet & Overtime Management Use Case](../images/usecase/workforce/timesheet-and-overtime.png)
+
+#### 5.4 Work Schedule Management Use Case
+*Defines work shift patterns, rota assignments, team scheduling, and work location/geofencing policies.*
+
+![Work Schedule Management Use Case](../images/usecase/workforce/work-schedule-management.png)
+
+---
+
+### 6. Project Management Use Case
+*Outlines project initiation, resource allocation, capacity planning, task time tracking, productivity monitoring, and manager timesheet approvals.*
+
+![Project Management Use Case](../images/usecase/project-management/Project-Management.drawio.png)
+
+---
+
+### 7. Integration Management Use Case
+*Illustrates third-party system connections including Google/Outlook calendars, email provider OAuth authorizations, and external HR platform sync.*
+
+![Integration Use Case](../images/usecase/Integration-usecase.png)
+
+---
+
+## II. Sitemaps
+
+### 1. People Management Sitemap
+*Information Architecture (IA) sitemap mapping site navigation for Employee Directory, 360 Profiles, Org Chart, HR Requests, Position Titles, and Team Management.*
+
 ![People Management Information Architecture Sitemap](../images/sitemap/people-sitemap.png)
 
-### 2.5 Project Management
-#### Staff Sitemap
-![Staff Sitemap](../images/sitemap/project-management/staff.png)
+---
 
-#### Manager Sitemap
-![Manager Sitemap](../images/sitemap/project-management/manager.png)
+### 2. Recruitment Management Sitemap
+*Navigation structure across Job Requisitions, Candidate Pipelines, Interview Schedules, Offer Generation, and Recruitment Templates.*
 
-#### HR Sitemap
-![HR Sitemap](../images/sitemap/project-management/hr.png)
-
-### 2.6 Recruitment Management
 ![Recruitment Sitemap](../images/sitemap/recruitment_sitemap.png)
 
-### 2.7 Workforce Management
+---
+
+### 3. Onboarding Management Sitemap
+*Page hierarchy covering Candidate Intake Portal, Intake Review Board, Day-One Readiness Checklist, and Probation Tracking.*
+
+![Onboarding Sitemap](../images/sitemap/onboard-sitemap.png)
+
+---
+
+### 4. Payroll Management Sitemap
+*Sitemap covering Payroll Cycles, Compensation Management, Payslips, and Email Logs.*
+
+![Payroll Sitemap](../images/sitemap/payroll_sitemap.png)
+
+---
+
+### 5. Workforce Management Sitemap
+*Navigation structure for Attendance Dashboard, Leave Management, Timesheet Review, Work Schedules, and Corrections.*
+
 ![Workforce Sitemap](../images/sitemap/image.png)
 
 ---
 
-## 3. UI/UX Specifications
+### 6. Project Management Sitemaps
 
-### 3.1 Integration Management
-#### 3.1.1 Integration Overview
-![Integration](<../images/uiux/integration/Integration.png>)
+#### 6.1 Staff View Sitemap
+*Navigation hierarchy for staff members accessing My Projects, My Capacity, My Productivity, and Time Tracking.*
 
-#### 3.1.2 Calendar Integration
-![Calendar Integration](<../images/uiux/integration/Calendar%20Integration.png>)
+![Staff View Sitemap](../images/sitemap/project-management/staff.png)
 
-#### 3.1.3 Email Integration
-![Email Integration](<../images/uiux/integration/Email%20Integration.png>)
+#### 6.2 Manager View Sitemap
+*Management dashboard navigation for Project Creation, Resource Allocation, Project Budgets, and Timesheet Reviews.*
 
-#### 3.1.4 Recruitment Integration
-![Recruitment Integration](<../images/uiux/integration/Recruiment%20Integration.png>)
+![Manager View Sitemap](../images/sitemap/project-management/manager.png)
 
-#### 3.1.5 Sync History
-![Sync History](<../images/uiux/integration/Sync%20History.png>)
+#### 6.3 HR View Sitemap
+*HR navigation structure for Capacity Overviews, Resource Utilization, and Overtime & Training tracking.*
 
----
-
-### 3.2 Onboarding Management
-#### 3.2.1 Application Management
-![Application Management UI](../images/uiux/onboard/application-screen.png)
-
-#### 3.2.2 Offer Management
-![Offer Management UI](../images/uiux/onboard/offer-management-screen.png)
-![Offer Template UI](../images/uiux/onboard/offer-template-screen.png)
-
-#### 3.2.3 Contract Management
-![Contract Management UI](../images/uiux/onboard/contract-screen.png)
-
-#### 3.2.4 Intake Review
-![Intake Review UI](../images/uiux/onboard/intake-screen.png)
-
-#### 3.2.5 Onboarding Board
-![Onboarding Board UI](../images/uiux/onboard/onboard-board-screen.png)
-
-#### 3.2.6 Assigned Task by Role
-![Assigned Task UI](../images/uiux/onboard/assigned-task-screen.png)
-
-#### 3.2.7 Tracking Onboard Progress
-![Tracking Onboard Progress UI](../images/uiux/onboard/tracking-screen.png)
+![HR View Sitemap](../images/sitemap/project-management/hr.png)
 
 ---
 
-### 3.3 Payroll Management
-#### 3.3.1 Payroll Management
-![Payroll Management](<../images/uiux/payroll/Payroll%20Management%20(1).png>)
+### 7. Integration Management Sitemap
+*Navigation flow for Provider Connections, Calendar Sync Settings, and Email Logs.*
 
-#### 3.3.2 Add Payroll
-![Add Payroll](../images/uiux/payroll/Add%20Payroll.png)
-
-#### 3.3.3 Payslips
-![Payslips](../images/uiux/payroll/Payslips.png)
-
-#### 3.3.4 Individual Payslip
-![Payslip](../images/uiux/payroll/payslip.png)
-
-#### 3.3.5 Compensation
-![Compensation](../images/uiux/payroll/Compensation.png)
-
-#### 3.3.6 Send Email
-![Send Email](../images/uiux/payroll/Send%20Email.png)
+![Integration Sitemap](../images/sitemap/integration.png)
 
 ---
 
-### 3.4 People Management
+## III. UI/UX Specifications
 
-| Category | Description | Count | Assets List |
-| :--- | :--- | :---: | :--- |
-| **Main Screens** | Primary application workflow and dashboard screens | **9** | `EmployeeDirectory`, `EmployeeProfileDetail`, `OrgDepartment`, `RequestManagement`, `CreateRequest`, `TrackingRequest`, `PositionManagement`, `TeamManagement`, `ReportingLines` |
-| **Major Popups & Drawers** | Modal dialogs and slide-over forms for data creation and approval | **6** | `AddEmployeeModal`, `AddDepartmentDrawer`, `AddContractModal`, `CeoApprovalModal`, `ApproveRejectModal`, `ExportEmployeeModal` |
+### 1. People Management UI/UX
 
-#### Main Screens
-- **Employee Directory Screen**: Central workforce catalog displaying searchable employee records, KPI metrics, status filters, and quick action toolbars.  
-  ![Employee Directory Screen](../images/uiux/people/EmployeeDirectory.png)
+#### 1.1 Employee Directory Screen
+*Central workforce catalog displaying searchable employee records, KPI metrics, status filters, and quick action toolbars.*
 
-- **Employee Profile Detail Screen**: Dedicated 360-degree employee profile view with breadcrumb navigation, header banner, and consolidated tabs for Overview, Contract & Documents, Education, and Audit History.  
-  ![Employee Profile Detail Screen](../images/uiux/people/EmployeeProfileDetail.png)
+![Employee Directory Screen](../images/uiux/people/EmployeeDirectory.png)
 
-- **Organization & Department Screen**: Interactive organizational structure canvas featuring department hierarchy tree, roster headcount metrics, branch location filters, and zoom controls.  
-  ![Organization & Department Screen](../images/uiux/people/OrgDepartment.png)
+#### 1.2 Employee Profile Detail Screen
+*360-degree employee profile view featuring breadcrumbs navigation, header banner, and consolidated tabs for Overview, Contract & Documents, Education, and History.*
 
-- **Request Management Screen**: Management dashboard for employee HR requests, leave approvals, status filtering, and workflow processing.  
-  ![Request Management Screen](../images/uiux/people/RequestManagement.png)
+![Employee Profile Detail Screen](../images/uiux/people/EmployeeProfileDetail.png)
 
-- **Create HR Request Screen**: Two-column interactive form for submitting annual leave, equipment, or policy requests with automatic quota balance validation and document uploads.  
-  ![Create HR Request Screen](../images/uiux/people/CreateRequest.png)
+#### 1.3 Organization & Department Screen
+*Interactive organizational structure canvas featuring department hierarchy tree, roster headcount metrics, location branch filters, and zoom controls.*
 
-- **Tracking Request Progress Screen**: Real-time request progress tracker displaying step-by-step approval workflow stages, reviewer audit logs, and timeline timestamps.  
-  ![Tracking Request Progress Screen](../images/uiux/people/TrackingRequest.png)
+![Organization & Department Screen](../images/uiux/people/OrgDepartment.png)
 
-- **Position & Job Title Management Screen**: Management screen defining organizational job titles, competency levels (L1-L6), salary band ranges, and headcount quotas.  
-  ![Position Management Screen](../images/uiux/people/PositionManagement.png)
+#### 1.4 Request Management Screen
+*Management dashboard for employee HR requests, leave approvals, status filtering, and workflow processing.*
 
-- **Team Management Screen**: Workspace for organizing cross-functional project teams, designating team leads, and allocating member capacity.  
-  ![Team Management Screen](../images/uiux/people/TeamManagement.png)
+![Request Management Screen](../images/uiux/people/RequestManagement.png)
 
-- **Reporting Lines & Hierarchy Matrix Screen**: Organizational matrix displaying direct report supervisors, functional line managers, and reporting relationships.  
-  ![Reporting Lines Matrix Screen](../images/uiux/people/ReportingLines.png)
+#### 1.5 Create HR Request Screen
+*Two-column interactive form for submitting annual leave, equipment, or policy requests with automatic quota balance validation.*
 
-#### Major PopUp Modals & Drawers
-- **Add New Employee Profile Modal**: Modal popup form for registering a new employee profile with personal demographics, corporate email, role assignment, and department placement.  
-  ![Add Employee Modal](../images/uiux/people/AddEmployeeModal.png)
+![Create HR Request Screen](../images/uiux/people/CreateRequest.png)
 
-- **Add Department Drawer**: Slide-over drawer for configuring new department entities, parent division alignment, location branch, and department lead assignment.  
-  ![Add Department Drawer](../images/uiux/people/AddDepartmentDrawer.png)
+#### 1.6 Tracking Request Progress Screen
+*Real-time request progress tracker displaying step-by-step approval workflow stages, reviewer audit logs, and timeline timestamps.*
 
-- **Add Labor Contract Modal**: Form popup for registering official labor contracts, compensation terms, effective start/end dates, and document attachments.  
-  ![Add Labor Contract Modal](../images/uiux/people/AddContractModal.png)
+![Tracking Request Progress Screen](../images/uiux/people/TrackingRequest.png)
 
-- **Director & CEO Approval Pending Modal**: Confirmation popup indicating organizational restructuring or employee reassignment request pending approval.  
-  ![CEO Approval Modal](../images/uiux/people/CeoApprovalModal.png)
+#### 1.7 Position & Job Title Management Screen
+*Management screen defining organizational job titles, competency levels (L1-L6), salary band ranges, and headcount quotas.*
 
-- **Approve or Reject Decision Modal**: Decision modal for approving or rejecting employee HR requests with mandatory reviewer comments.  
-  ![Approve Reject Modal](../images/uiux/people/ApproveRejectModal.png)
+![Position Management Screen](../images/uiux/people/PositionManagement.png)
 
-- **Export Employee Data Modal**: Configuration modal for selecting employee data columns, date ranges, and file format export options.  
-  ![Export Employee Modal](../images/uiux/people/ExportEmployeeModal.png)
+#### 1.8 Team Management Screen
+*Workspace for organizing cross-functional project teams, designating team leads, and allocating member capacity.*
 
----
+![Team Management Screen](../images/uiux/people/TeamManagement.png)
 
-### 3.5 Project Management
-#### 3.5.1 Staff UI/UX
-![Employee My Capacity](../images/uiux/project-management/Employee-My-Capacity.png)
-![Employee My Productivity](../images/uiux/project-management/Employee-My-Productivity.png)
-![Employee My Project](../images/uiux/project-management/Employee-My-Project.png)
-![Employee My Time](../images/uiux/project-management/Employee-My-Time.png)
-![Employee Project Detail](../images/uiux/project-management/Employee-Project-Detail.png)
+#### 1.9 Reporting Lines & Hierarchy Matrix Screen
+*Organizational matrix displaying direct report supervisors, functional line managers, and reporting relationships.*
 
-#### 3.5.2 HR UI/UX
-![HR Capacity Overview](../images/uiux/project-management/HR-Capacity-Overview.png)
-![HR Overtime & Training](../images/uiux/project-management/HR-Overtime-%26-Training.png)
-![HR Resource Overview](../images/uiux/project-management/HR-Resource-Overview.png)
-![HR Utilization](../images/uiux/project-management/HR-Utilization.png)
+![Reporting Lines Matrix Screen](../images/uiux/people/ReportingLines.png)
 
-#### 3.5.3 Manager UI/UX
-![PM Add Project Member Drawer](../images/uiux/project-management/PM-Add-Project-Member-Drawer.png)
-![PM Create Project Form](../images/uiux/project-management/PM-Create-Project-Form.png)
-![PM Employee Productivity Detail](../images/uiux/project-management/PM-Employee-Productivity-Detail.png)
-![PM Project Budget](../images/uiux/project-management/PM-Project-Budget.png)
-![PM Project Capacity View](../images/uiux/project-management/PM-Project-Capacity-View.png)
-![PM Project Detail View](../images/uiux/project-management/PM-Project-Detail-View.png)
-![PM Projects Dashboard](../images/uiux/project-management/PM-Projects-Dashboard.png)
-![PM Project Members List](../images/uiux/project-management/PM-Project-Members-List.png)
-![PM Resource Allocation](../images/uiux/project-management/PM-Resource-Allocation.png)
-![PM Team Productivity](../images/uiux/project-management/PM-Team-Productivity.png)
-![PM Time Tracking](../images/uiux/project-management/PM-Time-Tracking.png)
-![PM Timesheet Review](../images/uiux/project-management/PM-Timesheet-Review.png)
+#### 1.10 Add New Employee Profile Modal
+*Modal popup form for registering a new employee profile with personal demographics, corporate email, role assignment, and department placement.*
+
+![Add Employee Modal](../images/uiux/people/AddEmployeeModal.png)
+
+#### 1.11 Add Department Drawer
+*Slide-over drawer for configuring new department entities, parent division alignment, location branch, and manager assignments.*
+
+![Add Department Drawer](../images/uiux/people/AddDepartmentDrawer.png)
+
+#### 1.12 Add Labor Contract Modal
+*Form popup for registering official labor contracts, compensation terms, effective start/end dates, and document attachments.*
+
+![Add Labor Contract Modal](../images/uiux/people/AddContractModal.png)
+
+#### 1.13 Director & CEO Approval Pending Modal
+*Confirmation popup indicating organizational restructuring or employee reassignment request submitted for Director/CEO approval.*
+
+![CEO Approval Modal](../images/uiux/people/CeoApprovalModal.png)
+
+#### 1.14 Approve or Reject Decision Modal
+*Decision modal for approving or rejecting employee HR requests with mandatory reviewer feedback comments.*
+
+![Approve Reject Modal](../images/uiux/people/ApproveRejectModal.png)
+
+#### 1.15 Export Employee Data Modal
+*Configuration modal for selecting employee data columns, date ranges, and file export format.*
+
+![Export Employee Modal](../images/uiux/people/ExportEmployeeModal.png)
 
 ---
 
-### 3.6 Recruitment Management
-#### 3.6.1 Recruitment Management
+### 2. Recruitment Management UI/UX
+
+#### 2.1 Recruitment Management Dashboard
+*Master recruitment overview dashboard displaying active requisitions, open headcount, candidate pipeline funnels, and time-to-hire metrics.*
+
 ![Recruitment Management](../images/uiux/recruitment/Recruitment%20Management.png)
 
-#### 3.6.2 Requirement Management
+#### 2.2 Requirement Management Screen
+*Hiring requisition screen for submitting, reviewing, and approving department staffing requirements.*
+
 ![Requirement Management](../images/uiux/recruitment/Requirement%20Management.png)
 
-#### 3.6.3 Job Management
+#### 2.3 Job Management Screen
+*Interface for creating, editing, publishing, and archiving job vacancy postings across careers portals.*
+
 ![Job Management](../images/uiux/recruitment/Job%20Management.png)
 
-#### 3.6.4 Application Management
+#### 2.4 Application Management Screen
+*Applicant Tracking System (ATS) Kanban board for tracking candidate application stages from screening to offer.*
+
 ![Application Management](../images/uiux/recruitment/Application%20Management.png)
 
-#### 3.6.5 Interview Management
+#### 2.5 Interview Management Screen
+*Interview panel configuration interface for assigning interviewers, candidate evaluation scorecards, and feedback rubrics.*
+
 ![Interview Management](../images/uiux/recruitment/Interview%20Management.png)
 
-#### 3.6.6 Schedule Management
+#### 2.6 Schedule Management Screen
+*Recruitment calendar for managing candidate interview time slots and interviewer availability.*
+
 ![Schedule Management](../images/uiux/recruitment/Schedule%20Management.png)
 
-#### 3.6.7 Offer Management
+#### 2.7 Offer Management Screen
+*Offer generation portal for crafting candidate offer letters, setting compensation packages, and tracking candidate responses.*
+
 ![Offer Management](../images/uiux/recruitment/Offer%20Management.png)
 
-#### 3.6.8 Template Management
+#### 2.8 Template Management Screen
+*Template repository for recruitment notification emails, job offer templates, and interview scorecards.*
+
 ![Template Management](../images/uiux/recruitment/Template%20Management.png)
 
 ---
 
-### 3.7 Workforce Management
-#### 3.7.1 Attendance Dashboard
+### 3. Onboarding Management UI/UX
+
+#### 3.1 Application Management Screen
+*Pre-onboarding candidate application selection and transition into the onboarding pipeline.*
+
+![Application Management UI](../images/uiux/onboard/application-screen.png)
+
+#### 3.2 Offer Management Screen
+*Dashboard for tracking dispatched candidate job offers and monitoring candidate accept/decline responses.*
+
+![Offer Management UI](../images/uiux/onboard/offer-management-screen.png)
+
+#### 3.3 Offer Template Screen
+*Configuration editor for defining reusable candidate offer document templates.*
+
+![Offer Template UI](../images/uiux/onboard/offer-template-screen.png)
+
+#### 3.4 Contract Management Screen
+*Interface for generating probation contracts, sending e-signature requests, and managing signed agreements.*
+
+![Contract Management UI](../images/uiux/onboard/contract-screen.png)
+
+#### 3.5 Intake Review Screen
+*HR review portal for auditing candidate document uploads, verifying personal details, and inspecting OCR auto-extracted fields.*
+
+![Intake Review UI](../images/uiux/onboard/intake-screen.png)
+
+#### 3.6 Onboarding Board Screen
+*Kanban board for tracking new hires across Pre-Boarding, Day One, and Probation stages.*
+
+![Onboarding Board UI](../images/uiux/onboard/onboard-board-screen.png)
+
+#### 3.7 Assigned Task Screen
+*Worklist screen for department staff (IT, Payroll, HR, Manager) to process assigned onboarding tasks.*
+
+![Assigned Task UI](../images/uiux/onboard/assigned-task-screen.png)
+
+#### 3.8 Tracking Onboard Progress Screen
+*Overview screen for monitoring employee probation milestones, candidate self-reviews, and performance evaluation schedules.*
+
+![Tracking Onboard Progress UI](../images/uiux/onboard/tracking-screen.png)
+
+---
+
+### 4. Payroll Management UI/UX
+
+#### 4.1 Payroll Management Dashboard
+*Master payroll processing dashboard displaying pay period runs, gross salary totals, tax deductions, and net pay summaries.*
+
+![Payroll Management](../images/uiux/payroll/Payroll%20Management%20(1).png)
+
+#### 4.2 Add Payroll Form
+*Step-by-step form for defining pay periods, importing attendance time entries, and applying salary adjustments.*
+
+![Add Payroll](../images/uiux/payroll/Add%20Payroll.png)
+
+#### 4.3 Payslips Overview Screen
+*Management table listing all generated employee payslips with issue dates, status badges, and export controls.*
+
+![Payslips](../images/uiux/payroll/Payslips.png)
+
+#### 4.4 Individual Payslip View
+*Detailed payslip view itemizing base salary, allowances, statutory deductions, tax withholdings, and net payout.*
+
+![Individual Payslip](../images/uiux/payroll/payslip.png)
+
+#### 4.5 Compensation & Benefits Screen
+*Configuration catalog for defining recurring allowances, benefit categories, bonus structures, and deduction rules.*
+
+![Compensation](../images/uiux/payroll/Compensation.png)
+
+#### 4.6 Send Email Dispatch Screen
+*Batch interface for emailing digital payslip PDFs directly to employee email addresses.*
+
+![Send Email](../images/uiux/payroll/Send%20Email.png)
+
+---
+
+### 5. Workforce Management UI/UX
+
+#### 5.1 Attendance Dashboard
+*Real-time attendance monitor displaying daily clock-ins, late arrivals, absences, and active employee status.*
+
 ![Attendance Dashboard](../images/uiux/workforce/attendance/attendance-dashboard.png)
 
-#### 3.7.2 Attendance Corrections & Working State
-![Attendance Corrections Manager View](../images/uiux/workforce/attendance/attendance-corrections-manager-view.png)
-![My Attendance Working State](../images/uiux/workforce/attendance/my-attendance-working-state.png)
+#### 5.2 Attendance Corrections Manager View
+*Manager approval portal for reviewing, approving, or rejecting employee attendance adjustment requests.*
 
-#### 3.7.3 Leave Management
-![Leave Management UI](../images/uiux/workforce/leave-management/leave-management.png)
+![Attendance Corrections](../images/uiux/workforce/attendance/attendance-corrections-manager-view.png)
 
-#### 3.7.4 Timesheet Review Detail
+#### 5.3 My Attendance Working State Screen
+*Employee self-service screen for recording clock-in/out times, viewing work duration, and checking shift schedules.*
+
+![My Attendance](../images/uiux/workforce/attendance/my-attendance-working-state.png)
+
+#### 5.4 Leave Management Dashboard
+*Employee leave portal for submitting leave applications, checking annual leave quota balances, and viewing leave history.*
+
+![Leave Management](../images/uiux/workforce/leave-management/leave-management.png)
+
+#### 5.5 Timesheet Review Detail Screen
+*Manager timesheet inspection screen for auditing daily logged working hours, project effort breakdown, and overtime.*
+
 ![Timesheet Review Detail](../images/uiux/workforce/timesheet/timesheet-review-detail.png)
 
 ---
 
-## 4. Entity Relationship Diagrams (ERD) & Database Schemas
+### 6. Project Management UI/UX
 
-### 4.1 Integration Management
-#### 4.1.1 System ERD Overview
-![Integration ERD](../images/erd/integration.png)
+#### Staff Views
 
-#### 4.1.2 Sub-Domain Schemas
+##### 6.1 Staff My Capacity Screen
+*Personal capacity dashboard displaying allocated working hours, assigned project workload, and availability.*
 
-##### Integration Overview
-```mermaid
-erDiagram
-    COMPANY ||--o{ INTEGRATION : "enables"
-    
-    COMPANY {
-        string id PK
-        string name
-    }
+![Staff My Capacity](../images/uiux/project-management/Employee-My-Capacity.png)
 
-    INTEGRATION {
-        string id PK
-        string company_id FK
-        string provider_name "e.g., Google, Microsoft, LinkedIn"
-        string category "Calendar, Email, Recruitment"
-        string status "Connected, Disconnected"
-        datetime connected_at
-    }
-```
+##### 6.2 Staff My Productivity Screen
+*Individual productivity tracking screen displaying task completion rates, logged billable hours, and focus time analytics.*
 
-##### Calendar Integration
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ CALENDAR_CONNECTION : "authorizes"
-    CALENDAR_CONNECTION ||--o{ EVENT_SYNC : "manages"
-    
-    EMPLOYEE {
-        string id PK
-        string name
-    }
-    
-    CALENDAR_CONNECTION {
-        string id PK
-        string employee_id FK
-        string provider "Google Calendar, Outlook"
-        string account_email
-        string sync_status
-    }
-    
-    EVENT_SYNC {
-        string id PK
-        string connection_id FK
-        string event_id "External Event ID"
-        string title
-        datetime start_time
-        datetime end_time
-    }
-```
+![Staff My Productivity](../images/uiux/project-management/Employee-My-Productivity.png)
 
-##### Email Integration
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ EMAIL_CONNECTION : "authorizes"
-    EMAIL_CONNECTION ||--o{ EMAIL_SYNC_LOG : "generates"
-    
-    EMPLOYEE {
-        string id PK
-        string name
-        string primary_email
-    }
-    
-    EMAIL_CONNECTION {
-        string id PK
-        string employee_id FK
-        string provider "Gmail, Outlook"
-        string email_address
-        string status
-    }
-    
-    EMAIL_SYNC_LOG {
-        string id PK
-        string connection_id FK
-        string message_id
-        string subject
-        datetime synced_at
-        string status "Success, Failed"
-    }
-```
+##### 6.3 Staff My Project Screen
+*Personal project list displaying active project assignments, assigned roles, and milestone deadlines.*
 
-##### Recruitment Integration
-```mermaid
-erDiagram
-    INTEGRATION ||--o{ JOB_POSTING_SYNC : "publishes"
-    JOB_POSTING_SYNC ||--o{ CANDIDATE_IMPORT : "receives"
-    
-    INTEGRATION {
-        string id PK
-        string provider_name "e.g., LinkedIn, Indeed"
-        string status
-    }
-    
-    JOB_POSTING_SYNC {
-        string id PK
-        string integration_id FK
-        string internal_job_id
-        string external_job_id
-        string status "Active, Closed"
-        datetime posted_at
-    }
-    
-    CANDIDATE_IMPORT {
-        string id PK
-        string job_sync_id FK
-        string external_candidate_id
-        string name
-        string email
-        string resume_url
-        datetime imported_at
-    }
-```
+![Staff My Project](../images/uiux/project-management/Employee-My-Project.png)
 
-##### Sync History
-```mermaid
-erDiagram
-    INTEGRATION ||--o{ SYNC_HISTORY : "logs"
-    
-    INTEGRATION {
-        string id PK
-        string provider_name
-        string category
-    }
-    
-    SYNC_HISTORY {
-        string id PK
-        string integration_id FK
-        string sync_type "Manual, Scheduled, Webhook"
-        string status "Success, Error, In Progress"
-        int records_processed
-        int error_count
-        datetime started_at
-        datetime completed_at
-        string error_details
-    }
-```
+##### 6.4 Staff My Time Tracking Screen
+*Time entry log screen for recording daily hours spent across project tasks.*
 
-##### Full Integration ERD
-```mermaid
-erDiagram
-    COMPANY ||--o{ INTEGRATION : "enables"
-    EMPLOYEE ||--o{ CALENDAR_CONNECTION : "authorizes"
-    EMPLOYEE ||--o{ EMAIL_CONNECTION : "authorizes"
-    INTEGRATION ||--o{ JOB_POSTING_SYNC : "publishes"
-    INTEGRATION ||--o{ SYNC_HISTORY : "logs"
-    CALENDAR_CONNECTION ||--o{ EVENT_SYNC : "manages"
-    EMAIL_CONNECTION ||--o{ EMAIL_SYNC_LOG : "generates"
-    JOB_POSTING_SYNC ||--o{ CANDIDATE_IMPORT : "receives"
-    
-    COMPANY {
-        string id PK
-        string name
-    }
+![Staff My Time](../images/uiux/project-management/Employee-My-Time.png)
 
-    EMPLOYEE {
-        string id PK
-        string name
-    }
-    
-    INTEGRATION {
-        string id PK
-        string company_id FK
-        string provider_name
-        string category
-        string status
-    }
-    
-    CALENDAR_CONNECTION {
-        string id PK
-        string employee_id FK
-        string provider
-        string account_email
-        string sync_status
-    }
-    
-    EVENT_SYNC {
-        string id PK
-        string connection_id FK
-        string event_id
-        string title
-        datetime start_time
-    }
-    
-    EMAIL_CONNECTION {
-        string id PK
-        string employee_id FK
-        string provider
-        string email_address
-        string status
-    }
-    
-    EMAIL_SYNC_LOG {
-        string id PK
-        string connection_id FK
-        string message_id
-        string subject
-        string status
-    }
-    
-    JOB_POSTING_SYNC {
-        string id PK
-        string integration_id FK
-        string internal_job_id
-        string external_job_id
-        string status
-    }
-    
-    CANDIDATE_IMPORT {
-        string id PK
-        string job_sync_id FK
-        string external_candidate_id
-        string name
-        string email
-    }
-    
-    SYNC_HISTORY {
-        string id PK
-        string integration_id FK
-        string sync_type
-        string status
-        int records_processed
-        datetime started_at
-    }
-```
+##### 6.5 Staff Project Detail Screen
+*Detailed project hub displaying project description, task board, team members, and timeline.*
+
+![Staff Project Detail](../images/uiux/project-management/Employee-Project-Detail.png)
+
+#### HR Views
+
+##### 6.6 HR Capacity Overview Screen
+*Company-wide capacity dashboard for monitoring resource allocation across all departments and projects.*
+
+![HR Capacity Overview](../images/uiux/project-management/HR-Capacity-Overview.png)
+
+##### 6.7 HR Overtime & Training Screen
+*Tracking dashboard for employee overtime hours, training allocations, and skill development programs.*
+
+![HR Overtime & Training](../images/uiux/project-management/HR-Overtime-%26-Training.png)
+
+##### 6.8 HR Resource Overview Screen
+*Resource management dashboard displaying staff availability, active project allocations, and bench capacity.*
+
+![HR Resource Overview](../images/uiux/project-management/HR-Resource-Overview.png)
+
+##### 6.9 HR Utilization Screen
+*Resource utilization metrics screen analyzing planned vs actual resource utilization rates.*
+
+![HR Utilization](../images/uiux/project-management/HR-Utilization.png)
+
+#### Manager Views
+
+##### 6.10 PM Add Project Member Drawer
+*Slide-over drawer for searching employees, adding members to a project, and setting project roles.*
+
+![PM Add Project Member Drawer](../images/uiux/project-management/PM-Add-Project-Member-Drawer.png)
+
+##### 6.11 PM Create Project Form
+*Form for creating a new project entity, setting project code, start/end dates, budget, and project manager.*
+
+![PM Create Project Form](../images/uiux/project-management/PM-Create-Project-Form.png)
+
+##### 6.12 PM Employee Productivity Detail Screen
+*Detailed view analyzing individual employee productivity metrics and project contribution breakdown.*
+
+![PM Employee Productivity Detail](../images/uiux/project-management/PM-Employee-Productivity-Detail.png)
+
+##### 6.13 PM Project Budget Screen
+*Financial dashboard tracking project budget allocation, actual expenditure, burn rate, and financial forecast.*
+
+![PM Project Budget](../images/uiux/project-management/PM-Project-Budget.png)
+
+##### 6.14 PM Project Capacity View Screen
+*Capacity planning canvas showing project member resource allocations across project timelines.*
+
+![PM Project Capacity View](../images/uiux/project-management/PM-Project-Capacity-View.png)
+
+##### 6.15 PM Project Detail View Screen
+*Manager control center for managing project milestones, team members, tasks, and budget status.*
+
+![PM Project Detail View](../images/uiux/project-management/PM-Project-Detail-View.png)
+
+##### 6.16 PM Projects Dashboard Screen
+*Master portfolio dashboard displaying all company projects with health indicators and progress bars.*
+
+![PM Projects Dashboard](../images/uiux/project-management/PM-Projects-Dashboard.png)
+
+##### 6.17 PM Project Members List Screen
+*Project roster table showing assigned team members, assigned project roles, and allocated capacity %.*
+
+![PM Project Members List](../images/uiux/project-management/PM-Project-Members-List.png)
+
+##### 6.18 PM Resource Allocation Screen
+*Resource grid interface for allocating engineering and design resources across active projects.*
+
+![PM Resource Allocation](../images/uiux/project-management/PM-Resource-Allocation.png)
+
+##### 6.19 PM Team Productivity Screen
+*Team productivity analytics comparing planned vs actual effort hours and delivery velocity.*
+
+![PM Team Productivity](../images/uiux/project-management/PM-Team-Productivity.png)
+
+##### 6.20 PM Time Tracking Screen
+*Manager time auditing screen for reviewing detailed time entries logged by project team members.*
+
+![PM Time Tracking](../images/uiux/project-management/PM-Time-Tracking.png)
+
+##### 6.21 PM Timesheet Review Screen
+*Timesheet approval dashboard for reviewing and approving weekly team timesheets.*
+
+![PM Timesheet Review](../images/uiux/project-management/PM-Timesheet-Review.png)
 
 ---
 
-### 4.2 Onboarding Management
-#### 4.2.1 Application Management ERD
+### 7. Integration Management UI/UX
+
+#### 7.1 Integration Overview Screen
+*Central catalog displaying available third-party integrations (Google Workspace, Microsoft 365, LinkedIn).*
+
+![Integration Overview](../images/uiux/integration/Integration.png)
+
+#### 7.2 Calendar Integration Screen
+*Configuration screen for authorizing Google Calendar / Outlook Calendar event synchronization.*
+
+![Calendar Integration](../images/uiux/integration/Calendar%20Integration.png)
+
+#### 7.3 Email Integration Screen
+*Setup page for connecting corporate Gmail or Outlook email accounts for automated communications.*
+
+![Email Integration](../images/uiux/integration/Email%20Integration.png)
+
+---
+
+## IV. Database Schema ERDs
+
+### 1. People Management ERD
+
+#### 1.1 Organization Domain ERD
+*Entity relationship model covering Company Branches, Departments, Teams, Positions, and Reporting Lines.*
+
+![Organization Domain ERD](../images/erd/people/Organization.png)
+
+#### 1.2 Employee Directory Domain ERD
+*Database structure covering Employee Accounts, Profiles, Labor Contracts, Verification Documents, Assets, and Leave Quotas.*
+
+![Employee Directory ERD](../images/erd/people/EmployeeDirectory.png)
+
+#### 1.3 Request Management Domain ERD
+*Workflow database model covering HR Requests, Request Types, Workflow Steps, Multi-Level Approval Logs, and Attachments.*
+
+![Request Management ERD](../images/erd/people/Request_Managment.png)
+
+---
+
+### 2. Recruitment Management ERD
+
+#### 2.1 Recruitment Database Overview ERD
+*Master entity relationship model for the recruitment module.*
+
+![Recruitment DB Overview](../images/erd/recruitment/Recruitment%20db.png)
+
+#### 2.2 Organization & Recruitment Requirement ERD
+*Database schema linking department hiring requirements to organization structures.*
+
+![Organization & Recruitment Requirement](../images/erd/recruitment/Organization%20%26%20Recruitment%20Requirement.png)
+
+#### 2.3 Job & Application ERD
+*Database relationship model connecting Job Vacancies, Candidate Profiles, and Application stages.*
+
+![Job & Application](../images/erd/recruitment/Job%20%26%20Application.png)
+
+#### 2.4 Interview Schedule & Evaluation ERD
+*Database schema for Interview Schedules, Interview Panel Members, and Candidate Scorecard Evaluations.*
+
+![Interview Schedule & Evaluation](../images/erd/recruitment/Interview%20Schedule%20%26%20Evaluation.png)
+
+#### 2.5 Offer & Recruitment Template ERD
+*Database relationship model for Job Offers, Offer Responses, and Notification Templates.*
+
+![Offer & Recruitment Template](../images/erd/recruitment/Offer%20%26%20Recruitment%20Template.png)
+
+---
+
+### 3. Onboarding Management ERD
+
+#### 3.1 Application Management ERD
+*ERD model covering Candidate Applications and initial onboarding stage transitions.*
+
 ![Application Management ERD](../images/erd/onboard/application-erd.png)
 
-#### 4.2.2 Offer Management ERD
+#### 3.2 Offer Management ERD
+*ERD model for Job Offers, Offer Templates, Email Templates, and Candidate Responses.*
+
 ![Offer Management ERD](../images/erd/onboard/offer-erd.png)
 
-#### 4.2.3 Contract Management ERD
+#### 3.3 Contract Management ERD
+*ERD schema for Probation Contracts, Contract Templates, and Signing Records.*
+
 ![Contract Management ERD](../images/erd/onboard/contract-erd.png)
 
-#### 4.2.4 Intake Review ERD
+#### 3.4 Intake Review ERD
+*Database relationship model for Onboarding Submissions, Uploaded Documents, Field Mappings, and Generated PDF Outputs.*
+
 ![Intake Review ERD](../images/erd/onboard/intake-review-erd.png)
 
-#### 4.2.5 Onboarding Board ERD
+#### 3.5 Onboarding Board ERD
+*ERD model for Onboarding Cases, Kanban Stages, Day-One Readiness Items, and Blockers.*
+
 ![Onboarding Board ERD](../images/erd/onboard/board-erd.png)
 
-#### 4.2.6 Assigned Task ERD
+#### 3.6 Assigned Task ERD
+*Database schema for Onboarding Task Templates, Assigned Tasks, Task Assignments, and Task Comments.*
+
 ![Assigned Task ERD](../images/erd/onboard/assigned-task-erd.png)
 
-#### 4.2.7 Tracking Onboard Progress ERD
+#### 3.7 Tracking Onboard Progress ERD
+*ERD model covering Probation Tracking, Candidate Self-Reviews, and Performance Evaluation Rounds.*
+
 ![Tracking Onboard Progress ERD](../images/erd/onboard/tracking-erd.png)
 
 ---
 
-### 4.3 Payroll Management
-#### 4.3.1 System ERD Overview
+### 4. Payroll Management ERD
+
+#### 4.1 Full Payroll Schema ERD
+*Master entity relationship model for Payroll Runs, Base Salary, Compensation Allowances, Payroll Items, Payslips, and Email Logs.*
+
 ![Payroll ERD](../images/erd/Payroll-erd.png)
 
-#### 4.3.2 Sub-Domain Schemas
-
-##### Payroll Management
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ PAYROLL : "has"
-
-    EMPLOYEE {
-        string id PK
-        string name
-        string department
-    }
-
-    PAYROLL {
-        int id PK
-        string employee_id FK
-        date pay_period
-        decimal base_salary
-        decimal gross_pay
-        decimal total_deductions
-        decimal net_pay
-        string status
-    }
-```
-
-##### Add Payroll
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ PAYROLL : "has"
-    PAYROLL ||--o{ PAYROLL_ITEM : "contains"
-    COMPENSATION ||--o{ PAYROLL_ITEM : "references"
-
-    EMPLOYEE {
-        string id PK "e.g. EMP-00246"
-        string name
-        string role
-        string department
-        string employment_type
-    }
-
-    COMPENSATION {
-        int id PK
-        string type "ALLOWANCE, BENEFIT, BONUS, DEDUCTION"
-        string name "e.g. Transport Allowance"
-        string description
-        decimal default_amount
-        string status
-    }
-
-    PAYROLL {
-        int id PK
-        string employee_id FK
-        date pay_period
-        decimal base_salary
-        decimal gross_pay
-        decimal total_deductions
-        decimal net_pay
-        string status
-    }
-
-    PAYROLL_ITEM {
-        int id PK
-        int payroll_id FK
-        int COMPENSATION_id FK
-        decimal applied_amount
-    }
-```
-
-##### Payslips
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ PAYROLL : "has"
-    PAYROLL ||--o| PAYSLIP : "generates"
-
-    PAYROLL {
-        int id PK
-        string employee_id FK
-        date pay_period
-        decimal gross_pay
-        decimal total_deductions
-        decimal net_pay
-        string status
-    }
-
-    PAYSLIP {
-        int id PK
-        int payroll_id FK
-        string payslip_number
-        date issue_date
-        string file_url
-        string status
-        datetime generated_at
-    }
-```
-
-##### Individual Payslip
-```mermaid
-erDiagram
-    PAYSLIP ||--|| PAYROLL : "represents"
-    PAYROLL ||--o{ PAYROLL_ITEM : "contains"
-    COMPENSATION ||--o{ PAYROLL_ITEM : "describes"
-
-    PAYSLIP {
-        int id PK
-        int payroll_id FK
-        string payslip_number
-        date issue_date
-        string file_url
-        string status
-    }
-
-    PAYROLL {
-        int id PK
-        decimal base_salary
-        decimal gross_pay
-        decimal total_deductions
-        decimal net_pay
-    }
-
-    PAYROLL_ITEM {
-        int id PK
-        int payroll_id FK
-        int COMPENSATION_id FK
-        decimal applied_amount
-    }
-
-    COMPENSATION {
-        int id PK
-        string type
-        string name
-    }
-```
-
-##### Compensation
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ EMPLOYEE_COMPENSATION : "receives"
-    COMPENSATION ||--o{ EMPLOYEE_COMPENSATION : "assigned_to"
-
-    EMPLOYEE {
-        string id PK
-        string name
-    }
-
-    COMPENSATION {
-        int id PK
-        string name
-        string description
-        decimal default_amount
-        string frequency
-        string status
-    }
-
-    EMPLOYEE_COMPENSATION {
-        int id PK
-        string employee_id FK
-        int compensation_id FK
-        decimal applied_amount
-        date effective_from
-        date effective_to
-        string status
-    }
-```
-
-##### Send Email
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ EMAIL_LOG : "receives"
-    PAYSLIP ||--o{ EMAIL_LOG : "attached_to"
-
-    EMPLOYEE {
-        string id PK
-        string name
-        string email
-    }
-
-    PAYSLIP {
-        int id PK
-        int payroll_id FK
-        string file_url
-    }
-
-    EMAIL_LOG {
-        int id PK
-        string employee_id FK
-        int payslip_id FK
-        string recipient_email
-        string subject
-        string body
-        datetime sent_at
-        string status
-    }
-```
-
-##### Full Payroll ERD
-```mermaid
-erDiagram
-    EMPLOYEE ||--o{ PAYROLL : "has"
-
-    PAYROLL ||--o{ PAYROLL_ITEM : "contains"
-    COMPENSATION ||--o{ PAYROLL_ITEM : "references"
-
-    PAYROLL ||--o| PAYSLIP : "generates"
-
-    EMPLOYEE ||--o{ EMPLOYEE_COMPENSATION : "receives"
-    COMPENSATION ||--o{ EMPLOYEE_COMPENSATION : "assigned_to"
-
-    EMPLOYEE ||--o{ EMAIL_LOG : "receives"
-    PAYSLIP ||--o{ EMAIL_LOG : "attached_to"
-
-    EMPLOYEE {
-        string id PK
-        string name
-        string email
-        string role
-        string department
-        string employment_type
-    }
-
-    PAYROLL {
-        int id PK
-        string employee_id FK
-        date pay_period
-        decimal base_salary
-        decimal gross_pay
-        decimal total_deductions
-        decimal net_pay
-        string currency
-        string status
-        datetime created_at
-    }
-
-    COMPENSATION {
-        int id PK
-        string type "ALLOWANCE, BENEFIT"
-        string name
-        string description
-        decimal default_amount
-        string frequency
-        string status
-    }
-
-    PAYROLL_ITEM {
-        int id PK
-        int payroll_id FK
-        int compensation_id FK
-        decimal applied_amount
-    }
-
-    EMPLOYEE_COMPENSATION {
-        int id PK
-        string employee_id FK
-        int compensation_id FK
-        decimal applied_amount
-        date effective_from
-        date effective_to
-        string status
-    }
-
-    PAYSLIP {
-        int id PK
-        int payroll_id FK
-        string payslip_number
-        date issue_date
-        string file_url
-        string status
-        datetime generated_at
-    }
-
-    EMAIL_LOG {
-        int id PK
-        string employee_id FK
-        int payslip_id FK
-        string recipient_email
-        string subject
-        string body
-        datetime sent_at
-        string status
-    }
-```
-
 ---
 
-### 4.4 People Management
-#### 4.4.1 Organization Domain Schema ERD
-Database relationship model covering Company Branches, Departments, Teams, Positions, and Reporting Line relationships.
-![Organization Domain ERD](../images/databases/people/Organization.png)
+### 5. Workforce Management ERD
 
-#### 4.4.2 Employee Directory Domain Schema ERD
-Database entity structure covering Employee Accounts, 1:1 Profiles, Labor Contracts, Verification Documents, Education, Assets, Leave Types, and Leave Balances.
-![Employee Directory ERD](../images/databases/people/EmployeeDirectory.png)
+#### 5.1 Attendance Corrections ERD
+*ERD model covering Attendance Correction Requests, Review Logs, and Decision History.*
 
-#### 4.4.3 Request Management Domain Schema ERD
-Workflow database model covering Ticket Requests, Request Types, Workflow Steps, Multi-Stage Approval Logs, and Attachments.
-![Request Management ERD](../images/databases/people/Request_Managment.png)
-
----
-
-### 4.5 Project Management
-#### 4.5.1 System ERD Overview
-![Project Management Overview ERD](../images/erd/project-management/project-management.png)
-
-#### 4.5.2 Project Setup & Management, Member & Allocation, Effort / Time Tracking
-![Project Setup ERD](../images/erd/project-management/project-setup.png)
-
-#### 4.5.3 Capability Management + Budget Management
-![Capacity Management ERD](../images/erd/project-management/capacity-management.png)
-
-#### 4.5.4 Productivity Monitoring
-![Productivity Monitoring ERD](../images/erd/project-management/productivity-monitoring.png)
-
----
-
-### 4.6 Recruitment Management
-#### 4.6.1 Recruitment DB Overview
-![Recruitment DB Overview](<../images/erd/recruitment/Recruitment db.png>)
-
-#### 4.6.2 Organization & Recruitment Requirement
-![Organization & Recruitment Requirement](<../images/erd/recruitment/Organization & Recruitment Requirement.png>)
-
-#### 4.6.3 Job & Application
-![Job & Application](<../images/erd/recruitment/Job & Application.png>)
-
-#### 4.6.4 Interview Schedule & Evaluation
-![Interview Schedule & Evaluation](<../images/erd/recruitment/Interview Schedule & Evaluation.png>)
-
-#### 4.6.5 Offer & Recruitment Template
-![Offer & Recruitment Template](<../images/erd/recruitment/Offer & Recruitment Template.png>)
-
----
-
-### 4.7 Workforce Management
-#### 4.7.1 Attendance Corrections ERD
 ![Attendance Corrections ERD](../images/erd/workforce/attendence-corrections.png)
 
-#### 4.7.2 Attendance Record ERD
+#### 5.2 Attendance Record ERD
+*Database schema for Daily Attendance Logs, Clock-in/out Timestamps, and Work Hours.*
+
 ![Attendance Record ERD](../images/erd/workforce/attendance-record.png)
 
-#### 4.7.3 My Attendance ERD
+#### 5.3 My Attendance ERD
+*Database entity schema for Employee Working States, Shifts, and Break Logs.*
+
 ![My Attendance ERD](../images/erd/workforce/my-attendance.png)
 
-#### 4.7.4 Leave Management ERD
+#### 5.4 Leave Management ERD
+*ERD model for Employee Leave Requests, Leave Types, Leave Balances, and Approval Actions.*
+
 ![Leave Management ERD](../images/erd/workforce/leave-management.png)
 
-#### 4.7.5 Timesheet Review ERD
-![Timesheet Review ERD](../images/erd/workforce/time-sheet-review.png)
+#### 5.5 Time Sheet Review ERD
+*Database schema for Timesheets, Timesheet Entries, Overtime Records, and Manager Reviews.*
+
+![Time Sheet Review ERD](../images/erd/workforce/time-sheet-review.png)
 
 ---
 
-## 5. API Documentation & Test Cases
+### 6. Project Management ERD
 
-### 5.1 Integration Management
+#### 6.1 Project Management Master ERD Overview
+*Master database schema for the Project Management module.*
+
+![Project Management ERD Overview](../images/erd/project-management/project-management.png)
+
+#### 6.2 Project Setup & Management ERD
+*Database schema covering Projects, Project Members, Project Roles, and Time Entries.*
+
+![Project Setup & Management](../images/erd/project-management/project-setup.png)
+
+#### 6.3 Capability & Budget Management ERD
+*ERD model for Resource Capacity Planning, Skill Capabilities, and Project Budgets.*
+
+![Capability & Budget Management](../images/erd/project-management/capacity-management.png)
+
+#### 6.4 Productivity Monitoring ERD
+*Database relationship model for Task Completion Metrics, Productivity Logs, and Billable Effort Tracking.*
+
+![Productivity Monitoring](../images/erd/project-management/productivity-monitoring.png)
+
+---
+
+### 7. Integration Management ERD
+
+#### 7.1 Integration Management Schema ERD
+*Database schema covering Connected Integration Providers, Calendar Connections, Sync Events, and Email Sync Logs.*
+
+![Integration ERD](../images/erd/integration.png)
+
+---
+
+## V. API Specifications & Swagger Documentation
+
+### 1. People Management API
+
+#### 1.1 API Route Tree
 ```text
-BBV HR - Integration Management API
+Copilot.HR - People Management API
 │
-├── Integrations
-│   ├── GET     /integrations
-│   ├── POST    /integrations
-│   ├── GET     /integrations/{integrationId}
-│   ├── PUT     /integrations/{integrationId}
-│   ├── DELETE  /integrations/{integrationId}
-│   ├── POST    /integrations/{integrationId}/test
-│   └── POST    /integrations/{integrationId}/reconnect
+├── Employees & Profiles
+│   ├── GET     /employees
+│   ├── POST    /employees
+│   ├── POST    /employees/export
+│   ├── GET     /employees/{id}
+│   ├── PUT     /employees/{id}
+│   ├── DELETE  /employees/{id}
+│   ├── GET     /employees/{id}/contracts
+│   ├── POST    /employees/{id}/contracts
+│   ├── GET     /employees/{id}/documents
+│   ├── POST    /employees/{id}/documents
+│   └── GET     /employees/{id}/history
 │
-├── Calendar Integration
-│   ├── GET     /integrations/{integrationId}/calendar-config
-│   ├── PUT     /integrations/{integrationId}/calendar-config
-│   └── GET     /integrations/{integrationId}/calendar-events
+├── Leave Categories & Balances
+│   ├── GET     /leave-types
+│   ├── POST    /leave-types
+│   ├── GET     /employees/{id}/leave-balance
+│   └── GET     /requests/quotas/check
 │
-├── Email Integration
-│   ├── GET     /integrations/{integrationId}/email-config
-│   ├── PUT     /integrations/{integrationId}/email-config
-│   ├── GET     /integrations/{integrationId}/email-templates
-│   ├── POST    /integrations/{integrationId}/email-templates
-│   ├── PUT     /email-templates/{templateId}
-│   ├── DELETE  /email-templates/{templateId}
-│   ├── GET     /integrations/{integrationId}/email-logs
-│   └── POST    /integrations/{integrationId}/send-test-email
+├── HR Request Management & Workflows
+│   ├── GET     /requests
+│   ├── POST    /requests
+│   ├── GET     /requests/{id}
+│   ├── PUT     /requests/{id}
+│   ├── POST    /requests/{id}/approve
+│   ├── POST    /requests/{id}/reject
+│   ├── POST    /requests/{id}/cancel
+│   └── GET     /requests/{id}/timeline
 │
-├── Recruitment Integration
-│   ├── GET     /integrations/{integrationId}/recruitment-config
-│   ├── PUT     /integrations/{integrationId}/recruitment-config
-│   ├── GET     /integrations/{integrationId}/job-postings
-│   ├── POST    /integrations/{integrationId}/job-postings
-│   ├── POST    /job-postings/{jobPostingSyncId}/sync
-│   ├── POST    /job-postings/{jobPostingSyncId}/close
-│   ├── GET     /job-postings/{jobPostingSyncId}/candidate-imports
-│   └── POST    /integrations/{integrationId}/application-sync
-│
-└── Sync History
-    ├── POST    /integrations/{integrationId}/sync
-    ├── GET     /sync-history
-    ├── GET     /sync-history/{syncId}
-    └── POST    /sync-history/{syncId}/retry
+└── Organization & Hierarchy Matrix
+    ├── GET     /departments
+    ├── POST    /departments
+    ├── GET     /departments/{id}
+    ├── PUT     /departments/{id}
+    ├── DELETE  /departments/{id}
+    ├── POST    /departments/restructure
+    ├── GET     /positions
+    ├── POST    /positions
+    ├── PUT     /positions/{id}
+    ├── GET     /teams
+    ├── POST    /teams
+    ├── POST    /teams/{id}/members
+    ├── GET     /reporting-lines
+    └── PUT     /reporting-lines
 ```
 
-![Integration API](../images/api-swagger/integration/integration.png)
-![Calendar Integration API](../images/api-swagger/integration/calendar.png)
-![Email Integration API](../images/api-swagger/integration/email.png)
-![Recruitment Integration API](../images/api-swagger/integration/recruitment.png)
-![Sync History API](../images/api-swagger/integration/sync-history.png)
+#### 1.2 Swagger UI Screenshots
+![Employee Directory APIs](../images/api-swagger/people/EmployeeApi.png)
+![Labor Contracts and Documents APIs](../images/api-swagger/people/Contract_Documents.png)
+![Leave and Audit History APIs](../images/api-swagger/people/Leave_History.png)
+![Report Quotas APIs](../images/api-swagger/people/Report_Quotas.png)
+![Request Management APIs](../images/api-swagger/people/Request.png)
+![Approvals and Tracking APIs](../images/api-swagger/people/Approvals_Tracking.png)
+![Department Management APIs](../images/api-swagger/people/Department.png)
+![Positions Teams and Reporting Lines APIs](../images/api-swagger/people/Position_Team.png)
 
 ---
 
-### 5.2 Onboarding Management
-![Onboarding API Route Tree 1](../images/erd/onboard/api1.png) 
-![Onboarding API Route Tree 2](../images/erd/onboard/api2.png) 
-![Onboarding API Route Tree 3](../images/erd/onboard/api3.png)
+### 2. Recruitment Management API
+
+#### 2.1 API Route Tree
+```text
+BBV HR - Recruitment API
+│
+├── Requirements
+│   ├── GET     /requirements
+│   ├── POST    /requirements
+│   ├── GET     /requirements/{requirementId}
+│   ├── PATCH   /requirements/{requirementId}
+│   └── DELETE  /requirements/{requirementId}
+│
+├── Jobs
+│   ├── GET     /jobs
+│   ├── POST    /jobs
+│   ├── GET     /jobs/{jobId}
+│   ├── PATCH   /jobs/{jobId}
+│   ├── DELETE  /jobs/{jobId}
+│   └── POST    /jobs/{jobId}/publish
+│
+├── Applications
+│   ├── GET     /applications
+│   ├── POST    /applications
+│   ├── GET     /applications/{applicationId}
+│   ├── PATCH   /applications/{applicationId}
+│   ├── PATCH   /applications/{applicationId}/stage
+│   └── POST    /applications/{applicationId}/reject
+│
+├── Schedules
+│   ├── GET     /schedules
+│   ├── POST    /schedules
+│   ├── GET     /schedules/{scheduleId}
+│   ├── PATCH   /schedules/{scheduleId}
+│   └── POST    /schedules/{scheduleId}/cancel
+│
+├── Interviews
+│   ├── GET     /interviews
+│   ├── GET     /interviews/{interviewId}
+│   ├── PATCH   /interviews/{interviewId}
+│   ├── POST    /interviews/{interviewId}/evaluations
+│   └── POST    /interviews/{interviewId}/decision
+│
+├── Offers
+│   ├── GET     /offers
+│   ├── POST    /offers
+│   ├── GET     /offers/{offerId}
+│   ├── PATCH   /offers/{offerId}
+│   └── POST    /offers/{offerId}/send
+│
+└── Templates
+    ├── GET     /templates
+    ├── POST    /templates
+    ├── GET     /templates/{templateId}
+    ├── PATCH   /templates/{templateId}
+    └── DELETE  /templates/{templateId}
+```
+
+#### 2.2 Swagger UI Screenshots
+![Requirement & Job](../images/api-swagger/recruitment/Requirement%20%26%20job.jpg)
+![Application & Schedule](../images/api-swagger/recruitment/Application%20%26%20Schedule.jpg)
+![Interview & Offer](../images/api-swagger/recruitment/Interview%20%26%20offer.jpg)
+![Templates](../images/api-swagger/recruitment/Templates.jpg)
+
+---
+
+### 3. Onboarding Management API
+
+#### 3.1 API Route Trees
+![API Route Tree 1](../images/erd/onboard/api1.png)
+![API Route Tree 2](../images/erd/onboard/api2.png)
+![API Route Tree 3](../images/erd/onboard/api3.png)
 
 ```text
 Copilot HR - Employee Onboarding API
@@ -1047,7 +874,9 @@ Copilot HR - Employee Onboarding API
 
 ---
 
-### 5.3 Payroll Management
+### 4. Payroll Management API
+
+#### 4.1 API Route Tree
 ```text
 BBV HR - Payroll Management API
 │
@@ -1089,282 +918,16 @@ BBV HR - Payroll Management API
     └── GET     /email-logs
 ```
 
+#### 4.2 Swagger UI Screenshots
 ![Payroll API](../images/api-swagger/payroll/payroll.png)
 ![Compensation API](../images/api-swagger/payroll/compensation.png)
 ![Payslip API](../images/api-swagger/payroll/payslip.png)
 
 ---
 
-### 5.4 People Management
-Access the interactive online Swagger API documentation:  
-🔗 [Copilot.HR Employee Directory API - Interactive SwaggerHub Documentation](https://app.swaggerhub.com/apis/ouuniversity/copilothr-employee-directory-api/1.0.0#/Documents)
+### 5. Workforce Management API
 
-#### 5.4.1 API Endpoint Tree Structure
-```text
-Copilot.HR - People Management API
-│
-├── Employees & Profiles
-│   ├── GET     /employees
-│   ├── POST    /employees
-│   ├── POST    /employees/export
-│   ├── GET     /employees/{id}
-│   ├── PUT     /employees/{id}
-│   ├── DELETE  /employees/{id}
-│   ├── GET     /employees/{id}/contracts
-│   ├── POST    /employees/{id}/contracts
-│   ├── GET     /employees/{id}/documents
-│   ├── POST    /employees/{id}/documents
-│   └── GET     /employees/{id}/history
-│
-├── Leave Categories & Balances
-│   ├── GET     /leave-types
-│   ├── POST    /leave-types
-│   ├── GET     /employees/{id}/leave-balance
-│   └── GET     /requests/quotas/check
-│
-├── HR Request Management & Workflows
-│   ├── GET     /requests
-│   ├── POST    /requests
-│   ├── GET     /requests/{id}
-│   ├── PUT     /requests/{id}
-│   ├── POST    /requests/{id}/approve
-│   ├── POST    /requests/{id}/reject
-│   ├── POST    /requests/{id}/cancel
-│   └── GET     /requests/{id}/timeline
-│
-└── Organization & Hierarchy Matrix
-    ├── GET     /departments
-    ├── POST    /departments
-    ├── GET     /departments/{id}
-    ├── PUT     /departments/{id}
-    ├── DELETE  /departments/{id}
-    ├── POST    /departments/restructure
-    ├── GET     /positions
-    ├── POST    /positions
-    ├── PUT     /positions/{id}
-    ├── GET     /teams
-    ├── POST    /teams
-    ├── POST    /teams/{id}/members
-    ├── GET     /reporting-lines
-    └── PUT     /reporting-lines
-```
-
-#### 5.4.2 API Endpoint Tables
-
-##### Employee Directory APIs
-| Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
-| :---: | :--- | :--- | :--- | :---: | :--- |
-| `GET` | `/api/v1/employees` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin, System Admin` | Query: `query`, `department`, `status`, `page`, `limit` | `200`, `401` | Retrieve a paginated list of employees with search and department/status filtering options. |
-| `POST` | `/api/v1/employees` | `HR Staff, HR Manager, Tenant Admin` | Body: `fullName`, `corporateEmail`, `department`, `jobTitle`, `phoneNumber` | `201`, `400` | Register a new employee profile into the system directory. |
-| `GET` | `/api/v1/employees/{id}` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Retrieve comprehensive 360-degree employee profile details. |
-| `PUT` | `/api/v1/employees/{id}` | `Staff, HR Staff, HR Manager, Tenant Admin` | Path: `id`, Body: `phoneNumber`, `personalEmail`, `residentialAddress` | `200`, `400` | Update personal demographics or work contact details for an employee. |
-| `DELETE` | `/api/v1/employees/{id}` | `HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Deactivate or offboard an employee profile account. |
-| `GET` | `/api/v1/employees/{id}/contracts` | `Staff, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Retrieve labor contract history, base salary, and active employment contract. |
-| `POST` | `/api/v1/employees/{id}/contracts` | `HR Staff, HR Manager, Tenant Admin` | Path: `id`, Body: `contractNumber`, `contractType`, `baseSalary`, `effectiveDate` | `201`, `400` | Register a new labor contract with compensation details and effective date. |
-| `GET` | `/api/v1/employees/{id}/documents` | `Staff, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Fetch list of uploaded verification documents (Identity Card, Medical Clearance, Tax Records). |
-| `POST` | `/api/v1/employees/{id}/documents` | `Staff, HR Staff, HR Manager, Tenant Admin` | Path: `id`, FormData: `documentType`, `file` | `201`, `400` | Upload a new identity or verification document for an employee. |
-| `GET` | `/api/v1/employees/{id}/leave-balance` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Retrieve remaining annual leave and sick leave quota balances for the current year. |
-| `GET` | `/api/v1/employees/{id}/history` | `Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Fetch audit trail history including promotions, job level updates, and contract sign-offs. |
-| `POST` | `/api/v1/employees/export` | `Manager, HR Staff, HR Manager, Tenant Admin` | Body: `department`, `fileFormat` | `200`, `400` | Export filtered employee directory records to CSV or Excel file format. |
-
-##### Organization & Department APIs
-| Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
-| :---: | :--- | :--- | :--- | :---: | :--- |
-| `GET` | `/api/v1/departments` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Query: `branch` | `200`, `401` | Retrieve the interactive organizational tree hierarchy and department roster metrics. |
-| `POST` | `/api/v1/departments` | `HR Staff, HR Manager, Tenant Admin` | Body: `departmentName`, `parentDepartmentId`, `departmentLeadId`, `locationBranch` | `201`, `400` | Register a new operational department entity into the organizational structure. |
-| `GET` | `/api/v1/departments/{id}` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Fetch comprehensive department details, department lead, headcount, and budget allocation. |
-| `PUT` | `/api/v1/departments/{id}` | `HR Staff, HR Manager, Tenant Admin` | Path: `id`, Body: `departmentName`, `parentDepartmentId`, `departmentLeadId` | `200`, `400` | Modify department name, parent division, department lead, or location branch. |
-| `DELETE` | `/api/v1/departments/{id}` | `HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Archive or deactivate an existing department entity. |
-| `POST` | `/api/v1/departments/restructure` | `Manager, HR Manager, Tenant Admin` | Body: `sourceNodeId`, `targetDepartmentId`, `reason` | `202`, `400` | Queue an organizational restructuring or employee reassignment drag-and-drop event for Director/CEO approval. |
-| `GET` | `/api/v1/positions` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | None | `200` | Retrieve all defined organizational job titles, competency levels (L1-L6), and salary band ranges. |
-| `POST` | `/api/v1/positions` | `HR Staff, HR Manager, Tenant Admin` | Body: `title`, `jobLevel`, `minSalaryUSD`, `maxSalaryUSD` | `201`, `400` | Create a new job position title with assigned salary band and job level. |
-| `PUT` | `/api/v1/positions/{id}` | `HR Staff, HR Manager, Tenant Admin` | Path: `id`, Body: `title`, `jobLevel`, `minSalaryUSD`, `maxSalaryUSD` | `200`, `400` | Update job description, level, or salary band range for a position title. |
-| `GET` | `/api/v1/teams` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | None | `200` | Retrieve all active cross-functional project teams, designated team leads, and member counts. |
-| `POST` | `/api/v1/teams` | `Manager, HR Staff, HR Manager, Tenant Admin` | Body: `teamName`, `teamLeadId` | `201`, `400` | Register a new cross-functional project team. |
-| `POST` | `/api/v1/teams/{id}/members` | `Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id`, Body: `employeeId`, `action` | `200`, `400` | Assign or remove employee member allocations within a project team. |
-| `GET` | `/api/v1/reporting-lines` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | None | `200` | Fetch supervisor relationships across direct report managers and functional matrix line managers. |
-| `PUT` | `/api/v1/reporting-lines` | `HR Staff, HR Manager, Tenant Admin` | Body: `employeeId`, `newManagerId`, `reportingType` | `200`, `400` | Update direct report supervisor or functional line manager for an employee. |
-
-##### Request Management APIs
-| Method | URL Endpoint | Role | Parameters / Query | Status Code | Description |
-| :---: | :--- | :--- | :--- | :---: | :--- |
-| `GET` | `/api/v1/requests` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Query: `type`, `status`, `applicantId`, `page`, `limit` | `200`, `401` | Retrieve a paginated list of HR requests filtered by request type, approval status, or applicant. |
-| `POST` | `/api/v1/requests` | `Staff, Manager` | Body: `requestType`, `startDate`, `endDate`, `reason`, `urgencyLevel` | `201`, `400` | Submit a new HR request (Annual Leave, Equipment, Policy) with automatic quota validation. |
-| `GET` | `/api/v1/requests/{id}` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Retrieve full request metadata, applicant details, approval steps, and attached proof files. |
-| `PUT` | `/api/v1/requests/{id}` | `Staff, Manager` | Path: `id`, Body: `requestType`, `startDate`, `endDate`, `reason` | `200`, `400` | Modify an existing draft HR request prior to submission. |
-| `POST` | `/api/v1/requests/{id}/approve` | `Manager, HR Manager, Tenant Admin` | Path: `id`, Body: `comment` | `200`, `400` | Approve a pending request step. Automatically advances workflow to next approver or executes final approval. |
-| `POST` | `/api/v1/requests/{id}/reject` | `Manager, HR Manager, Tenant Admin` | Path: `id`, Body: `reason` | `200`, `400` | Reject a pending HR request with mandatory reviewer feedback comments. |
-| `POST` | `/api/v1/requests/{id}/cancel` | `Staff, Manager` | Path: `id` | `200`, `400` | Cancel a submitted request by the applicant prior to final approval execution. |
-| `GET` | `/api/v1/requests/{id}/timeline` | `Staff, Manager, HR Staff, HR Manager, Tenant Admin` | Path: `id` | `200`, `404` | Retrieve step-by-step progress tracker timeline, reviewer audit logs, and approval timestamps. |
-| `GET` | `/api/v1/requests/quotas/check` | `Staff, Manager` | Query: `applicantId`, `leaveType`, `requestedDays` | `200`, `400` | Validate available annual or sick leave balance before submitting a leave request. |
-
-#### 5.4.3 Swagger UI Endpoint Screenshots
-![Employee Directory APIs](../images/api-swagger/people/EmployeeApi.png)
-![Labor Contracts and Documents APIs](../images/api-swagger/people/Contract_Documents.png)
-![Leave and Audit History APIs](../images/api-swagger/people/Leave_History.png)
-![Report Quotas APIs](../images/api-swagger/people/Report_Quotas.png)
-![Request Management APIs](../images/api-swagger/people/Request.png)
-![Approvals and Tracking APIs](../images/api-swagger/people/Approvals_Tracking.png)
-![Department Management APIs](../images/api-swagger/people/Department.png)
-![Positions Teams and Reporting Lines APIs](../images/api-swagger/people/Position_Team.png)
-
----
-
-### 5.5 Project Management
-```text
-BBV HR - Project Management API
-
-├── MVP 1 - Core Project Management
-│   ├── Projects
-│   │   ├── GET     /projects
-│   │   ├── POST    /projects
-│   │   ├── GET     /projects/{projectId}
-│   │   ├── PATCH   /projects/{projectId}
-│   │   └── DELETE  /projects/{projectId}
-│   │
-│   ├── Project Members
-│   │   ├── GET     /projects/{projectId}/members
-│   │   ├── POST    /projects/{projectId}/members
-│   │   ├── GET     /projects/{projectId}/members/{memberId}
-│   │   ├── PATCH   /projects/{projectId}/members/{memberId}
-│   │   ├── DELETE  /projects/{projectId}/members/{memberId}
-│   │   └── PATCH   /projects/{projectId}/members/{memberId}/allocation
-│   │
-│   └── Project Effort
-│       ├── GET     /projects/{projectId}/effort
-│       ├── GET     /projects/{projectId}/effort/members
-│       └── GET     /projects/{projectId}/time-entries
-│
-├── MVP 2 - Capability & Budget Management
-│   ├── Capabilities
-│   │   ├── GET     /capabilities
-│   │   ├── POST    /capabilities
-│   │   ├── PATCH   /capabilities/{capabilityId}
-│   │   └── DELETE  /capabilities/{capabilityId}
-│   │
-│   ├── Employee Capabilities
-│   │   ├── GET     /employees/{employeeId}/capabilities
-│   │   ├── POST    /employees/{employeeId}/capabilities
-│   │   ├── PATCH   /employees/{employeeId}/capabilities/{capabilityId}
-│   │   └── DELETE  /employees/{employeeId}/capabilities/{capabilityId}
-│   │
-│   ├── Project Capability Requirements
-│   │   ├── GET     /projects/{projectId}/required-capabilities
-│   │   ├── POST    /projects/{projectId}/required-capabilities
-│   │   ├── PATCH   /projects/{projectId}/required-capabilities/{capabilityId}
-│   │   ├── DELETE  /projects/{projectId}/required-capabilities/{capabilityId}
-│   │   └── GET     /projects/{projectId}/capability-gap
-│   │
-│   └── Project Budget
-│       ├── GET     /projects/{projectId}/budget
-│       ├── GET     /projects/{projectId}/budget-adjustments
-│       ├── POST    /projects/{projectId}/budget-adjustments
-│       ├── GET     /projects/{projectId}/budget-adjustments/{adjustmentId}
-│       ├── POST    /projects/{projectId}/budget-adjustments/{adjustmentId}/approve
-│       └── POST    /projects/{projectId}/budget-adjustments/{adjustmentId}/reject
-│
-└── MVP 3 - Productivity Monitoring
-    ├── Project Productivity
-    │   ├── GET     /projects/{projectId}/productivity
-    │   └── GET     /projects/{projectId}/productivity/sessions
-    │
-    ├── Productivity Sessions
-    │   ├── POST    /productivity/sessions
-    │   ├── GET     /productivity/sessions/{sessionId}
-    │   └── PATCH   /productivity/sessions/{sessionId}
-    │
-    ├── Application Tracking
-    │   ├── GET     /productivity/sessions/{sessionId}/apps
-    │   └── POST    /productivity/sessions/{sessionId}/apps
-    │
-    ├── Website Tracking
-    │   ├── GET     /productivity/sessions/{sessionId}/websites
-    │   └── POST    /productivity/sessions/{sessionId}/websites
-    │
-    └── Screenshot Tracking
-        ├── GET     /productivity/sessions/{sessionId}/screenshots
-        └── POST    /productivity/sessions/{sessionId}/screenshots
-```
-
-![Project & Member API](../images/api-swagger/project-management/project-prjmember.png)
-![Capability API](../images/api-swagger/project-management/capability.png)
-![Project Effort & Productivity API](../images/api-swagger/project-management/project-effort-productivity.png)
-![Project Budget API](../images/api-swagger/project-management/project-budget.png)
-
----
-
-### 5.6 Recruitment Management
-```text
-BBV HR - Recruitment API
-│
-├── Requirements
-│   ├── GET     /requirements
-│   ├── POST    /requirements
-│   ├── GET     /requirements/{requirementId}
-│   ├── PATCH   /requirements/{requirementId}
-│   └── DELETE  /requirements/{requirementId}
-│
-├── Jobs
-│   ├── GET     /jobs
-│   ├── POST    /jobs
-│   ├── GET     /jobs/{jobId}
-│   ├── PATCH   /jobs/{jobId}
-│   ├── DELETE  /jobs/{jobId}
-│   └── POST    /jobs/{jobId}/publish
-│
-├── Applications
-│   ├── GET     /applications
-│   ├── POST    /applications
-│   ├── GET     /applications/{applicationId}
-│   ├── PATCH   /applications/{applicationId}
-│   ├── PATCH   /applications/{applicationId}/stage
-│   └── POST    /applications/{applicationId}/reject
-│
-├── Schedules
-│   ├── GET     /schedules
-│   ├── POST    /schedules
-│   ├── GET     /schedules/{scheduleId}
-│   ├── PATCH   /schedules/{scheduleId}
-│   └── POST    /schedules/{scheduleId}/cancel
-│
-├── Interviews
-│   ├── GET     /interviews
-│   ├── GET     /interviews/{interviewId}
-│   ├── PATCH   /interviews/{interviewId}
-│   ├── POST    /interviews/{interviewId}/evaluations
-│   └── POST    /interviews/{interviewId}/decision
-│
-├── Offers
-│   ├── GET     /offers
-│   ├── POST    /offers
-│   ├── GET     /offers/{offerId}
-│   ├── PATCH   /offers/{offerId}
-│   └── POST    /offers/{offerId}/send
-│
-└── Templates
-    ├── GET     /templates
-    ├── POST    /templates
-    ├── GET     /templates/{templateId}
-    ├── PATCH   /templates/{templateId}
-    └── DELETE  /templates/{templateId}
-```
-
-![Requirement & Job API](../images/api-swagger/recruitment/Requirement%20%26%20job.jpg)
-![Application & Schedule API](../images/api-swagger/recruitment/Application%20%26%20Schedule.jpg)
-![Interview & Offer API](../images/api-swagger/recruitment/Interview%20%26%20offer.jpg)
-![Templates API](../images/api-swagger/recruitment/Templates.jpg)
-
----
-
-### 5.7 Workforce Management
-#### 5.7.1 Interactive Swagger Docs Links
-- 🔗 [Attendance Management API](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/Attendence-management/1.0.0)
-- 🔗 [Leave Management API](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/leave-management)
-- 🔗 [Timesheet Review API](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/time-sheet-review/1.0.0)
-
-#### 5.7.2 API Endpoint Trees
-
-##### Attendance Management API
+#### 5.1 API Route Tree
 ```text
 Workforce
 └── Attendance Management
@@ -1387,99 +950,63 @@ Workforce
     │   └── Attendance Exceptions
     │       ├── GET    /attendance-exceptions
     │       └── GET    /attendance-exceptions/summary
-    ├── Attendance Corrections
-    │   ├── Correction Requests
-    │   │   ├── GET    /attendance-corrections
-    │   │   ├── POST   /attendance-corrections
-    │   │   ├── GET    /attendance-corrections/summary
-    │   │   ├── GET    /attendance-corrections/export
-    │   │   ├── GET    /attendance-corrections/{correctionId}
-    │   │   └── PATCH  /attendance-corrections/{correctionId}
-    │   ├── Correction Review
-    │   │   ├── GET    /attendance-corrections/{correctionId}/review
-    │   │   ├── POST   /attendance-corrections/{correctionId}/approve
-    │   │   ├── POST   /attendance-corrections/{correctionId}/reject
-    │   │   └── GET    /attendance-corrections/{correctionId}/review/history
-    │   └── Correction History
-    │       ├── GET    /employees/{employeeId}/attendance-corrections
-    │       └── GET    /attendance-records/{recordId}/corrections
-    └── Reference Data
-        ├── Employees
-        │   ├── GET    /employees/{employeeId}
-        │   └── GET    /employees/{employeeId}/attendance-records
-        └── Shifts
-            └── GET    /shifts/{shiftId}
+    └── Attendance Corrections
+        ├── Correction Requests
+        │   ├── GET    /attendance-corrections
+        │   ├── POST   /attendance-corrections
+        │   ├── GET    /attendance-corrections/summary
+        │   ├── GET    /attendance-corrections/export
+        │   ├── GET    /attendance-corrections/{correctionId}
+        │   └── PATCH  /attendance-corrections/{correctionId}
+        └── Correction Review
+            ├── GET    /attendance-corrections/{correctionId}/review
+            ├── POST   /attendance-corrections/{correctionId}/approve
+            ├── POST   /attendance-corrections/{correctionId}/reject
+            └── GET    /attendance-corrections/{correctionId}/review/history
 ```
 
-##### Leave Management API
+---
+
+### 6. Project Management API
+
+#### 6.1 API Route Tree
 ```text
-Leave Management API
+BBV HR - Project Management API
 │
-├── Leave Requests
-│   ├── GET   /leave-requests
-│   ├── POST  /leave-requests
-│   ├── GET   /leave-requests/{requestId}
-│   ├── PATCH /leave-requests/{requestId}
-│   └── POST  /leave-requests/{requestId}/cancel
+├── Core Projects
+│   ├── GET     /projects
+│   ├── POST    /projects
+│   ├── GET     /projects/{projectId}
+│   ├── PATCH   /projects/{projectId}
+│   └── DELETE  /projects/{projectId}
 │
-├── Leave Balances
-│   ├── GET /employees/{employeeId}/leave-balances
-│   ├── GET /employees/{employeeId}/leave-balances/{leaveTypeId}
-│   └── GET /employees/{employeeId}/leave-balances/{leaveTypeId}/adjustments
+├── Project Members
+│   ├── GET     /projects/{projectId}/members
+│   ├── POST    /projects/{projectId}/members
+│   └── DELETE  /projects/{projectId}/members/{memberId}
 │
-├── Team Leave Calendar
-│   └── GET /teams/{teamId}/leave-calendar
-│
-└── Reference Data
-    ├── GET /leave-types
-    ├── GET /leave-policies
-    └── GET /holidays
+└── Time Tracking & Allocation
+    ├── GET     /projects/{projectId}/time-entries
+    └── POST    /projects/{projectId}/time-entries
 ```
 
-##### Timesheet Review API
+---
+
+### 7. Integration Management API
+
+#### 7.1 API Route Tree
 ```text
-Timesheet Review API
+BBV HR - Integration Management API
 │
-├── Team Timesheets
-│   ├── GET  /timesheets
-│   ├── GET  /timesheets/{timesheetId}
-│   ├── POST /timesheets/{timesheetId}/approve
-│   └── POST /timesheets/{timesheetId}/reject
+├── Connected Providers
+│   ├── GET     /integrations
+│   └── POST    /integrations/connect
 │
-├── Timesheet Entries
-│   ├── GET   /timesheets/{timesheetId}/entries
-│   └── PATCH /timesheets/{timesheetId}/entries/{entryId}
+├── Calendar & Event Sync
+│   ├── GET     /calendar-connections
+│   └── POST    /calendar-connections/sync
 │
-├── Timesheet Corrections
-│   ├── GET  /timesheets/{timesheetId}/corrections
-│   └── POST /timesheets/{timesheetId}/corrections
-│
-└── Reference Data
-    ├── GET /employees/{employeeId}
-    └── GET /departments/{departmentId}
+└── Email Sync & Logs
+    ├── GET     /email-connections
+    └── GET     /email-sync-logs
 ```
-
-#### 5.7.3 API Test Cases Specifications
-
-##### Attendance Management Test Cases
-- **`GET /attendance/dashboard/summary`**: Valid request, zero values fallback, token missing, unauthorized.
-- **`GET /attendance-records`**: Filtering by employee, date range, status, pagination, invalid range validation.
-- **`POST /attendance-records`**: Manual clock-in creation, invalid clock-out timing, conflict duplicate handling.
-- **`POST /attendance-corrections/{correctionId}/approve`**: Approval execution, worked hours recalculation, reviewer permission checks.
-
-##### Leave Management Test Cases
-- **`POST /leave-requests`**: Date calculation excluding holidays, leave balance validation, date overlap conflict handling.
-- **`POST /leave-requests/{requestId}/cancel`**: Balance restoration on approved request cancellation.
-- **`GET /teams/{teamId}/leave-calendar`**: Date filtering, approved/cancelled event inclusion rules.
-
-##### Timesheet Review Test Cases
-- **`POST /timesheets/{timesheetId}/approve`** / **`reject`**: Manager decision audit logging, status transition rules.
-- **`PATCH /timesheets/{timesheetId}/entries/{entryId}`**: Duration recalculation on edit, locked timesheet protection.
-
-##### Test Coverage Summary
-| Module | API Endpoints | Main Test Areas |
-| :--- | :---: | :--- |
-| **Attendance Management** | 27 | Dashboard, records, exceptions, corrections, review, export, reference data |
-| **Leave Management** | 12 | Requests, balances, calendar, policies, leave types, holidays |
-| **Timesheet Review** | 10 | Timesheet review, approval, rejection, entries, corrections |
-| **TOTAL** | **49** | **Functional, validation, security, business rules, response and data verification** |
