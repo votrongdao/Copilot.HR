@@ -6,6 +6,14 @@
 
 ![alt text](../../images/usecase/project-management/Project-Management.drawio.png)
 
+## Sitemap
+
+![alt text](../../images/sitemap/project-management/staff.png)
+
+![alt text](../../images/sitemap/project-management/manager.png)
+
+![alt text](../../images/sitemap/project-management/hr.png)
+
 ## UI/UX
 
 ### Staff
@@ -57,6 +65,10 @@
 ![alt text](../../images/uiux/project-management/PM-Timesheet-Review.png)
 
 ## Database Design
+
+## Overview
+
+![alt text](../../images/erd/project-management/project-management.png)
 
 ### Project Setup & Management, Project Member & Allocation, Project Effort / Time Tracking
 
@@ -151,3 +163,11 @@ BBV HR - Project Management API
         ├── GET     /productivity/sessions/{sessionId}/screenshots
         └── POST    /productivity/sessions/{sessionId}/screenshots
 ```
+
+![alt text](../../images/api-swagger/project-management/project-prjmember.png)
+
+![alt text](../../images/api-swagger/project-management/capability.png)
+
+![alt text](../../images/api-swagger/project-management/project-effort-productivity.png)
+
+![alt text](../../images/api-swagger/project-management/project-budget.png)
