@@ -1,0 +1,113 @@
+// Goal Detail - screen-specific DBML
+
+Enum goal_status {
+  draft
+  active
+  completed
+  cancelled
+  overdue
+}
+
+Enum key_result_status {
+  not_started
+  in_progress
+  completed
+  cancelled
+}
+
+Table users {
+  id bigint [pk, increment]
+  employee_code varchar(50) [not null, unique]
+  full_name varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  avatar_url varchar(500)
+  department varchar(150)
+  job_title varchar(150)
+  is_active boolean [not null, default: true]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table review_cycles {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  start_date date [not null]
+  end_date date [not null]
+  status varchar(30) [not null]
+}
+
+Table goals {
+  id bigint [pk, increment]
+  review_cycle_id bigint
+  owner_id bigint [not null]
+  title varchar(255) [not null]
+  description text
+  status goal_status [not null]
+  progress_percent decimal(5,2) [not null, default: 0]
+  start_date date
+  due_date date
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table goal_key_results {
+  id bigint [pk, increment]
+  goal_id bigint [not null]
+  title varchar(255) [not null]
+  description text
+  status key_result_status [not null]
+  target_value decimal(18,4)
+  current_value decimal(18,4)
+  unit varchar(50)
+  weight decimal(6,3) [not null, default: 1]
+  due_date date
+  completed_at timestamp
+  sort_order int [not null, default: 0]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table goal_progress_snapshots {
+  id bigint [pk, increment]
+  goal_id bigint [not null]
+  progress_percent decimal(5,2) [not null]
+  recorded_at timestamp [not null]
+  recorded_by bigint [not null]
+  note text
+}
+
+Table goal_comments {
+  id bigint [pk, increment]
+  goal_id bigint [not null]
+  author_id bigint [not null]
+  comment_text text [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table goal_activities {
+  id bigint [pk, increment]
+  goal_id bigint [not null]
+  actor_id bigint [not null]
+  activity_type varchar(50) [not null]
+  activity_text text
+  created_at timestamp [not null]
+
+  Indexes {
+    (goal_id, created_at)
+  }
+}
+
+Ref: goals.review_cycle_id > review_cycles.id
+Ref: goals.owner_id > users.id
+
+Ref: goal_key_results.goal_id > goals.id
+
+Ref: goal_progress_snapshots.goal_id > goals.id
+Ref: goal_progress_snapshots.recorded_by > users.id
+
+Ref: goal_comments.goal_id > goals.id
+Ref: goal_comments.author_id > users.id
+
+Ref: goal_activities.goal_id > goals.id
+Ref: goal_activities.actor_id > users.id

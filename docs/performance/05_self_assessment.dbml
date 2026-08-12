@@ -1,0 +1,100 @@
+// Self-Assessment Screen - screen-specific DBML
+
+Enum assessment_status {
+  draft
+  in_progress
+  submitted
+  approved
+  reopened
+}
+
+Table users {
+  id bigint [pk, increment]
+  employee_code varchar(50) [not null, unique]
+  full_name varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  avatar_url varchar(500)
+  department varchar(150)
+  job_title varchar(150)
+  is_active boolean [not null, default: true]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table review_cycles {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  start_date date [not null]
+  end_date date [not null]
+  status varchar(30) [not null]
+  self_assessment_due_at timestamp
+}
+
+Table competencies {
+  id bigint [pk, increment]
+  name varchar(150) [not null, unique]
+  description text
+  category varchar(100)
+  is_active boolean [not null, default: true]
+}
+
+Table assessment_templates {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  description text
+  version int [not null, default: 1]
+  is_active boolean [not null, default: true]
+  created_at timestamp [not null]
+}
+
+Table assessment_questions {
+  id bigint [pk, increment]
+  template_id bigint [not null]
+  competency_id bigint
+  question_text text [not null]
+  response_type varchar(30) [not null, default: 'rating']
+  max_score decimal(5,2) [not null, default: 5]
+  sort_order int [not null, default: 0]
+  is_required boolean [not null, default: true]
+}
+
+Table self_assessments {
+  id bigint [pk, increment]
+  review_cycle_id bigint [not null]
+  employee_id bigint [not null]
+  template_id bigint [not null]
+  status assessment_status [not null]
+  started_at timestamp
+  submitted_at timestamp
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  Indexes {
+    (review_cycle_id, employee_id) [unique]
+    status
+  }
+}
+
+Table self_assessment_answers {
+  id bigint [pk, increment]
+  assessment_id bigint [not null]
+  question_id bigint [not null]
+  score decimal(5,2)
+  answer_text text
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  Indexes {
+    (assessment_id, question_id) [unique]
+  }
+}
+
+Ref: competencies.id < assessment_questions.competency_id
+Ref: assessment_templates.id < assessment_questions.template_id
+
+Ref: review_cycles.id < self_assessments.review_cycle_id
+Ref: users.id < self_assessments.employee_id
+Ref: assessment_templates.id < self_assessments.template_id
+
+Ref: self_assessments.id < self_assessment_answers.assessment_id
+Ref: assessment_questions.id < self_assessment_answers.question_id

@@ -1,47 +1,3 @@
-# Onboarding Documents
-
-## Onboarding Sitemap 
-![alt text](../../images/sitemap/onboard-sitemap.png)
-
-## Onboarding Use Case
-![alt text](<../../images/usecase/HR Platform Usecase-Onboarding.png>)
-
-## UI/UX and Database
-
-### 1. Application Management
-![Application Management UI](../../images/uiux/onboard/application-screen.png)
-![Application Management ERD](../../images/erd/onboard/application-erd.png)
-
-### 2. Offer Management
-![Offer Management UI](../../images/uiux/onboard/offer-management-screen.png)
-![Offer Template UI](../../images/uiux/onboard/offer-template-screen.png)
-![Offer Management ERD](../../images/erd/onboard/offer-erd.png)
-
-### 3. Contract Management
-![Contract Management UI](../../images/uiux/onboard/contract-screen.png)
-![Contract Management ERD](../../images/erd/onboard/contract-erd.png)
-
-### 4. Intake Review
-![Intake Review UI](../../images/uiux/onboard/intake-screen.png)
-![Intake Review ERD](../../images/erd/onboard/intake-review-erd.png)
-
-### 5. Onboarding Board 
-![Onboarding Board UI](../../images/uiux/onboard/onboard-board-screen.png)
-![Onboarding Board ERD](../../images/erd/onboard/board-erd.png)
-
-### 6. Assigned Task by Role
-![Assigned Task UI](../../images/uiux/onboard/assigned-task-screen.png)
-![Assigned Task ERD](../../images/erd/onboard/assigned-task-erd.png)
-
-### 7. Tracking Onboard Progress 
-![Tracking Onboard Progress UI](../../images/uiux/onboard/tracking-screen.png)
-![Tracking Onboard Progress ERD](../../images/erd/onboard/tracking-erd.png)
-
-## API route tree structure
-![alt text](../../images/erd/onboard/api1.png) 
-![alt text](../../images/erd/onboard/api2.png) 
-![alt text](../../images/erd/onboard/api3.png)
-```text
 Copilot HR - Employee Onboarding API
 │
 ├── Application Management
@@ -102,4 +58,3 @@ Copilot HR - Employee Onboarding API
     ├── POST   /probation/{probationId}/evaluations
     ├── POST   /probation/evaluations/{evaluationId}/reviewers
     └── POST   /probation/evaluations/{evaluationId}/finalize
-```

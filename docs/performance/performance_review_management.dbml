@@ -1,0 +1,198 @@
+// ============================================================
+// PERFORMANCE - PERFORMANCE REVIEW MANAGEMENT
+// Standalone ERD, 9 tables
+// Paste directly into dbdiagram.io
+// ============================================================
+
+Enum employee_status {
+  active
+  inactive
+  probation
+  suspended
+  terminated
+  on_leave
+}
+
+Enum review_cycle_status {
+  draft
+  scheduled
+  active
+  calibration
+  completed
+  cancelled
+}
+
+Enum review_status {
+  not_started
+  self_assessment
+  manager_review
+  pending_approval
+  revision_requested
+  approved
+  published
+  cancelled
+}
+
+Enum participant_role {
+  employee
+  manager
+  peer
+  hr
+}
+
+Enum feedback_type {
+  self_assessment
+  manager_feedback
+  peer_feedback
+  hr_feedback
+}
+
+Enum approval_decision {
+  pending
+  approved
+  rejected
+  revision_requested
+}
+
+Table organization {
+  id uuid [pk]
+  code varchar(50) [not null, unique]
+  name varchar(200) [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table employee {
+  id uuid [pk]
+  organization_id uuid [not null]
+  employee_number varchar(50) [not null]
+  display_name varchar(250) [not null]
+  email varchar(255)
+  status employee_status [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  indexes {
+    (organization_id, employee_number) [unique]
+  }
+}
+
+Table employee_assignment {
+  id uuid [pk]
+  employee_id uuid [not null]
+  manager_employee_id uuid
+  department_name varchar(200)
+  job_title varchar(200)
+  is_current boolean [not null]
+  start_date date [not null]
+  end_date date
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table performance_review_cycle {
+  id uuid [pk]
+  organization_id uuid [not null]
+  name varchar(200) [not null]
+  description text
+  review_period_start date [not null]
+  review_period_end date [not null]
+  self_assessment_due date
+  manager_review_due date
+  peer_feedback_enabled boolean [not null]
+  status review_cycle_status [not null]
+  created_by_employee_id uuid [not null]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table performance_review {
+  id uuid [pk]
+  review_cycle_id uuid [not null]
+  employee_id uuid [not null]
+  manager_employee_id uuid [not null]
+  status review_status [not null]
+  overall_rating decimal(4,2)
+  manager_summary text
+  employee_acknowledgement text
+  self_assessment_submitted_at timestamp
+  manager_review_completed_at timestamp
+  approved_at timestamp
+  published_at timestamp
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  indexes {
+    (review_cycle_id, employee_id) [unique]
+  }
+}
+
+Table review_participant {
+  id uuid [pk]
+  performance_review_id uuid [not null]
+  employee_id uuid [not null]
+  role participant_role [not null]
+  invited_at timestamp
+  submitted_at timestamp
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+
+  indexes {
+    (performance_review_id, employee_id, role) [unique]
+  }
+}
+
+Table review_feedback {
+  id uuid [pk]
+  performance_review_id uuid [not null]
+  reviewer_employee_id uuid [not null]
+  feedback_type feedback_type [not null]
+  rating decimal(4,2)
+  strengths text
+  development_areas text
+  comments text
+  is_submitted boolean [not null]
+  submitted_at timestamp
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table review_approval {
+  id uuid [pk]
+  performance_review_id uuid [not null]
+  approver_employee_id uuid [not null]
+  decision approval_decision [not null]
+  comment text
+  requested_at timestamp [not null]
+  decided_at timestamp
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+}
+
+Table review_history {
+  id uuid [pk]
+  performance_review_id uuid [not null]
+  changed_by_employee_id uuid [not null]
+  action varchar(100) [not null]
+  old_status review_status
+  new_status review_status
+  note text
+  created_at timestamp [not null]
+}
+
+Ref: employee.organization_id > organization.id
+Ref: employee_assignment.employee_id > employee.id
+Ref: employee_assignment.manager_employee_id > employee.id
+Ref: performance_review_cycle.organization_id > organization.id
+Ref: performance_review_cycle.created_by_employee_id > employee.id
+Ref: performance_review.review_cycle_id > performance_review_cycle.id
+Ref: performance_review.employee_id > employee.id
+Ref: performance_review.manager_employee_id > employee.id
+Ref: review_participant.performance_review_id > performance_review.id
+Ref: review_participant.employee_id > employee.id
+Ref: review_feedback.performance_review_id > performance_review.id
+Ref: review_feedback.reviewer_employee_id > employee.id
+Ref: review_approval.performance_review_id > performance_review.id
+Ref: review_approval.approver_employee_id > employee.id
+Ref: review_history.performance_review_id > performance_review.id
+Ref: review_history.changed_by_employee_id > employee.id
