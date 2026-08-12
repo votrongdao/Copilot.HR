@@ -1,4 +1,4 @@
-## I. Analyze and determine system requirements
+# I. Analyze and determine system requirements
 ## I.1. Actors
 
 | No. | Actor            | Main Responsibilities                                                                                  |
@@ -294,27 +294,28 @@ flowchart LR
 |  47 | **Integration**              | API & Webhook Management            | High     | Manage public APIs and webhook-based integrations.                                                    |
 |  48 | **Integration**              | Approval Workflow Management        | High     | Manage configurable multi-level approval workflows across business processes.                         |
 
-
-## II. Use case images
+# II. Use Case:
 
 ### 28. Attendance Management
-
-![Attendance Management use case](workforce/docs/usecases/attendance.png)
+![Attendance Management use case](images/usecase/workforce/attendance.png)
 
 ### 29. Leave Management
-
-![Leave Management use case](workforce/docs/usecases/leave-management.png)
+![Leave Management use case](images/usecase/workforce/leave-management.png)
 
 ### 30. Timesheet and Overtime Management
-
-![Timesheet and Overtime Management use case](workforce/docs/usecases/timesheet-and-overtime.png)
-
-### 31. Work Location and Geofence Management
-
-![Work Location and Geofence Management use case](workforce/docs/usecases/work%20location%20%26%20geofence%20management.png)
+![Timesheet and Overtime Management use case](images/usecase/workforce/timesheet-and-overtime.png)
 
 ### 32. Work Schedule Management
+![Work Schedule Management use case](images/usecase/workforce/work-schedule-management.png)
 
-![Work Schedule Management use case](workforce/docs/usecases/work-schedule-management.png)
 
+## III. Information Architecture
+
+## IV. UI/UX design
+
+## V. Entity diagram
+
+## VI. API docs
+
+## VII. API testcase
 

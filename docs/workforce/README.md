@@ -15,13 +15,30 @@
 ### 32. Work Schedule Management
 ![alt text](../../images/usecase/workforce/work-schedule-management.png)
 
-## III. UI/UX
+## III. IA
+![workforce - information architecture](../../images/sitemap/workforce.png)
+
+## IV. UI/UX
 ### 28. Attendence Management
-![alt text](<../../images/uiux/attendance/Attendance Dashboard.png>)
-![alt text](<../../images/uiux/attendance/Attendance Dashboard.png>) 
-![alt text](<../../images/uiux/attendance/Attendance Records & Exceptions.png>) 
-![alt text](<../../images/uiux/attendance/My Attendance - Working State.png>)
-## IV. DB, Entity Diagram
+![alt text](../../images/uiux/workforce/attendance/attendance-dashboard.png)
+
+#### Attendance Corrections
+
+![alt text](../../images/uiux/workforce/attendance/attendance-corrections-manager-view.png)
+![alt text](../../images/erd/workforce/attendence-corrections.png)
+---
+![alt text](../../images/uiux/workforce/attendance/attendance-corrections-manager-view.png)
+![alt text](../../images/erd/workforce/attendance-record.png)
+---
+![alt text](../../images/uiux/workforce/attendance/my-attendance-working-state.png)
+![alt text](../../images/erd/workforce/my-attendance.png)
+---
+![alt text](../../images/uiux/workforce/leave-management/leave-management.png)
+![alt text](../../images/erd/workforce/leave-management.png)
+---
+![alt text](../../images/uiux/workforce/timesheet/timesheet-review-detail.png)
+![alt text](../../images/erd/workforce/time-sheet-review.png)
+
 ## V. API docs
 
 ### Attendence Management
@@ -72,9 +89,11 @@ Workforce
         └── Shifts
             └── GET    /shifts/{shiftId}
 ```
-### Leave Management
+
+### Leave Management (12)
+[Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/leave-management)
 ```text
-Leave Management API
+Leave Management API 
 |
 ├── Leave Requests
 |   ├── GET   /leave-requests
