@@ -1,0 +1,217 @@
+# ================================
+# .NET Build
+# ================================
+
+[Bb]in/
+[Oo]bj/
+artifacts/
+out/
+publish/
+
+# ================================
+# Visual Studio
+# ================================
+
+.vs/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+# ================================
+# VS Code
+# ================================
+
+.vscode/
+
+# Uncomment if you want to keep
+# shared VS Code settings:
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+
+# ================================
+# JetBrains Rider / ReSharper
+# ================================
+
+.idea/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# ================================
+# Test Results
+# ================================
+
+TestResults/
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+
+# Coverlet
+coverage/
+coverage.*
+coverage.json
+coverage.opencover.xml
+coverage.cobertura.xml
+
+# ================================
+# NuGet
+# ================================
+
+*.nupkg
+*.snupkg
+
+# NuGet packages
+**/[Pp]ackages/*
+
+# Keep build targets inside packages
+!**/[Pp]ackages/build/
+
+*.nuget.props
+*.nuget.targets
+
+# ================================
+# ASP.NET Core
+# ================================
+
+# User secrets should NOT normally
+# exist inside the repository
+secrets.json
+
+# Environment-specific configuration
+appsettings.Development.local.json
+appsettings.Local.json
+appsettings.*.local.json
+
+# ================================
+# Environment Variables
+# ================================
+
+.env
+.env.*
+!.env.example
+
+# ================================
+# Database
+# ================================
+
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# ================================
+# Logs
+# ================================
+
+*.log
+logs/
+Logs/
+
+# ================================
+# Temporary Files
+# ================================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+~$*
+
+# ================================
+# OS Generated Files
+# ================================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ================================
+# BenchmarkDotNet
+# ================================
+
+BenchmarkDotNet.Artifacts/
+
+# ================================
+# SonarQube
+# ================================
+
+.sonarqube/
+
+# ================================
+# NCrunch
+# ================================
+
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# ================================
+# StyleCop
+# ================================
+
+StyleCopReport.xml
+
+# ================================
+# Node.js
+# In case frontend/tools are added
+# ================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ================================
+# Docker
+# ================================
+
+docker-compose.override.yml
+
+# ================================
+# Certificates / Keys
+# ================================
+
+*.pfx
+*.p12
+*.key
+*.pem
+
+# ================================
+# Local development
+# ================================
+
+.local/
+.cache/
+temp/
+tmp/
