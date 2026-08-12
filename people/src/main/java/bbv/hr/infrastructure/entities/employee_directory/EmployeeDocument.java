@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString(exclude = "employee")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EmployeeDocumentEntity {
+public class EmployeeDocument {
 
     @Id
     @EqualsAndHashCode.Include
@@ -23,7 +23,7 @@ public class EmployeeDocumentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
-    private EmployeeEntity employee;
+    private Employee employee;
 
     @Column(name = "document_name", length = 150)
     private String documentName;

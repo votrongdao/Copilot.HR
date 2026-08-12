@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @ToString(exclude = "department")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class PositionEntity {
+public class Position {
 
     @Id
     @EqualsAndHashCode.Include
@@ -35,7 +35,7 @@ public class PositionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
-    private DepartmentEntity department;
+    private Department department;
 
     @Column(name = "target_headcount")
     private Integer targetHeadcount;

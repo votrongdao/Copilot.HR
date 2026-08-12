@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class LeaveTypeEntity {
+public class LeaveType {
 
     @Id
     @EqualsAndHashCode.Include

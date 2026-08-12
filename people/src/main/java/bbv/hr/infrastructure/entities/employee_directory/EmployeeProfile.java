@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Builder
 @ToString(exclude = "employee")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EmployeeProfileEntity {
+public class EmployeeProfile {
 
     @Id
     @EqualsAndHashCode.Include
@@ -23,7 +23,7 @@ public class EmployeeProfileEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false, unique = true)
-    private EmployeeEntity employee;
+    private Employee employee;
 
     @Column(name = "first_name", length = 50)
     private String firstName;

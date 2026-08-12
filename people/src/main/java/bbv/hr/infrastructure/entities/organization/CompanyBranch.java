@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class CompanyBranchEntity {
+public class CompanyBranch {
 
     @Id
     @EqualsAndHashCode.Include

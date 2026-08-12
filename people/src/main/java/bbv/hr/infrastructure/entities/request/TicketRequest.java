@@ -1,6 +1,6 @@
 package bbv.hr.infrastructure.entities.request;
 
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeEntity;
+import bbv.hr.infrastructure.entities.employee_directory.Employee;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString(exclude = {"employee", "requestType", "handoverEmployee"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class TicketRequestEntity {
+public class TicketRequest {
 
     @Id
     @EqualsAndHashCode.Include
@@ -26,11 +26,11 @@ public class TicketRequestEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
-    private EmployeeEntity employee;
+    private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", nullable = false)
-    private RequestTypeEntity requestType;
+    private RequestType requestType;
 
     @Column(name = "priority", length = 50)
     private String priority;
@@ -40,7 +40,7 @@ public class TicketRequestEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "handover_employee_id")
-    private EmployeeEntity handoverEmployee;
+    private Employee handoverEmployee;
 
     @Column(name = "submitted_at")
     private LocalDateTime submittedAt;

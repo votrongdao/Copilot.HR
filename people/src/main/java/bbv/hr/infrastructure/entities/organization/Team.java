@@ -1,6 +1,6 @@
 package bbv.hr.infrastructure.entities.organization;
 
-import bbv.hr.infrastructure.entities.employee_directory.EmployeeEntity;
+import bbv.hr.infrastructure.entities.employee_directory.Employee;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 @ToString(exclude = {"department", "teamLead"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class TeamEntity {
+public class Team {
 
     @Id
     @EqualsAndHashCode.Include
@@ -25,11 +25,11 @@ public class TeamEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
-    private DepartmentEntity department;
+    private Department department;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_lead_id")
-    private EmployeeEntity teamLead;
+    private Employee teamLead;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;

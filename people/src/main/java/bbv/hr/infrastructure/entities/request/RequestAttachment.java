@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString(exclude = "request")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class RequestAttachmentEntity {
+public class RequestAttachment {
 
     @Id
     @EqualsAndHashCode.Include
@@ -23,7 +23,7 @@ public class RequestAttachmentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id", nullable = false)
-    private TicketRequestEntity request;
+    private TicketRequest request;
 
     @Column(name = "file_name", length = 150)
     private String fileName;

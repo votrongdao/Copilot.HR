@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @ToString(exclude = {"employee", "leaveType"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EmployeeLeaveBalanceEntity {
+public class EmployeeLeaveBalance {
 
     @Id
     @EqualsAndHashCode.Include
@@ -23,11 +23,11 @@ public class EmployeeLeaveBalanceEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
-    private EmployeeEntity employee;
+    private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leave_type_id", nullable = false)
-    private LeaveTypeEntity leaveType;
+    private LeaveType leaveType;
 
     @Column(name = "year")
     private Integer year;

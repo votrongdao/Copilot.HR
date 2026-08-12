@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @ToString(exclude = "request")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class HandoverTaskEntity {
+public class HandoverTask {
 
     @Id
     @EqualsAndHashCode.Include
@@ -21,7 +21,7 @@ public class HandoverTaskEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id", nullable = false)
-    private TicketRequestEntity request;
+    private TicketRequest request;
 
     @Column(name = "task_title", length = 150)
     private String taskTitle;

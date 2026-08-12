@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Builder
 @ToString(exclude = "employee")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ContractEntity {
+public class Contract {
 
     @Id
     @EqualsAndHashCode.Include
@@ -24,7 +24,7 @@ public class ContractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
-    private EmployeeEntity employee;
+    private Employee employee;
 
     @Column(name = "contract_number", nullable = false, unique = true, length = 50)
     private String contractNumber;

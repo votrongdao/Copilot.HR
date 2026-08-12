@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @ToString(exclude = "requestType")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class WorkflowStepEntity {
+public class WorkflowStep {
 
     @Id
     @EqualsAndHashCode.Include
@@ -21,7 +21,7 @@ public class WorkflowStepEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", nullable = false)
-    private RequestTypeEntity requestType;
+    private RequestType requestType;
 
     @Column(name = "step_order")
     private Integer stepOrder;

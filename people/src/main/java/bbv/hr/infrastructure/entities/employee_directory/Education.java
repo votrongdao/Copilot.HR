@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @ToString(exclude = "employee")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EducationEntity {
+public class Education {
 
     @Id
     @EqualsAndHashCode.Include
@@ -21,7 +21,7 @@ public class EducationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
-    private EmployeeEntity employee;
+    private Employee employee;
 
     @Column(name = "degree", length = 100)
     private String degree;

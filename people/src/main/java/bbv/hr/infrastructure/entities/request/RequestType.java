@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class RequestTypeEntity {
+public class RequestType {
 
     @Id
     @EqualsAndHashCode.Include

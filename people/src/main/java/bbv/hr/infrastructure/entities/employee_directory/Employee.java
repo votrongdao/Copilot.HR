@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Builder
 @ToString(exclude = "directManager")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EmployeeEntity {
+public class Employee {
 
     @Id
     @EqualsAndHashCode.Include
@@ -41,5 +41,5 @@ public class EmployeeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "direct_manager_id")
-    private EmployeeEntity directManager;
+    private Employee directManager;
 }
