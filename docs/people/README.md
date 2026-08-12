@@ -117,21 +117,21 @@ Entity Relationship Diagrams (ERD) illustrating the relational schema across Org
 #### Organization Domain Schema ERD
 Database relationship model covering Company Branches, Departments, Teams, Positions, and Reporting Line relationships.
 
-![Organization Domain ERD](../../images/databases/people/Organization.png)
+![Organization Domain ERD](../../images/erd/people/Organization.png)
 
 ---
 
 #### Employee Directory Domain Schema ERD
 Database entity structure covering Employee Accounts, 1:1 Profiles, Labor Contracts, Verification Documents, Education, Assets, Leave Types, and Leave Balances.
 
-![Employee Directory ERD](../../images/databases/people/EmployeeDirectory.png)
+![Employee Directory ERD](../../images/erd/people/EmployeeDirectory.png)
 
 ---
 
 #### Request Management Domain Schema ERD
 Workflow database model covering Ticket Requests, Request Types, Workflow Steps, Multi-Stage Approval Logs, and Attachments.
 
-![Request Management ERD](../../images/databases/people/Request_Managment.png)
+![Request Management ERD](../../images/erd/people/Request_Managment.png)
 
 ---
 
