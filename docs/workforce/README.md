@@ -54,6 +54,7 @@
 #### Time Sheet View (11)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/time-sheet-review/1.0.0)
 
+```text
 Workforce
 ├── Attendance Management
 │   ├── Attendance Records
@@ -93,7 +94,7 @@ Workforce
         ├── PATCH   /timesheets/{timesheetId}/entries/{entryId}
         └── DELETE  /timesheets/{timesheetId}/entries/{entryId}
                     └── Manual entry only
-
+```
 ## VI. Test Cases
 
 This section defines the planned API test cases for the Workforce Management modules.

@@ -114,7 +114,7 @@ Welcome to the master technical documentation for **Copilot.HR**. This consolida
 ### 5. Workforce Management Sitemap
 *Navigation structure for Attendance Dashboard, Leave Management, Timesheet Review, Work Schedules, and Corrections.*
 
-![Workforce Sitemap](../images/sitemap/image.png)
+![Workforce Sitemap](../images/sitemap/workforce.png)
 
 ---
 
@@ -609,6 +609,8 @@ Welcome to the master technical documentation for **Copilot.HR**. This consolida
 ---
 
 ### 5. Workforce Management ERD
+#### Full workforce management ERD
+![Full workforce management](../images/erd/workforce/full-workforce-management.png)
 
 #### 5.1 Attendance Corrections ERD
 *ERD model covering Attendance Correction Requests, Review Logs, and Decision History.*
@@ -635,6 +637,8 @@ Welcome to the master technical documentation for **Copilot.HR**. This consolida
 
 ![Time Sheet Review ERD](../images/erd/workforce/time-sheet-review.png)
 
+#### 5.6 Attendance dashboard
+![Attendance dashboard ERD](../images/erd/workforce/attendance-dashboard.png)
 ---
 
 ### 6. Project Management ERD
