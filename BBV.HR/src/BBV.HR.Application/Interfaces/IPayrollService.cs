@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 public interface IPayrollService
 {
-    Task<IEnumerable<Payroll>> GetAllAsync();
-    Task<Payroll?> GetByIdAsync(int id);
-    Task<Payroll> CreateAsync(Payroll payroll);
-    Task UpdateAsync(Payroll payroll);
+    Task<PagedResult<PayrollResponse>> GetAllAsync(PayrollFilterRequest filter);
+    Task<PayrollResponse?> GetByIdAsync(int id);
+    Task<PayrollResponse> CreateAsync(CreatePayrollRequest request);
+    Task UpdateAsync(int id, UpdatePayrollRequest request);
     Task DeleteAsync(int id);
-    Task<int> ImportAsync(IEnumerable<Payroll> payrolls);
+    Task<int> ImportAsync(IEnumerable<CreatePayrollRequest> requests);
 }

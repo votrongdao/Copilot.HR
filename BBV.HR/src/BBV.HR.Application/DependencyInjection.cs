@@ -9,6 +9,7 @@ public static class DependencyInjectionApplication
         services.AddValidatorsFromAssembly(
             typeof(DependencyInjectionApplication).Assembly);
 
+        services.AddScoped<IPayrollService, PayrollService>();
         return services;
     }
 }

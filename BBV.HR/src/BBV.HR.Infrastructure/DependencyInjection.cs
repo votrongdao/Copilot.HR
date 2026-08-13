@@ -17,6 +17,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
 
+
+        services.AddScoped<IPayrollRepository, PayrollRepository>();
         return services;
     }
 }

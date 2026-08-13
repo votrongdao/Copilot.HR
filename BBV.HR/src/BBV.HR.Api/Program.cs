@@ -1,3 +1,5 @@
+using FluentValidation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +9,9 @@ builder.Services.AddInfrastructure(builder.Configuration);
 // Add Exception Handler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+// Add FluentValidation
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddSwaggerWithJwt();

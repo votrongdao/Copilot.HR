@@ -11,4 +11,10 @@ public class AppDbContext : DbContext
     public DbSet<Payslip> Payslips { get; set; }
     public DbSet<EmployeeCompensation> EmployeeCompensations { get; set; }
     public DbSet<EmailLog> EmailLogs { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+    }
 }
