@@ -357,3 +357,185 @@ BBV HR - Payroll Management API
 ![Payroll API](../../images/api-swagger/payroll/payroll.png)
 ![Compensation API](../../images/api-swagger/payroll/compensation.png)
 ![Payslip API](../../images/api-swagger/payroll/payslip.png)
+
+## Unit Test Summary
+
+| Test Group | Number of Tests |
+| --- | --- |
+| Payroll Management | 10 |
+| Payroll Import | 6 |
+| Compensation | 6 |
+| Employee Compensation | 7 |
+| Payroll Item | 5 |
+| Payslip | 7 |
+| Payslip Email | 5 |
+| API / Controller | 4 |
+| **Total** | **50** |
+
+### 1. Payroll Management — 10 Tests
+
+| Unit Test | Expected Result | Priority |
+| --- | --- | --- |
+| Create payroll with valid data | Payroll is created successfully | Critical |
+| Create payroll for a nonexistent employee | Request is rejected | Critical |
+| Create payroll with missing required fields | Validation error is returned | Critical |
+| Create duplicate payroll for the same employee and pay period | Duplicate payroll is rejected | Critical |
+| Update existing payroll | Payroll is updated successfully | Critical |
+| Create payroll with invalid monetary values | Validation error is returned | High |
+| Get payroll by valid ID | Correct payroll is returned | High |
+| Get nonexistent payroll | Not Found is returned | High |
+| Get payroll list with pagination | Correct paginated result is returned | High |
+| Delete existing payroll | Payroll is deleted successfully | High |
+
+### 2. Payroll Import — 6 Tests
+
+| Unit Test | Expected Result | Priority |
+| --- | --- | --- |
+| Import valid Excel payroll file | Payroll records are imported successfully | Critical |
+| Import multiple valid payroll rows | All valid rows are imported | Critical |
+| Import row with nonexistent employee | Invalid row is rejected | Critical |
+| Import duplicate employee and pay period | Duplicate record is detected | Critical |
+| Import unsupported file format | File is rejected | High |
+| Import payroll row with invalid data | Validation error is returned | High |
+
+### 3. Compensation — 6 Tests
+
+| Unit Test | Expected Result | Priority |
+| --- | --- | --- |
+| Create valid compensation | Compensation is created successfully | Critical |
+| Create compensation with invalid type | Validation error is returned | Critical |
+| Create compensation without required fields | Validation error is returned | High |
+| Create compensation with invalid amount | Validation error is returned | High |
+| Update compensation | Compensation is updated successfully | High |
+| Delete or deactivate compensation | Compensation is deleted or deactivated | High |
+
+### 4. Employee Compensation — 7 Tests
+
+| Unit Test | Expected Result | Priority |
+| --- | --- | --- |
+| Assign compensation to valid employee | Assignment is created successfully | Critical |
+| Assign compensation to nonexistent employee | Assignment is rejected | Critical |
+| Assign nonexistent compensation | Assignment is rejected | Critical |
+| Assign custom applied_amount | Correct custom amount is stored | Critical |
+| Set effective_to before effective_from | Validation error is returned | Critical |
+| Assign inactive compensation | Assignment is rejected | High |
+| Update employee compensation | Assignment is updated successfully | High |
+
+### 5. Payroll Item — 5 Tests
+
+| Unit Test | Expected Result | Priority |
+| --- | --- | --- |
+| Add compensation to payroll | Payroll item is created successfully | Critical |
+| Add item to nonexistent payroll | Not Found is returned | Critical |
+| Add nonexistent compensation to payroll | Request is rejected | Critical |
+| Update payroll item | Payroll item is updated successfully | High |
+| Delete payroll item | Payroll item is removed successfully | High |
+
+### 6. Payslip — 7 Tests
+
+| Unit Test | Expected Result | Priority |
+| --- | --- | --- |
+| Generate payslip from valid payroll | Payslip is generated successfully | Critical |
+| Generate payslip for nonexistent payroll | Not Found is returned | Critical |
+| Generate second payslip for the same payroll | Duplicate payslip is rejected | Critical |
+| Map payroll values to payslip | Payslip values match payroll data | Critical |
+| Map payroll items and compensations to payslip | Correct compensation lines are generated | Critical |
+| Generate unique payslip_number | Unique payslip number is generated | High |
+| Generate payslip document | Valid file_url is stored | High |
+
+### 7. Payslip Email — 5 Tests
+
+| Unit Test | Expected Result | Priority |
+| --- | --- | --- |
+| Send valid payslip email | Email is sent successfully | Critical |
+| Send email for nonexistent payslip | Not Found is returned | Critical |
+| Send payslip when employee has no email | Email sending is rejected | Critical |
+| Email provider succeeds | Successful EMAIL_LOG is recorded | Critical |
+| Email provider fails | Failed EMAIL_LOG is recorded | Critical |
+
+### 8. API / Controller — 4 Tests
+
+| Endpoint | Scenario | Expected Result | Priority |
+| --- | --- | --- | --- |
+| GET /payrolls | Valid request with pagination | 200 OK with paginated result | Critical |
+| POST /payrolls | Valid or invalid request | 201 Created or 400 Bad Request | Critical |
+| POST /payrolls/{payrollId}/payslip | Valid payroll or duplicate payslip | 201 Created or 409 Conflict | Critical |
+| POST /payslips/{payslipId}/send-email | Valid request or provider failure | Email result is handled correctly | Critical |
+
+## Complex Unit Test Sequence Diagrams
+
+### 1. Bulk Payroll Import Test Flow
+This sequence diagram illustrates the complex unit testing scenario for importing payrolls from a bulk Excel/CSV file, highlighting parsing, validation, duplicate checking, and database mocking.
+
+```mermaid
+sequenceDiagram
+    participant Test
+    participant PayrollController
+    participant ImportService
+    participant Parser
+    participant DB_Mock
+
+    Test->>PayrollController: POST /payrolls/import (Excel File)
+    PayrollController->>ImportService: ProcessFile(file)
+    ImportService->>Parser: Parse(file)
+    Parser-->>ImportService: List<PayrollRecord>
+    
+    loop For Each Record
+        ImportService->>DB_Mock: CheckEmployeeExists(empId)
+        DB_Mock-->>ImportService: Employee (or null)
+        alt Employee Exists
+            ImportService->>DB_Mock: CheckDuplicatePayroll(empId, payPeriod)
+            DB_Mock-->>ImportService: Duplicate (True/False)
+            alt Is Not Duplicate
+                ImportService->>ImportService: Calculate gross_pay, deductions, net_pay
+            else Duplicate
+                ImportService->>ImportService: Track Error: "Duplicate Entry"
+            end
+        else Employee Not Found
+            ImportService->>ImportService: Track Error: "Employee Not Found"
+        end
+    end
+    
+    ImportService->>DB_Mock: BulkInsert(validPayrolls)
+    DB_Mock-->>ImportService: Success (Rows Affected)
+    ImportService-->>PayrollController: ImportSummary (Success/Failed metrics)
+    PayrollController-->>Test: HTTP 200 OK (with ImportSummary)
+    
+    Test->>Test: Assert HTTP Status == 200
+    Test->>Test: Assert DB_Mock.BulkInsert called with N valid records
+```
+
+### 2. Payslip Generation & Email Test Flow
+This sequence diagram outlines the testing flow for generating a payslip document and sending it to an employee via email, showcasing how external services (PDF Generator, Email Provider) are mocked in a unit test.
+
+```mermaid
+sequenceDiagram
+    participant Test
+    participant PayslipController
+    participant PayslipService
+    participant PDFGenerator_Mock
+    participant EmailService_Mock
+    participant DB_Mock
+
+    Test->>PayslipController: POST /payslips/{id}/send-email
+    PayslipController->>PayslipService: SendPayslipEmail(payslipId)
+    
+    PayslipService->>DB_Mock: GetPayslipAndEmployee(payslipId)
+    DB_Mock-->>PayslipService: Payslip & Employee Data
+    
+    PayslipService->>PDFGenerator_Mock: GeneratePDF(payslipData)
+    PDFGenerator_Mock-->>PayslipService: Generated Document URL / Buffer
+    
+    PayslipService->>EmailService_Mock: SendEmail(employee.email, Document)
+    EmailService_Mock-->>PayslipService: Delivery Status (Sent)
+    
+    PayslipService->>DB_Mock: Insert(EMAIL_LOG, status: 'Sent')
+    DB_Mock-->>PayslipService: Log Saved
+    
+    PayslipService-->>PayslipController: Success Message
+    PayslipController-->>Test: HTTP 200 OK
+    
+    Test->>Test: Assert HTTP Status == 200
+    Test->>Test: Assert EmailService_Mock.SendEmail was called exactly once
+    Test->>Test: Assert DB_Mock.Insert(EMAIL_LOG) was called with correct data
+```
