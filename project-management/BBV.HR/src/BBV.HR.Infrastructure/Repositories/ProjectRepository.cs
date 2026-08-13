@@ -3,7 +3,6 @@ using BBV.HR.Application.Interfaces.Repositories;
 using BBV.HR.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace BBV.HR.Infrastructure.Repositories;
 
 public class ProjectRepository : IProjectRepository
@@ -65,20 +64,19 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<Project> AddAsync(Project project)
     {
-        _dbContext.Projects.Add(project);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Projects.AddAsync(project);
         return project;
     }
 
-    public async Task UpdateAsync(Project project)
+    public Task UpdateAsync(Project project)
     {
         _dbContext.Projects.Update(project);
-        await _dbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Project project)
+    public Task DeleteAsync(Project project)
     {
         _dbContext.Projects.Remove(project);
-        await _dbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 }

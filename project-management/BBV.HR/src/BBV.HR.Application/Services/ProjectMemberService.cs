@@ -12,6 +12,7 @@ public class ProjectMemberService : IProjectMemberService
     private readonly IProjectMemberRepository _memberRepository;
     private readonly IProjectRepository _projectRepository;
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<AddProjectMemberDto> _addMemberValidator;
     private readonly IValidator<UpdateMemberAllocationDto> _allocationValidator;
 
@@ -19,12 +20,14 @@ public class ProjectMemberService : IProjectMemberService
         IProjectMemberRepository memberRepository,
         IProjectRepository projectRepository,
         IEmployeeRepository employeeRepository,
+        IUnitOfWork unitOfWork,
         IValidator<AddProjectMemberDto> addMemberValidator,
         IValidator<UpdateMemberAllocationDto> allocationValidator)
     {
         _memberRepository = memberRepository;
         _projectRepository = projectRepository;
         _employeeRepository = employeeRepository;
+        _unitOfWork = unitOfWork;
         _addMemberValidator = addMemberValidator;
         _allocationValidator = allocationValidator;
     }
@@ -78,6 +81,8 @@ public class ProjectMemberService : IProjectMemberService
         };
 
         var created = await _memberRepository.AddAsync(member);
+        await _unitOfWork.SaveChangesAsync();
+
         return await GetProjectMemberByIdAsync(projectId, created.Id) ?? created.ToDto();
     }
 
@@ -95,6 +100,8 @@ public class ProjectMemberService : IProjectMemberService
         member.UpdatedAt = DateTime.UtcNow;
 
         await _memberRepository.UpdateAsync(member);
+        await _unitOfWork.SaveChangesAsync();
+
         return await GetProjectMemberByIdAsync(projectId, memberId);
     }
 
@@ -104,6 +111,8 @@ public class ProjectMemberService : IProjectMemberService
         if (member == null) return false;
 
         await _memberRepository.DeleteAsync(member);
+        await _unitOfWork.SaveChangesAsync();
+
         return true;
     }
 
@@ -118,6 +127,8 @@ public class ProjectMemberService : IProjectMemberService
         member.UpdatedAt = DateTime.UtcNow;
 
         await _memberRepository.UpdateAsync(member);
+        await _unitOfWork.SaveChangesAsync();
+
         return await GetProjectMemberByIdAsync(projectId, memberId);
     }
 }

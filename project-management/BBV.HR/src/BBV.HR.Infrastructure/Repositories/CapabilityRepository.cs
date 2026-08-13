@@ -68,20 +68,19 @@ public class CapabilityRepository : ICapabilityRepository
 
     public async Task<Capability> AddAsync(Capability capability)
     {
-        _context.Capabilities.Add(capability);
-        await _context.SaveChangesAsync();
+        await _context.Capabilities.AddAsync(capability);
         return capability;
     }
 
-    public async Task UpdateAsync(Capability capability)
+    public Task UpdateAsync(Capability capability)
     {
         _context.Capabilities.Update(capability);
-        await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Capability capability)
+    public Task DeleteAsync(Capability capability)
     {
         _context.Capabilities.Remove(capability);
-        await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 }

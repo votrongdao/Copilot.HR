@@ -4,7 +4,6 @@ using BBV.HR.Application.Services;
 using FluentAssertions;
 using Moq;
 
-
 namespace BBV.HR.Tests.Services;
 
 public class ProjectEffortServiceTests
@@ -17,6 +16,7 @@ public class ProjectEffortServiceTests
     {
         _timeEntryRepoMock = new Mock<ITimeEntryRepository>();
         _projectRepoMock = new Mock<IProjectRepository>();
+
         _effortService = new ProjectEffortService(
             _timeEntryRepoMock.Object,
             _projectRepoMock.Object

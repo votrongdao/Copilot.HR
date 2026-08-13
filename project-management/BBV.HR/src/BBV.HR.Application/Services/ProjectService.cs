@@ -10,15 +10,18 @@ namespace BBV.HR.Application.Services;
 public class ProjectService : IProjectService
 {
     private readonly IProjectRepository _projectRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<CreateProjectDto> _createValidator;
     private readonly IValidator<UpdateProjectDto> _updateValidator;
 
     public ProjectService(
         IProjectRepository projectRepository,
+        IUnitOfWork unitOfWork,
         IValidator<CreateProjectDto> createValidator,
         IValidator<UpdateProjectDto> updateValidator)
     {
         _projectRepository = projectRepository;
+        _unitOfWork = unitOfWork;
         _createValidator = createValidator;
         _updateValidator = updateValidator;
     }
@@ -69,6 +72,8 @@ public class ProjectService : IProjectService
         };
 
         var created = await _projectRepository.AddAsync(project);
+        await _unitOfWork.SaveChangesAsync();
+
         return await GetProjectByIdAsync(created.Id) ?? created.ToDto();
     }
 
@@ -107,6 +112,8 @@ public class ProjectService : IProjectService
         project.UpdatedAt = DateTime.UtcNow;
 
         await _projectRepository.UpdateAsync(project);
+        await _unitOfWork.SaveChangesAsync();
+
         return await GetProjectByIdAsync(projectId);
     }
 
@@ -116,6 +123,8 @@ public class ProjectService : IProjectService
         if (project == null) return false;
 
         await _projectRepository.DeleteAsync(project);
+        await _unitOfWork.SaveChangesAsync();
+
         return true;
     }
 }

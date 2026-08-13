@@ -13,6 +13,7 @@ public class ProjectMemberServiceTests
     private readonly Mock<IProjectMemberRepository> _memberRepoMock;
     private readonly Mock<IProjectRepository> _projectRepoMock;
     private readonly Mock<IEmployeeRepository> _employeeRepoMock;
+    private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly ProjectMemberService _memberService;
 
     public ProjectMemberServiceTests()
@@ -20,11 +21,15 @@ public class ProjectMemberServiceTests
         _memberRepoMock = new Mock<IProjectMemberRepository>();
         _projectRepoMock = new Mock<IProjectRepository>();
         _employeeRepoMock = new Mock<IEmployeeRepository>();
+        _unitOfWorkMock = new Mock<IUnitOfWork>();
+
+        _unitOfWorkMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
         _memberService = new ProjectMemberService(
             _memberRepoMock.Object,
             _projectRepoMock.Object,
             _employeeRepoMock.Object,
+            _unitOfWorkMock.Object,
             new AddProjectMemberDtoValidator(),
             new UpdateMemberAllocationDtoValidator()
         );
@@ -88,6 +93,7 @@ public class ProjectMemberServiceTests
         result.EmployeeId.Should().Be(employeeId);
         result.ProjectRole.Should().Be("Fullstack Dev");
         _memberRepoMock.Verify(r => r.AddAsync(It.IsAny<ProjectMember>()), Times.Once);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -145,5 +151,6 @@ public class ProjectMemberServiceTests
 
         // Assert
         _memberRepoMock.Verify(r => r.UpdateAsync(It.Is<ProjectMember>(m => m.AllocationPct == 80)), Times.Once);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

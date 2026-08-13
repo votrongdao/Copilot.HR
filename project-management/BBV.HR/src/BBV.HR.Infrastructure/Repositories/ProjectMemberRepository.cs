@@ -3,7 +3,6 @@ using BBV.HR.Application.Interfaces.Repositories;
 using BBV.HR.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace BBV.HR.Infrastructure.Repositories;
 
 public class ProjectMemberRepository : IProjectMemberRepository
@@ -40,20 +39,19 @@ public class ProjectMemberRepository : IProjectMemberRepository
 
     public async Task<ProjectMember> AddAsync(ProjectMember member)
     {
-        _dbContext.ProjectMembers.Add(member);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.ProjectMembers.AddAsync(member);
         return member;
     }
 
-    public async Task UpdateAsync(ProjectMember member)
+    public Task UpdateAsync(ProjectMember member)
     {
         _dbContext.ProjectMembers.Update(member);
-        await _dbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(ProjectMember member)
+    public Task DeleteAsync(ProjectMember member)
     {
         _dbContext.ProjectMembers.Remove(member);
-        await _dbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 }

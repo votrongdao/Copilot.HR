@@ -12,13 +12,19 @@ namespace BBV.HR.Tests.Services;
 public class ProjectServiceTests
 {
     private readonly Mock<IProjectRepository> _projectRepoMock;
+    private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly ProjectService _projectService;
 
     public ProjectServiceTests()
     {
         _projectRepoMock = new Mock<IProjectRepository>();
+        _unitOfWorkMock = new Mock<IUnitOfWork>();
+
+        _unitOfWorkMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
+
         _projectService = new ProjectService(
             _projectRepoMock.Object,
+            _unitOfWorkMock.Object,
             new CreateProjectDtoValidator(),
             new UpdateProjectDtoValidator()
         );
@@ -114,6 +120,7 @@ public class ProjectServiceTests
         result.Code.Should().Be("NEW-01");
         result.Name.Should().Be("New Project");
         _projectRepoMock.Verify(r => r.AddAsync(It.IsAny<Project>()), Times.Once);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -178,6 +185,7 @@ public class ProjectServiceTests
 
         // Assert
         _projectRepoMock.Verify(r => r.UpdateAsync(It.Is<Project>(p => p.Name == "Updated Name" && p.Status == "Active")), Times.Once);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -196,5 +204,6 @@ public class ProjectServiceTests
         // Assert
         result.Should().BeTrue();
         _projectRepoMock.Verify(r => r.DeleteAsync(existingProject), Times.Once);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }
