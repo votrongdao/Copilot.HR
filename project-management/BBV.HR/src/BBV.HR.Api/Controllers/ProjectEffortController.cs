@@ -1,5 +1,4 @@
 using BBV.HR.Application.Common.Exceptions;
-using BBV.HR.Application.Common.Models;
 using BBV.HR.Application.DTOs.ProjectEffort;
 using BBV.HR.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,24 +17,24 @@ public class ProjectEffortController : ControllerBase
     }
 
     [HttpGet("effort")]
-    public async Task<ActionResult<ApiResponse<ProjectEffortSummaryDto>>> GetEffortSummary(Guid projectId)
+    public async Task<ActionResult<ProjectEffortSummaryDto>> GetEffortSummary(Guid projectId)
     {
         var summary = await _effortService.GetProjectEffortSummaryAsync(projectId);
         if (summary == null) throw new NotFoundException("Project", projectId);
-        return Ok(ApiResponse<ProjectEffortSummaryDto>.SuccessResult(summary));
+        return Ok(summary);
     }
 
     [HttpGet("effort/members")]
-    public async Task<ActionResult<ApiResponse<IEnumerable<MemberEffortDto>>>> GetMemberEffort(Guid projectId)
+    public async Task<ActionResult<IEnumerable<MemberEffortDto>>> GetMemberEffort(Guid projectId)
     {
         var memberEfforts = await _effortService.GetProjectMemberEffortAsync(projectId);
-        return Ok(ApiResponse<IEnumerable<MemberEffortDto>>.SuccessResult(memberEfforts));
+        return Ok(memberEfforts);
     }
 
     [HttpGet("time-entries")]
-    public async Task<ActionResult<ApiResponse<IEnumerable<ProjectTimeEntryDto>>>> GetTimeEntries(Guid projectId)
+    public async Task<ActionResult<IEnumerable<ProjectTimeEntryDto>>> GetTimeEntries(Guid projectId)
     {
         var entries = await _effortService.GetProjectTimeEntriesAsync(projectId);
-        return Ok(ApiResponse<IEnumerable<ProjectTimeEntryDto>>.SuccessResult(entries));
+        return Ok(entries);
     }
 }

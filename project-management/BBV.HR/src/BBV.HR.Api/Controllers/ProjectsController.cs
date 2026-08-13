@@ -1,5 +1,4 @@
 using BBV.HR.Application.Common.Exceptions;
-using BBV.HR.Application.Common.Models;
 using BBV.HR.Application.DTOs.Projects;
 using BBV.HR.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,44 +17,43 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<IEnumerable<ProjectDto>>>> GetAll(
-        [FromQuery] string? search, 
-        [FromQuery] string? status, 
+    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAll(
+        [FromQuery] string? search,
+        [FromQuery] string? status,
         [FromQuery] Guid? managerId)
     {
         var projects = await _projectService.GetAllProjectsAsync(search, status, managerId);
-        return Ok(ApiResponse<IEnumerable<ProjectDto>>.SuccessResult(projects));
+        return Ok(projects);
     }
 
     [HttpGet("{projectId:guid}")]
-    public async Task<ActionResult<ApiResponse<ProjectDto>>> GetById(Guid projectId)
+    public async Task<ActionResult<ProjectDto>> GetById(Guid projectId)
     {
         var project = await _projectService.GetProjectByIdAsync(projectId);
         if (project == null) throw new NotFoundException("Project", projectId);
-        return Ok(ApiResponse<ProjectDto>.SuccessResult(project));
+        return Ok(project);
     }
 
     [HttpPost]
-    public async Task<ActionResult<ApiResponse<ProjectDto>>> Create([FromBody] CreateProjectDto dto)
+    public async Task<ActionResult<ProjectDto>> Create([FromBody] CreateProjectDto dto)
     {
         var project = await _projectService.CreateProjectAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { projectId = project.Id }, 
-            ApiResponse<ProjectDto>.SuccessResult(project, "Project created successfully.", 201));
+        return CreatedAtAction(nameof(GetById), new { projectId = project.Id }, project);
     }
 
     [HttpPatch("{projectId:guid}")]
-    public async Task<ActionResult<ApiResponse<ProjectDto>>> Update(Guid projectId, [FromBody] UpdateProjectDto dto)
+    public async Task<ActionResult<ProjectDto>> Update(Guid projectId, [FromBody] UpdateProjectDto dto)
     {
         var updated = await _projectService.UpdateProjectAsync(projectId, dto);
         if (updated == null) throw new NotFoundException("Project", projectId);
-        return Ok(ApiResponse<ProjectDto>.SuccessResult(updated, "Project updated successfully."));
+        return Ok(updated);
     }
 
     [HttpDelete("{projectId:guid}")]
-    public async Task<ActionResult<ApiResponse>> Delete(Guid projectId)
+    public async Task<IActionResult> Delete(Guid projectId)
     {
         var deleted = await _projectService.DeleteProjectAsync(projectId);
         if (!deleted) throw new NotFoundException("Project", projectId);
-        return Ok(ApiResponse.SuccessResponse("Project deleted successfully."));
+        return NoContent();
     }
 }

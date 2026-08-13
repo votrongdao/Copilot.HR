@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<IProjectMemberService, ProjectMemberService>();
         services.AddScoped<IProjectEffortService, ProjectEffortService>();
+        services.AddScoped<ICapabilityService, CapabilityService>();
 
         // Register FluentValidation Validators
         services.AddValidatorsFromAssemblyContaining<CreateProjectDtoValidator>();
