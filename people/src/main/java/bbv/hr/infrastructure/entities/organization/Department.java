@@ -23,9 +23,6 @@ public class Department {
     @Column(name = "department_name", length = 150)
     private String departmentName;
 
-    @Column(name = "code", nullable = true, length = 50)
-    private String code;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_department_id")
     private Department parentDepartment;
@@ -38,8 +35,8 @@ public class Department {
     @JoinColumn(name = "branch_id")
     private CompanyBranch branch;
 
-    @Column(name = "budget_headcount")
-    private Integer budgetHeadcount;
+    @Column(name = "headcount")
+    private Integer headcount;
 
     @Column(name = "status", length = 50)
     private String status;

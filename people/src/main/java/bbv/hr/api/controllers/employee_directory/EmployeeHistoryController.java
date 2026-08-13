@@ -1,6 +1,9 @@
 package bbv.hr.api.controllers.employee_directory;
 
 import bbv.hr.application.interfaces.employee_directory.EmployeeHistoryService;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,7 +18,7 @@ import java.util.Map;
 /**
  * REST Controller for Employee Career Audit Trail and History from PostgreSQL.
  */
-@Tag(name = "Employee Directory", description = "Career History and Audit Log Timeline API")
+@Tag(name = "Employee Directory", description = "Employee career timeline and audit history APIs")
 @RestController
 @RequestMapping("/api/v1/employees/{employeeId}/history")
 public class EmployeeHistoryController {
@@ -26,14 +29,27 @@ public class EmployeeHistoryController {
         this.employeeHistoryService = employeeHistoryService;
     }
 
-    @Operation(summary = "Get career timeline and audit history", description = "Query career milestones and audit logs from PostgreSQL for an employee.")
+    @Operation(
+            summary = "Fetch career promotion audit logs",
+            description = "Returns career timeline entries such as promotions, department changes, and position changes."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Employee history timeline retrieved successfully"),
-            @ApiResponse(responseCode = "404", description = "Employee not found")
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Employee history timeline retrieved successfully",
+                    content = @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(
+                                    implementation = Map.class,
+                                    example = "{\"eventType\":\"PROMOTION\",\"fromPosition\":\"Junior Software Engineer\",\"toPosition\":\"Software Engineer\",\"effectiveDate\":\"2026-08-01\"}"
+                            ))
+                    )
+            ),
+            @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
     })
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> getEmployeeHistory(
-            @Parameter(description = "Employee ID (e.g., EMP-0024)") @PathVariable String employeeId) {
+            @Parameter(description = "Employee ID", example = "EMP-0024", required = true) @PathVariable String employeeId) {
         List<Map<String, Object>> responses = employeeHistoryService.getEmployeeHistory(employeeId);
         return ResponseEntity.ok(responses);
     }
