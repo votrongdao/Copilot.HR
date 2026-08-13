@@ -38,4 +38,5 @@ package-lock.json
 context.md
 IA/
 /databases/
-export_image.js
+export_image.js
+.fake
