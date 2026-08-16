@@ -4,6 +4,31 @@ Streamlined unit test specifications featuring **37 core, high-priority test cas
 
 ---
 
+## System Architecture & Spring Framework Diagrams
+
+### 1. Overview Architecture
+![Overview](src/main/resources/images/Overview.png)
+
+### 2. Architecture & Data Flow
+![Architecture Data](src/main/resources/images/ArchitectureData.png)
+
+### 3. Dependency Injection (DI) & IoC Container
+![DI IoC MVC](src/main/resources/images/DI_IOC_MVC.png)
+
+### 4. Spring MVC Flow
+![Spring MVC](src/main/resources/images/SpringMVC.png)
+
+### 5. Spring Data JPA Architecture
+![Spring Data JPA](src/main/resources/images/SpringJPA.png)
+
+### 6. Hibernate ORM Layer
+![Hibernate](src/main/resources/images/Hibernate.png)
+
+### 7. Spring Security Architecture
+![Spring Security](src/main/resources/images/Security.png)
+
+---
+
 ## 1. Core Unit Test Diagram
 
 ```mermaid
