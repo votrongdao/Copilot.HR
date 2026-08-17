@@ -6,6 +6,7 @@ import com.example.workforce.model.AttendanceCorrectionDetail;
 import com.example.workforce.model.AttendanceCorrectionListItem;
 import com.example.workforce.model.AttendanceCorrectionSummary;
 import com.example.workforce.model.AttendanceCorrectionUpdate;
+import com.example.workforce.model.GetListAttendanceCorrections;
 import com.example.workforce.model.ReviewDecision;
 import com.example.workforce.model.ReviewHistoryEntry;
 import com.example.workforce.model.ReviewStatus;
@@ -14,6 +15,7 @@ import com.example.workforce.model.dtos.AttendanceDashboardSummaryDto;
 import com.example.workforce.model.dtos.AttendanceBreakDto;
 import com.example.workforce.model.dtos.AttendanceCorrectionExportFilter;
 import com.example.workforce.model.dtos.AttendanceCorrectionFilter;
+import com.example.workforce.model.dtos.AttendanceCorrectionResponse;
 import com.example.workforce.model.dtos.AttendanceExceptionDto;
 import com.example.workforce.model.dtos.AttendanceExceptionFilter;
 import com.example.workforce.model.dtos.AttendanceExceptionSummaryDto;
@@ -33,6 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,20 +104,14 @@ public class AttendanceController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         ContentDisposition.attachment().filename("attendance-records.csv").build().toString())
-                .contentType(new MediaType("text", "csv"))
+                .contentType(new MediaType(`"text", "csv"))
                 .body(csv);
     }
 
     @GetMapping("/attendance-corrections")
-    public PageResult<AttendanceCorrectionListItem> listCorrections(
-            @RequestParam(required = false) String status,
-            @RequestParam(name = "employee_id", required = false) UUID employeeId,
-            @RequestParam(name = "date_from", required = false) LocalDate dateFrom,
-            @RequestParam(name = "date_to", required = false) LocalDate dateTo,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(name = "page_size", defaultValue = "20") int pageSize) {
-        return attendanceService.listCorrections(
-                new AttendanceCorrectionFilter(status, employeeId, dateFrom, dateTo, page, pageSize));
+    public PageResult<AttendanceCorrectionResponse> listCorrections(
+           @ModelAttribute GetListAttendanceCorrections request) {
+        return attendanceService.listCorrections(request);
     }
 
     @PostMapping("/attendance-corrections")

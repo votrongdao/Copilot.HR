@@ -8,6 +8,7 @@ import com.example.workforce.model.AttendanceCorrectionDetail;
 import com.example.workforce.model.AttendanceCorrectionListItem;
 import com.example.workforce.model.AttendanceCorrectionSummary;
 import com.example.workforce.model.AttendanceCorrectionUpdate;
+import com.example.workforce.model.GetListAttendanceCorrections;
 import com.example.workforce.model.ReviewDecision;
 import com.example.workforce.model.ReviewHistoryEntry;
 import com.example.workforce.model.ReviewStatus;
@@ -19,6 +20,7 @@ import com.example.workforce.model.dtos.AttendanceExceptionFilter;
 import com.example.workforce.model.dtos.AttendanceExceptionSummaryDto;
 import com.example.workforce.model.dtos.AttendanceCorrectionExportFilter;
 import com.example.workforce.model.dtos.AttendanceCorrectionFilter;
+import com.example.workforce.model.dtos.AttendanceCorrectionResponse;
 import com.example.workforce.model.dtos.AttendanceRecordFilter;
 import com.example.workforce.model.dtos.AttendanceRecordSummaryDto;
 import com.example.workforce.model.dtos.AttendanceRecordDto;
@@ -40,7 +42,7 @@ public interface AttendanceService {
 
     String exportRecords(AttendanceRecordFilter filter);
 
-    PageResult<AttendanceCorrectionListItem> listCorrections(AttendanceCorrectionFilter filter);
+    PageResult<AttendanceCorrectionResponse> listCorrections(GetListAttendanceCorrections filter);
 
     AttendanceCorrectionDetail createCorrection(AttendanceCorrectionCreate request);
 
