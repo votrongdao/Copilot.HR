@@ -11,7 +11,16 @@ import com.example.workforce.model.AttendanceCorrectionUpdate;
 import com.example.workforce.model.ReviewDecision;
 import com.example.workforce.model.ReviewHistoryEntry;
 import com.example.workforce.model.ReviewStatus;
+import com.example.workforce.model.dtos.AttendanceDashboardClockInDto;
+import com.example.workforce.model.dtos.AttendanceDashboardSummaryDto;
 import com.example.workforce.model.dtos.AttendanceBreakDto;
+import com.example.workforce.model.dtos.AttendanceExceptionDto;
+import com.example.workforce.model.dtos.AttendanceExceptionFilter;
+import com.example.workforce.model.dtos.AttendanceExceptionSummaryDto;
+import com.example.workforce.model.dtos.AttendanceCorrectionExportFilter;
+import com.example.workforce.model.dtos.AttendanceCorrectionFilter;
+import com.example.workforce.model.dtos.AttendanceRecordFilter;
+import com.example.workforce.model.dtos.AttendanceRecordSummaryDto;
 import com.example.workforce.model.dtos.AttendanceRecordDto;
 
 import java.time.LocalDate;
@@ -19,13 +28,25 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AttendanceService {
-    PageResult<AttendanceCorrectionListItem> listCorrections(String status, UUID employeeId, int page, int pageSize);
+    AttendanceDashboardSummaryDto dashboardSummary();
+
+    List<AttendanceDashboardClockInDto> recentClockIns();
+
+    String exportDashboard();
+
+    PageResult<AttendanceRecordDto> records(AttendanceRecordFilter filter);
+
+    AttendanceRecordSummaryDto recordSummary(AttendanceRecordFilter filter);
+
+    String exportRecords(AttendanceRecordFilter filter);
+
+    PageResult<AttendanceCorrectionListItem> listCorrections(AttendanceCorrectionFilter filter);
 
     AttendanceCorrectionDetail createCorrection(AttendanceCorrectionCreate request);
 
     AttendanceCorrectionSummary summary();
 
-    String exportCorrections(String status, LocalDate dateFrom, LocalDate dateTo);
+    String exportCorrections(AttendanceCorrectionExportFilter filter);
 
     AttendanceCorrectionDetail getCorrection(UUID correctionId);
 
@@ -38,6 +59,10 @@ public interface AttendanceService {
     AttendanceCorrectionDetail reject(UUID correctionId, ReviewDecision request);
 
     List<ReviewHistoryEntry> history(UUID correctionId);
+
+    PageResult<AttendanceExceptionDto> exceptions(AttendanceExceptionFilter filter);
+
+    AttendanceExceptionSummaryDto exceptionSummary();
 
     List<AttendanceRecordDto> employeeRecords(UUID employeeId, LocalDate dateFrom, LocalDate dateTo);
 

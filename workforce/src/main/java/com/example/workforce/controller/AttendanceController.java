@@ -9,8 +9,18 @@ import com.example.workforce.model.AttendanceCorrectionUpdate;
 import com.example.workforce.model.ReviewDecision;
 import com.example.workforce.model.ReviewHistoryEntry;
 import com.example.workforce.model.ReviewStatus;
+import com.example.workforce.model.dtos.AttendanceDashboardClockInDto;
+import com.example.workforce.model.dtos.AttendanceDashboardSummaryDto;
 import com.example.workforce.model.dtos.AttendanceBreakDto;
+import com.example.workforce.model.dtos.AttendanceCorrectionExportFilter;
+import com.example.workforce.model.dtos.AttendanceCorrectionFilter;
+import com.example.workforce.model.dtos.AttendanceExceptionDto;
+import com.example.workforce.model.dtos.AttendanceExceptionFilter;
+import com.example.workforce.model.dtos.AttendanceExceptionSummaryDto;
+import com.example.workforce.model.dtos.AttendanceRecordFilter;
+import com.example.workforce.model.dtos.AttendanceRecordSummaryDto;
 import com.example.workforce.model.dtos.AttendanceRecordDto;
+import com.example.workforce.common.PageResult;
 import com.example.workforce.common.ShiftDto;
 import jakarta.validation.Valid;
 import java.nio.charset.StandardCharsets;
@@ -38,13 +48,73 @@ public class AttendanceController {
         this.attendanceService = attendanceService;
     }
 
-    @GetMapping("/attendance-corrections")
-    public com.example.workforce.common.PageResult<AttendanceCorrectionListItem> listCorrections(
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) UUID employeeId,
+    @GetMapping("/attendance/dashboard/summary")
+    public AttendanceDashboardSummaryDto dashboardSummary() {
+        return attendanceService.dashboardSummary();
+    }
+
+    @GetMapping("/attendance/dashboard/recent-clock-ins")
+    public List<AttendanceDashboardClockInDto> recentClockIns() {
+        return attendanceService.recentClockIns();
+    }
+
+    @GetMapping("/attendance/dashboard/export")
+    public ResponseEntity<byte[]> exportDashboard() {
+        byte[] csv = attendanceService.exportDashboard().getBytes(StandardCharsets.UTF_8);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment().filename("attendance-dashboard.csv").build().toString())
+                .contentType(new MediaType("text", "csv"))
+                .body(csv);
+    }
+
+    @GetMapping("/attendance-records")
+    public PageResult<AttendanceRecordDto> records(
+            @RequestParam(name = "employee_id", required = false) UUID employeeId,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "date_from", required = false) LocalDate dateFrom,
+            @RequestParam(name = "date_to", required = false) LocalDate dateTo,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int pageSize) {
-        return attendanceService.listCorrections(status, employeeId, page, pageSize);
+            @RequestParam(name = "page_size", defaultValue = "20") int pageSize) {
+        return attendanceService.records(
+                new AttendanceRecordFilter(employeeId, status, dateFrom, dateTo, page, pageSize));
+    }
+
+    @GetMapping("/attendance-records/summary")
+    public AttendanceRecordSummaryDto recordSummary(
+            @RequestParam(name = "employee_id", required = false) UUID employeeId,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "date_from", required = false) LocalDate dateFrom,
+            @RequestParam(name = "date_to", required = false) LocalDate dateTo) {
+        return attendanceService.recordSummary(new AttendanceRecordFilter(employeeId, status, dateFrom, dateTo, 1,
+                20));
+    }
+
+    @GetMapping("/attendance-records/export")
+    public ResponseEntity<byte[]> exportRecords(
+            @RequestParam(name = "employee_id", required = false) UUID employeeId,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "date_from", required = false) LocalDate dateFrom,
+            @RequestParam(name = "date_to", required = false) LocalDate dateTo) {
+        AttendanceRecordFilter filter = new AttendanceRecordFilter(employeeId, status, dateFrom, dateTo, 1, 20);
+        byte[] csv = attendanceService.exportRecords(filter).getBytes(StandardCharsets.UTF_8);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment().filename("attendance-records.csv").build().toString())
+                .contentType(new MediaType("text", "csv"))
+                .body(csv);
+    }
+
+    @GetMapping("/attendance-corrections")
+    public PageResult<AttendanceCorrectionListItem> listCorrections(
+            @RequestParam(required = false) String status,
+            @RequestParam(name = "employee_id", required = false) UUID employeeId,
+            @RequestParam(name = "date_from", required = false) LocalDate dateFrom,
+            @RequestParam(name = "date_to", required = false) LocalDate dateTo,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(name = "page_size", defaultValue = "20") int pageSize) {
+        return attendanceService.listCorrections(
+                new AttendanceCorrectionFilter(status, employeeId, dateFrom, dateTo, page, pageSize));
     }
 
     @PostMapping("/attendance-corrections")
@@ -58,12 +128,30 @@ public class AttendanceController {
         return attendanceService.summary();
     }
 
+    @GetMapping("/attendance-exceptions")
+    public PageResult<AttendanceExceptionDto> exceptions(
+            @RequestParam(name = "employee_id", required = false) UUID employeeId,
+            @RequestParam(name = "exception_type", required = false) String exceptionType,
+            @RequestParam(name = "date_from", required = false) LocalDate dateFrom,
+            @RequestParam(name = "date_to", required = false) LocalDate dateTo,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(name = "page_size", defaultValue = "20") int pageSize) {
+        return attendanceService.exceptions(
+                new AttendanceExceptionFilter(employeeId, exceptionType, dateFrom, dateTo, page, pageSize));
+    }
+
+    @GetMapping("/attendance-exceptions/summary")
+    public AttendanceExceptionSummaryDto exceptionSummary() {
+        return attendanceService.exceptionSummary();
+    }
+
     @GetMapping("/attendance-corrections/export")
     public ResponseEntity<byte[]> exportCorrections(
             @RequestParam(required = false) String status,
-            @RequestParam(required = false) LocalDate dateFrom,
-            @RequestParam(required = false) LocalDate dateTo) {
-        byte[] csv = attendanceService.exportCorrections(status, dateFrom, dateTo).getBytes(StandardCharsets.UTF_8);
+            @RequestParam(name = "date_from", required = false) LocalDate dateFrom,
+            @RequestParam(name = "date_to", required = false) LocalDate dateTo) {
+        AttendanceCorrectionExportFilter filter = new AttendanceCorrectionExportFilter(status, dateFrom, dateTo);
+        byte[] csv = attendanceService.exportCorrections(filter).getBytes(StandardCharsets.UTF_8);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         ContentDisposition.attachment().filename("attendance-corrections.csv").build().toString())

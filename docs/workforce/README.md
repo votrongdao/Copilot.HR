@@ -167,7 +167,7 @@ The test cases focus on:
 ##### `GET /attendance/dashboard/summary`
 
 ```java
-@Test void getDashboardSummary_shouldReturnSummary_whenRequestIsValid();
+@Test void getDashboardSummary_shouldReturnSummary_whenRequestIsValid(); ok
 @Test void getDashboardSummary_shouldReturnZeroValues_whenNoAttendanceDataExists();
 @Test void getDashboardSummary_shouldReturnUnauthorized_whenTokenIsMissing();
 @Test void getDashboardSummary_shouldReturnForbidden_whenUserHasNoPermission();
@@ -176,7 +176,7 @@ The test cases focus on:
 ##### `GET /attendance/dashboard/recent-clock-ins`
 
 ```java
-@Test void getRecentClockIns_shouldReturnRecentClockIns_whenDataExists();
+@Test void getRecentClockIns_shouldReturnRecentClockIns_whenDataExists();ok
 @Test void getRecentClockIns_shouldReturnEmptyList_whenNoClockInsExist();
 @Test void getRecentClockIns_shouldReturnResultsOrderedByLatestFirst();
 @Test void getRecentClockIns_shouldReturnUnauthorized_whenTokenIsMissing();
