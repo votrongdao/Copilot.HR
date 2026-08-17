@@ -27,6 +27,9 @@ Streamlined unit test specifications featuring **37 core, high-priority test cas
 ### 7. Spring Security Architecture
 ![Spring Security](src/main/resources/images/Security.png)
 
+### 8. PostgreSQL Database Architecture
+![PostgreSQL](src/main/resources/images/PostgrestSQL.png)
+
 ---
 
 ## 1. Core Unit Test Diagram
