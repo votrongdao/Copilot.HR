@@ -9,13 +9,16 @@ import com.example.workforce.model.dtos.LeaveBalanceAdjustmentDto;
 import com.example.workforce.model.dtos.LeaveBalanceDto;
 import com.example.workforce.model.dtos.LeavePolicyDto;
 import com.example.workforce.model.dtos.LeaveRequestDto;
+import com.example.workforce.model.dtos.LeaveRequestFilter;
 import com.example.workforce.model.dtos.LeaveTypeDto;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.UUID;
 
 public interface LeaveService {
-    PageResult<LeaveRequestDto> listRequests(UUID employeeId, String status, int page, int pageSize);
+    PageResult<LeaveRequestDto> listRequests(LeaveRequestFilter filter);
 
     LeaveRequestDto createRequest(LeaveRequestCreate request);
 
@@ -31,11 +34,11 @@ public interface LeaveService {
 
     List<LeaveBalanceAdjustmentDto> adjustments(UUID employeeId, UUID leaveTypeId);
 
-    List<CalendarDayDto> teamCalendar(UUID teamId, int year, int month);
+    List<CalendarDayDto> teamCalendar(UUID teamId, YearMonth month);
 
     List<LeaveTypeDto> leaveTypes();
 
     List<LeavePolicyDto> leavePolicies(UUID leaveTypeId);
 
-    List<HolidayDto> holidays(Integer year);
+    List<HolidayDto> holidays(LocalDate dateFrom, LocalDate dateTo);
 }

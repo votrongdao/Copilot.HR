@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.example.workforce.entity.AttendanceRecordEntity;
-import com.example.workforce.model.AttendanceCorrectionSummary;
 import com.example.workforce.model.GetListAttendanceCorrections;
 
 public interface IAttendanceRecordRepository {

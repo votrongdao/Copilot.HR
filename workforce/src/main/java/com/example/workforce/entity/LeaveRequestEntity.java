@@ -11,7 +11,6 @@ import java.util.UUID;
 public class LeaveRequestEntity {
     @Id
     private UUID id;
-
     private UUID employeeId;
     private UUID leaveTypeId;
     private LocalDate startDate;
