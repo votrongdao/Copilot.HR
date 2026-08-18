@@ -67,21 +67,21 @@ Workforce
     │       └── GET    /attendance-exceptions/summary
     ├── Attendance Corrections
     │   ├── Correction Requests
-    │   │   ├── GET    /attendance-corrections
-    │   │   ├── POST   /attendance-corrections
-    │   │   ├── GET    /attendance-corrections/summary
+    │   │   ├── GET    /attendance-corrections x
+    │   │   ├── POST   /attendance-corrections x
+    │   │   ├── GET    /attendance-corrections/summary x
     │   │   ├── GET    /attendance-corrections/export
     │   │   │
-    │   │   ├── GET    /attendance-corrections/{correctionId}
-    │   │   └── PATCH  /attendance-corrections/{correctionId}
+    │   │   ├── GET    /attendance-corrections/{correctionId} x
+    │   │   └── PATCH  /attendance-corrections/{correctionId} x
     │   ├── Correction Review
-    │   │   ├── GET    /attendance-corrections/{correctionId}/review
-    │   │   ├── POST   /attendance-corrections/{correctionId}/approve
-    │   │   ├── POST   /attendance-corrections/{correctionId}/reject
-    │   │   └── GET    /attendance-corrections/{correctionId}/review/history
+    │   │   ├── GET    /attendance-corrections/{correctionId}/review x
+    │   │   ├── POST   /attendance-corrections/{correctionId}/approve x
+    │   │   ├── POST   /attendance-corrections/{correctionId}/reject x
+    │   │   └── GET    /attendance-corrections/{correctionId}/review/history x
     │   └── Correction History
-    │       ├── GET    /employees/{employeeId}/attendance-corrections
-    │       └── GET    /attendance-records/{recordId}/corrections
+    │       ├── GET    /employees/{employeeId}/attendance-corrections x
+    │       └── GET    /attendance-records/{recordId}/corrections x
     └── Reference Data
         ├── Employees
         │   ├── GET    /employees/{employeeId}

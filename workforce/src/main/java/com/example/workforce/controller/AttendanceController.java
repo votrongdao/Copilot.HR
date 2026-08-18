@@ -2,7 +2,6 @@ package com.example.workforce.controller;
 
 import com.example.workforce.interfaces.AttendanceService;
 import com.example.workforce.model.AttendanceCorrectionCreate;
-import com.example.workforce.model.AttendanceCorrectionDetail;
 import com.example.workforce.model.AttendanceCorrectionListItem;
 import com.example.workforce.model.AttendanceCorrectionSummary;
 import com.example.workforce.model.AttendanceCorrectionUpdate;
@@ -14,7 +13,6 @@ import com.example.workforce.model.dtos.AttendanceDashboardClockInDto;
 import com.example.workforce.model.dtos.AttendanceDashboardSummaryDto;
 import com.example.workforce.model.dtos.AttendanceBreakDto;
 import com.example.workforce.model.dtos.AttendanceCorrectionExportFilter;
-import com.example.workforce.model.dtos.AttendanceCorrectionFilter;
 import com.example.workforce.model.dtos.AttendanceCorrectionResponse;
 import com.example.workforce.model.dtos.AttendanceExceptionDto;
 import com.example.workforce.model.dtos.AttendanceExceptionFilter;
@@ -104,18 +102,18 @@ public class AttendanceController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         ContentDisposition.attachment().filename("attendance-records.csv").build().toString())
-                .contentType(new MediaType(`"text", "csv"))
+                .contentType(new MediaType("text", "csv"))
                 .body(csv);
     }
 
     @GetMapping("/attendance-corrections")
     public PageResult<AttendanceCorrectionResponse> listCorrections(
-           @ModelAttribute GetListAttendanceCorrections request) {
+            @ModelAttribute GetListAttendanceCorrections request) {
         return attendanceService.listCorrections(request);
     }
 
     @PostMapping("/attendance-corrections")
-    public ResponseEntity<AttendanceCorrectionDetail> createCorrection(
+    public ResponseEntity<AttendanceCorrectionResponse> createCorrection(
             @Valid @RequestBody AttendanceCorrectionCreate request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(attendanceService.createCorrection(request));
     }
@@ -157,12 +155,12 @@ public class AttendanceController {
     }
 
     @GetMapping("/attendance-corrections/{correctionId}")
-    public AttendanceCorrectionDetail getCorrection(@PathVariable UUID correctionId) {
+    public AttendanceCorrectionResponse getCorrection(@PathVariable UUID correctionId) {
         return attendanceService.getCorrection(correctionId);
     }
 
     @PatchMapping("/attendance-corrections/{correctionId}")
-    public AttendanceCorrectionDetail updateCorrection(@PathVariable UUID correctionId,
+    public AttendanceCorrectionResponse updateCorrection(@PathVariable UUID correctionId,
             @RequestBody AttendanceCorrectionUpdate request) {
         return attendanceService.updateCorrection(correctionId, request);
     }
@@ -173,13 +171,13 @@ public class AttendanceController {
     }
 
     @PostMapping("/attendance-corrections/{correctionId}/approve")
-    public AttendanceCorrectionDetail approve(@PathVariable UUID correctionId,
+    public AttendanceCorrectionResponse approve(@PathVariable UUID correctionId,
             @RequestBody(required = false) ReviewDecision request) {
         return attendanceService.approve(correctionId, request == null ? new ReviewDecision(null) : request);
     }
 
     @PostMapping("/attendance-corrections/{correctionId}/reject")
-    public AttendanceCorrectionDetail reject(@PathVariable UUID correctionId, @RequestBody ReviewDecision request) {
+    public AttendanceCorrectionResponse reject(@PathVariable UUID correctionId, @RequestBody ReviewDecision request) {
         return attendanceService.reject(correctionId, request);
     }
 

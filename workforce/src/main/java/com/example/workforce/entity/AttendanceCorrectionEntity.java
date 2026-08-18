@@ -1,8 +1,11 @@
 package com.example.workforce.entity;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.UUID;
+
+import com.example.workforce.enums.AttendanceCorrectionStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -31,13 +34,13 @@ public class AttendanceCorrectionEntity {
 
     private String reasonCategory;
     private String employeeJustification;
-    private String status;
+    private AttendanceCorrectionStatus status;
 
-    private Date submittedAt;
+    private OffsetDateTime submittedAt;
 
     private UUID reviewedByEmployeeId;
 
     private String managerComment;
 
-    private Timestamp reviewedAt;
+    private OffsetDateTime reviewedAt;
 }

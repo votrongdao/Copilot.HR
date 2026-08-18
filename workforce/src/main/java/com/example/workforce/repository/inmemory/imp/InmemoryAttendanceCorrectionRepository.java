@@ -6,20 +6,18 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-
 import com.example.workforce.entity.AttendanceCorrectionEntity;
-import com.example.workforce.entity.AttendanceRecordEntity;
+import com.example.workforce.model.AttendanceCorrectionSummary;
 import com.example.workforce.model.GetListAttendanceCorrections;
-import com.example.workforce.repository.inmemory.IInmemoryAttendanceCorrectionRepository;
+import com.example.workforce.repository.inmemory.IAttendanceCorrectionRepository;
 
 @Repository
 @Profile("inmemory")
 @Primary
-public class InmemoryAttendanceCorrectionRepository implements IInmemoryAttendanceCorrectionRepository {
+public class InmemoryAttendanceCorrectionRepository implements IAttendanceCorrectionRepository {
     private final Map<UUID, AttendanceCorrectionEntity> storages = new ConcurrentHashMap<>();
 
     @Override
@@ -47,7 +45,7 @@ public class InmemoryAttendanceCorrectionRepository implements IInmemoryAttendan
                 .stream()
 
                 .filter(c -> filter.getStatus() == null
-                        || c.getStatus() == filter.getStatus())
+                        || c.getStatus().toString().equals(filter.getStatus()))
 
                 .filter(c -> filter.getEmployeeId() == null
                         || c.getEmployeeId()
@@ -66,4 +64,35 @@ public class InmemoryAttendanceCorrectionRepository implements IInmemoryAttendan
                 .toList();
     }
 
+    @Override
+    public List<AttendanceCorrectionEntity> findByRecordId(UUID recordId) {
+        return storages.values().stream().filter(c -> c.getAttendanceRecordId().equals(recordId)).toList();
+    }
+
+    @Override
+    public List<AttendanceCorrectionEntity> findByEmployeeId(UUID employeeId) {
+        return storages.values().stream().filter(c -> c.getEmployeeId().equals(employeeId)).toList();
+    }
+
+    @Override
+    public AttendanceCorrectionSummary getAttendanceCorrectionSummary() {
+        return storages.values().stream()
+                .collect(AttendanceCorrectionSummary::new,
+                        (summary, correction) -> {
+                            if (correction.getStatus() == null) {
+                                summary.setPendingReview(summary.getPendingReview() + 1);
+                            } else if (correction.getStatus().toString().equals("APPROVED")
+                                    && correction.getSubmittedAt().toLocalDate().equals(java.time.LocalDate.now())) {
+                                summary.setApprovedToday(summary.getApprovedToday() + 1);
+                            } else if (correction.getStatus().toString().equals("REJECTED")
+                                    && correction.getSubmittedAt().toLocalDate().equals(java.time.LocalDate.now())) {
+                                summary.setRejectedToday(summary.getRejectedToday() + 1);
+                            }
+                        },
+                        (summary1, summary2) -> {
+                            summary1.setPendingReview(summary1.getPendingReview() + summary2.getPendingReview());
+                            summary1.setApprovedToday(summary1.getApprovedToday() + summary2.getApprovedToday());
+                            summary1.setRejectedToday(summary1.getRejectedToday() + summary2.getRejectedToday());
+                        });
+    }
 }

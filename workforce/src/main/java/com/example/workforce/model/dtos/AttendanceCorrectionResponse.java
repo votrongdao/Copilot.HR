@@ -2,32 +2,22 @@ package com.example.workforce.model.dtos;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import com.example.workforce.common.EmployeeBrief;
+
+import lombok.Data;
+
+@Data
 public class AttendanceCorrectionResponse {
-    private UUID id;
-
-    private UUID attendanceRecordId;
-    private UUID employeeId;
-
-    private Timestamp originalClockInAt;
-    private Timestamp requestedClockInAt;
-
-    private Timestamp originalClockOutAt;
-    private Timestamp requestedClockOutAt;
-
-    private Integer originalBreakMinutes;
-    private Integer requestedBreakMinutes;
-
-    private String reasonCategory;
-    private String employeeJustification;
-    private String status;
-
-    private Date submittedAt;
-
-    private UUID reviewedByEmployeeId;
-
-    private String managerComment;
-
-    private Timestamp reviewedAt;
+    UUID id;
+    String status;
+    EmployeeBrief employee;
+    String reasonCategory;
+    String employeeJustification;
+    String managerComment;
+    OffsetDateTime submittedAt;
+    EmployeeBrief reviewedBy;
+    OffsetDateTime reviewedAt;
 }
