@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.workforce.entity.AttendanceRecordEntity;
 import com.example.workforce.model.GetListAttendanceCorrections;
-import com.example.workforce.repository.inmemory.IAttendanceRecordRepository;
+import com.example.workforce.repository.IAttendanceRecordRepository;
 
 @Repository
 @Profile("inmemory")

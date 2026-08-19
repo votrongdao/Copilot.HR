@@ -1,4 +1,4 @@
-package com.example.workforce.repository.inmemory;
+package com.example.workforce.repository;
 
 import java.util.List;
 import java.util.Optional;

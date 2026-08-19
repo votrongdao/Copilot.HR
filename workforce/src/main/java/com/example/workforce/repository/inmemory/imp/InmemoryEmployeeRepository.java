@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.example.workforce.entity.AttendanceRecordEntity;
 import com.example.workforce.entity.EmployeeEntity;
-import com.example.workforce.repository.inmemory.IEmployeeRepository;
+import com.example.workforce.repository.IEmployeeRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

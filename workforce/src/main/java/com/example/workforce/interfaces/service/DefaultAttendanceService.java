@@ -26,9 +26,9 @@ import com.example.workforce.model.dtos.AttendanceExceptionFilter;
 import com.example.workforce.model.dtos.AttendanceExceptionSummaryDto;
 import com.example.workforce.model.dtos.AttendanceRecordFilter;
 import com.example.workforce.model.dtos.AttendanceRecordSummaryDto;
-import com.example.workforce.repository.inmemory.IAttendanceCorrectionRepository;
-import com.example.workforce.repository.inmemory.IAttendanceRecordRepository;
-import com.example.workforce.repository.inmemory.IEmployeeRepository;
+import com.example.workforce.repository.IAttendanceCorrectionRepository;
+import com.example.workforce.repository.IAttendanceRecordRepository;
+import com.example.workforce.repository.IEmployeeRepository;
 
 import lombok.RequiredArgsConstructor;
 

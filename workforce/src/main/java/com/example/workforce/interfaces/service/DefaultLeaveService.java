@@ -14,7 +14,7 @@ import com.example.workforce.model.dtos.LeavePolicyDto;
 import com.example.workforce.model.dtos.LeaveRequestDto;
 import com.example.workforce.model.dtos.LeaveRequestFilter;
 import com.example.workforce.model.dtos.LeaveTypeDto;
-import com.example.workforce.repository.inmemory.ILeaveRequestRepository;
+import com.example.workforce.repository.ILeaveBalance;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -24,9 +24,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultLeaveService implements LeaveService {
-    private final ILeaveRequestRepository leaveRequestRepository;
+    private final ILeaveBalance leaveRequestRepository;
 
-    public DefaultLeaveService(ILeaveRequestRepository leaveRequestRepository) {
+    public DefaultLeaveService(ILeaveBalance leaveRequestRepository) {
         this.leaveRequestRepository = leaveRequestRepository;
     }
 
