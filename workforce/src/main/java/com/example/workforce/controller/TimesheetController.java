@@ -10,6 +10,7 @@ import com.example.workforce.model.TimesheetEntryUpdate;
 import com.example.workforce.model.dtos.TimesheetCorrectionDto;
 import com.example.workforce.model.dtos.TimesheetDetailDto;
 import com.example.workforce.model.dtos.TimesheetEntryDto;
+import com.example.workforce.model.dtos.TimesheetFilter;
 import com.example.workforce.model.dtos.TimesheetListItemDto;
 
 import jakarta.validation.Valid;
@@ -35,11 +36,15 @@ public class TimesheetController {
     }
 
     @GetMapping("/timesheets")
-    public PageResult<TimesheetListItemDto> timesheets(@RequestParam(required = false) UUID employeeId,
-            @RequestParam(required = false) UUID departmentId, @RequestParam(required = false) String status,
-            @RequestParam(required = false) LocalDate weekStart, @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int pageSize) {
-        return timesheetService.timesheets(employeeId, departmentId, status, weekStart, page, pageSize);
+    public PageResult<TimesheetListItemDto> timesheets(
+            @RequestParam(name = "employee_id", required = false) UUID employeeId,
+            @RequestParam(name = "department_id", required = false) UUID departmentId,
+            @RequestParam(required = false) String status,
+            @RequestParam(name = "week_start", required = false) LocalDate weekStart,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(name = "page_size", defaultValue = "20") int pageSize) {
+        return timesheetService.timesheets(
+                new TimesheetFilter(employeeId, departmentId, status, weekStart, page, pageSize));
     }
 
     @GetMapping("/timesheets/{timesheetId}")

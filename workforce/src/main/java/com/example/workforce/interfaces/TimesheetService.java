@@ -9,15 +9,13 @@ import com.example.workforce.model.TimesheetEntryUpdate;
 import com.example.workforce.model.dtos.TimesheetCorrectionDto;
 import com.example.workforce.model.dtos.TimesheetDetailDto;
 import com.example.workforce.model.dtos.TimesheetEntryDto;
+import com.example.workforce.model.dtos.TimesheetFilter;
 import com.example.workforce.model.dtos.TimesheetListItemDto;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 public interface TimesheetService {
-    PageResult<TimesheetListItemDto> timesheets(UUID employeeId, UUID departmentId, String status, LocalDate weekStart,
-            int page, int pageSize);
+    PageResult<TimesheetListItemDto> timesheets(TimesheetFilter filter);
 
     TimesheetDetailDto timesheet(UUID timesheetId);
 

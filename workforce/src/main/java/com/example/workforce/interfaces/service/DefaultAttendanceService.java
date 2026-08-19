@@ -20,7 +20,6 @@ import com.example.workforce.model.dtos.AttendanceDashboardClockInDto;
 import com.example.workforce.model.dtos.AttendanceDashboardSummaryDto;
 import com.example.workforce.model.dtos.AttendanceBreakDto;
 import com.example.workforce.model.dtos.AttendanceCorrectionExportFilter;
-import com.example.workforce.model.dtos.AttendanceCorrectionFilter;
 import com.example.workforce.model.dtos.AttendanceCorrectionResponse;
 import com.example.workforce.model.dtos.AttendanceExceptionDto;
 import com.example.workforce.model.dtos.AttendanceExceptionFilter;
@@ -31,12 +30,10 @@ import com.example.workforce.repository.inmemory.IAttendanceCorrectionRepository
 import com.example.workforce.repository.inmemory.IAttendanceRecordRepository;
 import com.example.workforce.repository.inmemory.IEmployeeRepository;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import com.example.workforce.model.dtos.AttendanceRecordDto;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
