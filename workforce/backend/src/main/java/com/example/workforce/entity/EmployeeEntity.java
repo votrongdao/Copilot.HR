@@ -3,6 +3,8 @@ package com.example.workforce.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -32,4 +34,12 @@ public class EmployeeEntity {
     private String avatarUrl;
     @Column(name = "employment_status", length = 30)
     private String employmentStatus;
+
+    @OneToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private DepartmentEntity department;
+
+    @OneToOne
+    @JoinColumn(name = "managerId", referencedColumnName = "id", insertable = false, updatable = false)
+    private EmployeeEntity manager;
 }

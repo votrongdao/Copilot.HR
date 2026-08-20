@@ -13,5 +13,7 @@ import com.example.workforce.model.dtos.LeaveRequestFilter;
 
 @Repository
 public interface ILeaveBalance extends JpaRepository<LeaveBalanceEntity, UUID> {
-   
+    List<LeaveBalanceEntity> findByEmployeeId(UUID employeeId);
+
+    LeaveBalanceEntity findByEmployeeIdAndLeaveTypeId(UUID employeeId, UUID leaveTypeId);
 }

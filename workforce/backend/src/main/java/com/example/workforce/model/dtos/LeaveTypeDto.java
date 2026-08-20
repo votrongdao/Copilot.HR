@@ -2,5 +2,8 @@ package com.example.workforce.model.dtos;
 
 import java.util.UUID;
 
-public record LeaveTypeDto(UUID id, String name, String status) {
+public class LeaveTypeDto {
+    UUID id;
+    String name;
+    String status;
 }

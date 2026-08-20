@@ -93,22 +93,22 @@ Workforce
 ### Leave Management (12)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/leave-management)
 ```text
-Leave Management API 
+Leave Management API
 |
 ├── Leave Requests
-|   ├── GET   /leave-requests
-|   ├── POST  /leave-requests
-|   ├── GET   /leave-requests/{requestId}
-|   ├── PATCH /leave-requests/{requestId}
-|   └── POST  /leave-requests/{requestId}/cancel
+|   ├── GET   /leave-requests x
+|   ├── POST  /leave-requests x
+|   ├── GET   /leave-requests/{requestId} x
+|   ├── PATCH /leave-requests/{requestId} x
+|   └── POST  /leave-requests/{requestId}/cancel x
 |
 ├── Leave Balances
-|   ├── GET /employees/{employeeId}/leave-balances
-|   ├── GET /employees/{employeeId}/leave-balances/{leaveTypeId}
-|   └── GET /employees/{employeeId}/leave-balances/{leaveTypeId}/adjustments
+|   ├── GET /employees/{employeeId}/leave-balances x
+|   ├── GET /employees/{employeeId}/leave-balances/{leaveTypeId} x
+|   └── GET /employees/{employeeId}/leave-balances/{leaveTypeId}/adjustments x
 |
 ├── Team Leave Calendar
-|   └── GET /teams/{teamId}/leave-calendar
+|   └── GET /teams/{teamId}/leave-calendar x
 |
 └── Reference Data
     ├── GET /leave-types
