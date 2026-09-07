@@ -47,11 +47,81 @@
 #### Attendence Management (28)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/Attendence-management/1.0.0)
 
-#### Leave Management (12)
+```text
+Workforce
+└── Attendance Management
+    ├── Attendance Dashboard
+    │   ├── Dashboard Summary
+    │   │   └── GET    /attendance/dashboard/summary
+    │   ├── Recent Clock-ins
+    │   │   └── GET    /attendance/dashboard/recent-clock-ins
+    │   └── Export
+    │       └── GET    /attendance/dashboard/export
+    ├── Attendance Records & Exceptions
+    │   ├── Attendance Records
+    │   │   ├── GET    /attendance-records
+    │   │   ├── POST   /attendance-records
+    │   │   │          └── Create Manual Entry
+    │   │   ├── GET    /attendance-records/summary
+    │   │   ├── GET    /attendance-records/export
+    │   │   ├── GET    /attendance-records/{recordId}
+    │   │   ├── PATCH  /attendance-records/{recordId}
+    │   │   └── GET    /attendance-records/{recordId}/breaks
+    │   └── Attendance Exceptions
+    │       ├── GET    /attendance-exceptions
+    │       └── GET    /attendance-exceptions/summary
+    ├── Attendance Corrections
+    │   ├── Correction Requests
+    │   │   ├── GET    /attendance-corrections x
+    │   │   ├── POST   /attendance-corrections x
+    │   │   ├── GET    /attendance-corrections/summary x
+    │   │   ├── GET    /attendance-corrections/export
+    │   │   │
+    │   │   ├── GET    /attendance-corrections/{correctionId} x
+    │   │   └── PATCH  /attendance-corrections/{correctionId} x
+    │   ├── Correction Review
+    │   │   ├── GET    /attendance-corrections/{correctionId}/review x
+    │   │   ├── POST   /attendance-corrections/{correctionId}/approve x
+    │   │   ├── POST   /attendance-corrections/{correctionId}/reject x
+    │   │   └── GET    /attendance-corrections/{correctionId}/review/history x
+    │   └── Correction History
+    │       ├── GET    /employees/{employeeId}/attendance-corrections x
+    │       └── GET    /attendance-records/{recordId}/corrections x
+    └── Reference Data
+        ├── Employees
+        │   ├── GET    /employees/{employeeId}
+        │   └── GET    /employees/{employeeId}/attendance-records
+        └── Shifts
+            └── GET    /shifts/{shiftId}
+```
+
+### Leave Management (12)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/leave-management)
+```text
+Leave Management API
+|
+├── Leave Requests
+|   ├── GET   /leave-requests x
+|   ├── POST  /leave-requests x
+|   ├── GET   /leave-requests/{requestId} x
+|   ├── PATCH /leave-requests/{requestId} x
+|   └── POST  /leave-requests/{requestId}/cancel x
+|
+├── Leave Balances
+|   ├── GET /employees/{employeeId}/leave-balances x
+|   ├── GET /employees/{employeeId}/leave-balances/{leaveTypeId} x
+|   └── GET /employees/{employeeId}/leave-balances/{leaveTypeId}/adjustments x
+|
+├── Team Leave Calendar
+|   └── GET /teams/{teamId}/leave-calendar x
+|
+└── Reference Data
+    ├── GET /leave-types
+    ├── GET /leave-policies
+    └── GET /holidays
+```
 
-
-#### Time Sheet View (11)
+### Time Sheet View (10)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/time-sheet-review/1.0.0)
 
 ```text
@@ -121,7 +191,7 @@ The test cases focus on:
 ##### `GET /attendance/dashboard/summary`
 
 ```java
-@Test void getDashboardSummary_shouldReturnSummary_whenRequestIsValid();
+@Test void getDashboardSummary_shouldReturnSummary_whenRequestIsValid(); ok
 @Test void getDashboardSummary_shouldReturnZeroValues_whenNoAttendanceDataExists();
 @Test void getDashboardSummary_shouldReturnUnauthorized_whenTokenIsMissing();
 @Test void getDashboardSummary_shouldReturnForbidden_whenUserHasNoPermission();
@@ -130,7 +200,7 @@ The test cases focus on:
 ##### `GET /attendance/dashboard/recent-clock-ins`
 
 ```java
-@Test void getRecentClockIns_shouldReturnRecentClockIns_whenDataExists();
+@Test void getRecentClockIns_shouldReturnRecentClockIns_whenDataExists();ok
 @Test void getRecentClockIns_shouldReturnEmptyList_whenNoClockInsExist();
 @Test void getRecentClockIns_shouldReturnResultsOrderedByLatestFirst();
 @Test void getRecentClockIns_shouldReturnUnauthorized_whenTokenIsMissing();
