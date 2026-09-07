@@ -309,13 +309,4 @@ flowchart LR
 ![Work Schedule Management use case](images/usecase/workforce/work-schedule-management.png)
 
 
-## III. Information Architecture
-
-## IV. UI/UX design
-
-## V. Entity diagram
-
-## VI. API docs
-
-## VII. API testcase
 

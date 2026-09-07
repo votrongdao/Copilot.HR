@@ -40,8 +40,13 @@
 ![alt text](../../images/erd/workforce/time-sheet-review.png)
 
 ## V. API docs
-### Attendence Management (27)
+### Entire Workforce API docs
+
+[Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/index-workforce/1.0.0)
+
+#### Attendence Management (28)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/Attendence-management/1.0.0)
+
 ```text
 Workforce
 └── Attendance Management
@@ -118,29 +123,48 @@ Leave Management API
 
 ### Time Sheet View (10)
 [Link to API documents](https://app.swaggerhub.com/apis-docs/digitaltransformatio-4d0/time-sheet-review/1.0.0)
+
 ```text
-Timesheet Review API
-|
-├── Team Timesheets
-|   ├── GET  /timesheets
-|   ├── GET  /timesheets/{timesheetId}
-|   ├── POST /timesheets/{timesheetId}/approve
-|   └── POST /timesheets/{timesheetId}/reject
-|
-├── Timesheet Entries
-|   ├── GET   /timesheets/{timesheetId}/entries
-|   └── PATCH /timesheets/{timesheetId}/entries/{entryId}
-|
-├── Timesheet Corrections
-|   ├── GET  /timesheets/{timesheetId}/corrections
-|   └── POST /timesheets/{timesheetId}/corrections
-|
-└── Reference Data
-    ├── GET /employees/{employeeId}
-    └── GET /departments/{departmentId}
+Workforce
+├── Attendance Management
+│   ├── Attendance Records
+│   │   ├── GET     /attendance-records
+│   │   ├── POST    /attendance-records
+│   │   ├── GET     /attendance-records/{recordId}
+│   │   ├── PATCH   /attendance-records/{recordId}
+│   │   └── DELETE  /attendance-records/{recordId}
+│   │               └── Delete Manual Entry only
+│   │
+│   └── Attendance Corrections
+│       ├── GET     /attendance-corrections
+│       ├── POST    /attendance-corrections
+│       ├── GET     /attendance-corrections/{correctionId}
+│       ├── PATCH   /attendance-corrections/{correctionId}
+│       ├── POST    /attendance-corrections/{correctionId}/approve
+│       └── POST    /attendance-corrections/{correctionId}/reject
+│
+├── Leave Management
+│   └── Leave Requests
+│       ├── GET     /leave-requests
+│       ├── POST    /leave-requests
+│       ├── GET     /leave-requests/{requestId}
+│       ├── PATCH   /leave-requests/{requestId}
+│       └── POST    /leave-requests/{requestId}/cancel
+│
+└── Timesheet Management
+    ├── Timesheets
+    │   ├── GET     /timesheets
+    │   ├── GET     /timesheets/{timesheetId}
+    │   ├── POST    /timesheets/{timesheetId}/approve
+    │   └── POST    /timesheets/{timesheetId}/reject
+    │
+    └── Timesheet Entries
+        ├── GET     /timesheets/{timesheetId}/entries
+        ├── POST    /timesheets/{timesheetId}/entries
+        ├── PATCH   /timesheets/{timesheetId}/entries/{entryId}
+        └── DELETE  /timesheets/{timesheetId}/entries/{entryId}
+                    └── Manual entry only
 ```
-
-
 ## VI. Test Cases
 
 This section defines the planned API test cases for the Workforce Management modules.
