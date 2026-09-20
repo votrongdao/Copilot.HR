@@ -1,0 +1,71 @@
+## ==========================================
+## .NET / Visual Studio Build & Binary Outputs
+## ==========================================
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+out/
+publish/
+**/[Bb]in/
+**/[Oo]bj/
+
+## Visual Studio Temporary & User Files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.pidb
+*.booproj
+*.sln.imln
+
+## JetBrains Rider / ReSharper
+_ReSharper.*/
+*.DotSettings.user
+
+## Test & Code Coverage Outputs
+[Tt]est[Rr]esult*
+[Cc]overage/
+*.trx
+*.coverage
+*.coveragecleared
+.sonar/
+.stryker-tmp/
+
+## Database & Temporary Storage
+*.mdf
+*.ldf
+*.db
+*.sqlite
+*.sqlite3
+*.dmp
+*.dump
+
+## NuGet Packages & Locks
+*.nupkg
+*.snupkg
+**/packages/
+project.lock.json
+project.assets.json
+
+## Local Configuration Overrides & Sensitive Files
+appsettings.Local.json
+appsettings.*.local.json
+appsettings.Production.json
+secrets.json
+
+## OS & System Artifacts
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+.DS_Store?
+._*
+
+## Agent / Environment Artifacts
+.antigravity/
+.gemini/

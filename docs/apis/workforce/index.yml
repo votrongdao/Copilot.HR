@@ -1,0 +1,1745 @@
+openapi: 3.0.3
+info:
+  title: Workforce Management API - Attendance, Leave & Timesheets
+  description: Combined API specification for Attendance Corrections, Leave Management, and Timesheet Review.
+  version: 1.0.0
+servers:
+# Added by API Auto Mocking Plugin
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/digitaltransformatio-4d0/index-workforce/1.0.0
+- url: https://api.precisionenterprise.com/v1
+- url: https://api.globalcorp.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Attendance Corrections
+  description: Correction request directory and lifecycle operations.
+- name: Correction Review
+  description: Approve/reject decision workflow and review history.
+- name: Attendance Records
+  description: Underlying clock in/out records referenced by corrections.
+- name: Correction History
+  description: Historical correction requests, scoped by employee or record.
+- name: Reference Data
+  description: Read-only lookups used to render the review panel; read-only lookups - leave types, policies, holidays; read-only
+    lookups used to render the review header.
+- name: Leave Requests
+  description: Leave request directory and lifecycle operations.
+- name: Leave Balances
+  description: Per employee, per leave type balance and adjustment history.
+- name: Team Leave Calendar
+  description: Month view of who is on leave, scoped to a team.
+- name: Team Timesheets
+  description: Weekly timesheet directory and approval decision.
+- name: Timesheet Entries
+  description: Day-level project/task time entries within a timesheet.
+- name: Timesheet Corrections
+  description: Correction requests sent back to the employee.
+paths:
+  /attendance-corrections:
+    get:
+      tags:
+      - Attendance Corrections
+      summary: List attendance corrections
+      description: Backs the "Pending Requests" table.
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+          default: pending
+      - name: employee_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: date_from
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: Paginated list of corrections
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AttendanceCorrectionListItem'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    post:
+      tags:
+      - Attendance Corrections
+      summary: Create attendance correction
+      description: Employee (or manager on their behalf) submits a new correction request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceCorrectionCreate'
+      responses:
+        '201':
+          description: Created correction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceCorrectionDetail'
+  /attendance-corrections/summary:
+    get:
+      tags:
+      - Attendance Corrections
+      summary: Get correction summary
+      description: Backs the 3 stat cards (Pending Review / Approved Today / Rejected Today).
+      responses:
+        '200':
+          description: Correction counts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceCorrectionSummary'
+  /attendance-corrections/export:
+    get:
+      tags:
+      - Attendance Corrections
+      summary: Export attendance corrections
+      description: Downloads the current filtered queue as CSV.
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+      - name: date_from
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: CSV file
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+  /attendance-corrections/{correctionId}:
+    parameters:
+    - name: correctionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Attendance Corrections
+      summary: Get attendance correction
+      description: Backs the "Review Attendance Correction" side panel.
+      responses:
+        '200':
+          description: Full correction detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceCorrectionDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Attendance Corrections
+      summary: Update attendance correction
+      description: Saves a draft manager comment without changing status.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                manager_comment:
+                  type: string
+      responses:
+        '200':
+          description: Updated correction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceCorrectionDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /attendance-corrections/{correctionId}/review:
+    parameters:
+    - name: correctionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Correction Review
+      summary: Get current review status
+      responses:
+        '200':
+          description: Review status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewStatus'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /attendance-corrections/{correctionId}/approve:
+    parameters:
+    - name: correctionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    post:
+      tags:
+      - Correction Review
+      summary: Approve attendance correction
+      description: Applies the requested change to the linked attendance record.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                manager_comment:
+                  type: string
+      responses:
+        '200':
+          description: Approved correction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceCorrectionDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /attendance-corrections/{correctionId}/reject:
+    parameters:
+    - name: correctionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    post:
+      tags:
+      - Correction Review
+      summary: Reject attendance correction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - manager_comment
+              properties:
+                manager_comment:
+                  type: string
+      responses:
+        '200':
+          description: Rejected correction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceCorrectionDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /attendance-corrections/{correctionId}/review/history:
+    parameters:
+    - name: correctionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Correction Review
+      summary: List review history
+      description: Every status transition (submitted, approved/rejected) with actor and timestamp.
+      responses:
+        '200':
+          description: Review history entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewHistoryEntry'
+  /employees/{employeeId}/attendance-records:
+    parameters:
+    - name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Attendance Records
+      summary: List attendance records
+      parameters:
+      - name: date_from
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: List of attendance records for the employee
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceRecord'
+  /attendance-records/{recordId}:
+    parameters:
+    - name: recordId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Attendance Records
+      summary: Get attendance record
+      description: The underlying clock in/out record referenced by "Original Record".
+      responses:
+        '200':
+          description: Attendance record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceRecord'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /attendance-records/{recordId}/breaks:
+    parameters:
+    - name: recordId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Attendance Records
+      summary: List record breaks
+      description: 'Source of "Meal Break: No Change" when unmodified.'
+      responses:
+        '200':
+          description: List of breaks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceBreak'
+  /employees/{employeeId}/attendance-corrections:
+    parameters:
+    - name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Correction History
+      summary: List employee correction history
+      responses:
+        '200':
+          description: List of corrections submitted by this employee
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceCorrectionListItem'
+  /attendance-records/{recordId}/corrections:
+    parameters:
+    - name: recordId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Correction History
+      summary: List correction history for record
+      description: Every correction attempt ever made against one attendance record (audit trail).
+      responses:
+        '200':
+          description: List of corrections for this record
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceCorrectionListItem'
+  /shifts/{shiftId}:
+    parameters:
+    - name: shiftId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Reference Data
+      summary: Get shift
+      description: Returns start_time / end_time for the "Scheduled Shift" label.
+      responses:
+        '200':
+          description: Shift
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shift'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /employees/{employeeId}:
+    parameters:
+    - name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Reference Data
+      summary: Get employee
+      description: Employee reference data used by attendance-correction and timesheet-review screens (name, code, title,
+        avatar, manager, and department when available).
+      responses:
+        '200':
+          description: Employee
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeBrief'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /leave-requests:
+    get:
+      tags:
+      - Leave Requests
+      summary: List leave requests
+      description: 'Backs the "Recent Leave Requests" table and "View All History" link.
+
+        '
+      parameters:
+      - name: employee_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+          - cancelled
+      - name: date_from
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: Paginated list of leave requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LeaveRequest'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    post:
+      tags:
+      - Leave Requests
+      summary: Create leave request
+      description: 'Backs the "Request Leave" button. Validates dates against the employee''s remaining balance for the chosen
+        leave type.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaveRequestCreate'
+      responses:
+        '201':
+          description: Created leave request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '422':
+          description: Requested days exceed remaining balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /leave-requests/{requestId}:
+    parameters:
+    - name: requestId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Leave Requests
+      summary: Get leave request
+      responses:
+        '200':
+          description: Leave request detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Leave Requests
+      summary: Update leave request
+      description: 'Edit a request while it is still pending (dates, reason). Cannot be used once the request has been approved
+        or rejected.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaveRequestUpdate'
+      responses:
+        '200':
+          description: Updated leave request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /leave-requests/{requestId}/cancel:
+    parameters:
+    - name: requestId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    post:
+      tags:
+      - Leave Requests
+      summary: Cancel leave request
+      description: Sets status to cancelled and restores the reserved balance.
+      responses:
+        '200':
+          description: Cancelled leave request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /employees/{employeeId}/leave-balances:
+    parameters:
+    - name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Leave Balances
+      summary: List leave balances
+      description: 'Backs the "My Leave Balance" card - one entry per leave type (Annual, Sick, Unpaid) with entitlement,
+        used, and remaining days.
+
+        '
+      responses:
+        '200':
+          description: List of balances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveBalance'
+  /employees/{employeeId}/leave-balances/{leaveTypeId}:
+    parameters:
+    - name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: leaveTypeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Leave Balances
+      summary: Get leave balance
+      responses:
+        '200':
+          description: Single leave balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveBalance'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /employees/{employeeId}/leave-balances/{leaveTypeId}/adjustments:
+    parameters:
+    - name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: leaveTypeId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Leave Balances
+      summary: List balance adjustments
+      description: Audit trail of manual changes - accrual runs, corrections, carry-over.
+      responses:
+        '200':
+          description: List of adjustments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveBalanceAdjustment'
+  /teams/{teamId}/leave-calendar:
+    parameters:
+    - name: teamId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Team Leave Calendar
+      summary: Get team leave calendar
+      description: 'Backs the "Team Leave Calendar" grid - who is on leave per day, plus an aggregated pending count for days
+        with unreviewed requests.
+
+        '
+      parameters:
+      - name: month
+        in: query
+        required: true
+        schema:
+          type: string
+          example: 2023-10
+      responses:
+        '200':
+          description: Calendar days with leave entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarDay'
+  /leave-types:
+    get:
+      tags:
+      - Reference Data
+      summary: List leave types
+      responses:
+        '200':
+          description: Leave types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveType'
+  /leave-policies:
+    get:
+      tags:
+      - Reference Data
+      summary: List leave policies
+      description: 'Source of the accrual/reset rule behind "Balances reset on Jan 1st, 2024".
+
+        '
+      parameters:
+      - name: leave_type_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Leave policies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeavePolicy'
+  /holidays:
+    get:
+      tags:
+      - Reference Data
+      summary: List holidays
+      description: Used to shade non-working days on the team calendar.
+      parameters:
+      - name: date_from
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Holidays
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Holiday'
+  /timesheets:
+    get:
+      tags:
+      - Team Timesheets
+      summary: List team timesheets
+      description: Backs the "Team Timesheets" list this review screen is opened from.
+      parameters:
+      - name: employee_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: department_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - draft
+          - submitted
+          - correction_requested
+          - approved
+      - name: week_start
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: Paginated list of timesheets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TimesheetListItem'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+  /timesheets/{timesheetId}:
+    parameters:
+    - name: timesheetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Team Timesheets
+      summary: Get timesheet
+      description: 'Backs the header (employee, department, manager, week range, status pill) and the 4 summary cards (Regular
+        / Overtime / Total Tracked / Billable Amount).
+
+        '
+      responses:
+        '200':
+          description: Timesheet detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesheetDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /timesheets/{timesheetId}/approve:
+    parameters:
+    - name: timesheetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    post:
+      tags:
+      - Team Timesheets
+      summary: Approve timesheet
+      description: Backs the "Approve Timesheet" button.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                manager_comment:
+                  type: string
+      responses:
+        '200':
+          description: Approved timesheet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesheetDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /timesheets/{timesheetId}/reject:
+    parameters:
+    - name: timesheetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    post:
+      tags:
+      - Team Timesheets
+      summary: Reject timesheet
+      description: Backs the "Reject" button.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - manager_comment
+              properties:
+                manager_comment:
+                  type: string
+      responses:
+        '200':
+          description: Rejected timesheet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesheetDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /timesheets/{timesheetId}/entries:
+    parameters:
+    - name: timesheetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Timesheet Entries
+      summary: List timesheet entries
+      description: 'Backs the day-by-day table rows (date, project/task, start/end, break, reg/OT/total, Tracked or Manual
+        badge) and the weekly totals row.
+
+        '
+      responses:
+        '200':
+          description: List of entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimesheetEntry'
+  /timesheets/{timesheetId}/entries/{entryId}:
+    parameters:
+    - name: timesheetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: entryId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    patch:
+      tags:
+      - Timesheet Entries
+      summary: Update timesheet entry
+      description: Manager adjustment to a single day's entry before approving.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimesheetEntryUpdate'
+      responses:
+        '200':
+          description: Updated entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesheetEntry'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /timesheets/{timesheetId}/corrections:
+    parameters:
+    - name: timesheetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Timesheet Corrections
+      summary: List correction requests
+      description: History of correction requests raised on this timesheet.
+      responses:
+        '200':
+          description: List of corrections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimesheetCorrection'
+    post:
+      tags:
+      - Timesheet Corrections
+      summary: Request correction
+      description: 'Backs the "Request Correction" button - sends the timesheet (or one entry) back to the employee and sets
+        timesheet status to correction_requested.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimesheetCorrectionCreate'
+      responses:
+        '201':
+          description: Created correction request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesheetCorrection'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /departments/{departmentId}:
+    parameters:
+    - name: departmentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      tags:
+      - Reference Data
+      summary: Get department
+      description: 'Backs "Dept: Engineering (Frontend)" in the header.'
+      responses:
+        '200':
+          description: Department
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    EmployeeBrief:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee_code:
+          type: string
+        full_name:
+          type: string
+        job_title:
+          type: string
+          example: Customer Support Rep
+        avatar_url:
+          type: string
+          format: uri
+        manager:
+          $ref: '#/components/schemas/EmployeeMini'
+        department:
+          $ref: '#/components/schemas/Department'
+    Shift:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        start_time:
+          type: string
+          example: 09:00
+        end_time:
+          type: string
+          example: '17:00'
+    AttendanceRecord:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee_id:
+          type: string
+          format: uuid
+        shift_id:
+          type: string
+          format: uuid
+        attendance_date:
+          type: string
+          format: date
+        clock_in_at:
+          type: string
+          format: date-time
+        clock_out_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - present
+          - late
+          - missing_punch
+          - geofence_alert
+          - exception
+          - in_progress
+    AttendanceBreak:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        attendance_record_id:
+          type: string
+          format: uuid
+        break_start_at:
+          type: string
+          format: date-time
+        break_end_at:
+          type: string
+          format: date-time
+        duration_minutes:
+          type: integer
+    AttendanceCorrectionSummary:
+      type: object
+      properties:
+        pending_review:
+          type: integer
+          example: 12
+        approved_today:
+          type: integer
+          example: 24
+        rejected_today:
+          type: integer
+          example: 3
+    AttendanceCorrectionListItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee:
+          $ref: '#/components/schemas/EmployeeBrief'
+        attendance_date:
+          type: string
+          format: date
+        original_record:
+          type: object
+          properties:
+            clock_in_at:
+              type: string
+              example: 09:15
+            clock_out_at:
+              type: string
+              example: '17:00'
+        requested_change:
+          type: object
+          properties:
+            clock_in_at:
+              type: string
+              example: 09:00
+            clock_out_at:
+              type: string
+              example: '17:00'
+        reason_category:
+          type: string
+          example: Forgot to clock in
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+        submitted_at:
+          type: string
+          format: date-time
+    AttendanceCorrectionDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+        employee:
+          $ref: '#/components/schemas/EmployeeBrief'
+        scheduled_shift:
+          $ref: '#/components/schemas/Shift'
+        timesheet_modification:
+          type: object
+          properties:
+            clock_in:
+              type: object
+              properties:
+                original:
+                  type: string
+                requested:
+                  type: string
+                changed:
+                  type: boolean
+            clock_out:
+              type: object
+              properties:
+                original:
+                  type: string
+                requested:
+                  type: string
+                changed:
+                  type: boolean
+            meal_break:
+              type: object
+              properties:
+                original_minutes:
+                  type: integer
+                requested_minutes:
+                  type: integer
+                changed:
+                  type: boolean
+        reason_category:
+          type: string
+        employee_justification:
+          type: string
+        manager_comment:
+          type: string
+          nullable: true
+        submitted_at:
+          type: string
+          format: date-time
+        reviewed_by:
+          $ref: '#/components/schemas/EmployeeBrief'
+        reviewed_at:
+          type: string
+          format: date-time
+          nullable: true
+    AttendanceCorrectionCreate:
+      type: object
+      required:
+      - attendance_record_id
+      - reason_category
+      properties:
+        attendance_record_id:
+          type: string
+          format: uuid
+        requested_clock_in_at:
+          type: string
+          format: date-time
+        requested_clock_out_at:
+          type: string
+          format: date-time
+        requested_break_minutes:
+          type: integer
+        reason_category:
+          type: string
+        employee_justification:
+          type: string
+    ReviewStatus:
+      type: object
+      properties:
+        correction_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+        reviewed_by:
+          $ref: '#/components/schemas/EmployeeBrief'
+        reviewed_at:
+          type: string
+          format: date-time
+          nullable: true
+        manager_comment:
+          type: string
+          nullable: true
+    ReviewHistoryEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        action:
+          type: string
+          enum:
+          - submitted
+          - approved
+          - rejected
+          - comment_updated
+        actor:
+          $ref: '#/components/schemas/EmployeeBrief'
+        comment:
+          type: string
+          nullable: true
+        occurred_at:
+          type: string
+          format: date-time
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        page_size:
+          type: integer
+        total:
+          type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: validation_error
+            message:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: string
+    LeaveType:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Annual Leave
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+    LeavePolicy:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        policy_name:
+          type: string
+        leave_type_id:
+          type: string
+          format: uuid
+        entitlement_value:
+          type: number
+          example: 18
+        entitlement_unit:
+          type: string
+          example: Days
+        accrual_method:
+          type: string
+          example: annual_reset
+        carry_over_value:
+          type: number
+        eligibility:
+          type: string
+    LeaveBalance:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        leave_type:
+          $ref: '#/components/schemas/LeaveType'
+        entitlement_amount:
+          type: number
+          example: 18
+        used_amount:
+          type: number
+          example: 3.5
+        remaining_amount:
+          type: number
+          example: 14.5
+        reset_date:
+          type: string
+          format: date
+          example: '2024-01-01'
+        updated_at:
+          type: string
+          format: date-time
+    LeaveBalanceAdjustment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        previous_amount:
+          type: number
+        adjustment_amount:
+          type: number
+        new_amount:
+          type: number
+        reason:
+          type: string
+        adjusted_by:
+          $ref: '#/components/schemas/EmployeeBrief'
+        adjusted_at:
+          type: string
+          format: date-time
+    LeaveRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee:
+          $ref: '#/components/schemas/EmployeeBrief'
+        leave_type:
+          $ref: '#/components/schemas/LeaveType'
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        duration_days:
+          type: number
+          example: 3
+        reason:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+          - cancelled
+        submitted_at:
+          type: string
+          format: date-time
+        reviewed_by:
+          $ref: '#/components/schemas/EmployeeBrief'
+        manager_comment:
+          type: string
+          nullable: true
+        reviewed_at:
+          type: string
+          format: date-time
+          nullable: true
+    LeaveRequestCreate:
+      type: object
+      required:
+      - leave_type_id
+      - start_date
+      - end_date
+      properties:
+        leave_type_id:
+          type: string
+          format: uuid
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        reason:
+          type: string
+    LeaveRequestUpdate:
+      type: object
+      properties:
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        reason:
+          type: string
+    CalendarDay:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        entries:
+          type: array
+          items:
+            type: object
+            properties:
+              employee:
+                $ref: '#/components/schemas/EmployeeBrief'
+              leave_type:
+                $ref: '#/components/schemas/LeaveType'
+              status:
+                type: string
+                enum:
+                - pending
+                - approved
+        pending_count:
+          type: integer
+          example: 2
+    Holiday:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        holiday_name:
+          type: string
+        holiday_date:
+          type: string
+          format: date
+        holiday_type:
+          type: string
+    EmployeeMini:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+          example: Sarah Jenkins
+    Department:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Engineering (Frontend)
+    TimesheetListItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee:
+          $ref: '#/components/schemas/EmployeeBrief'
+        week_start:
+          type: string
+          format: date
+        week_end:
+          type: string
+          format: date
+        total_hours:
+          type: number
+          example: 42.5
+        status:
+          type: string
+          enum:
+          - draft
+          - submitted
+          - correction_requested
+          - approved
+    TimesheetDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        employee:
+          $ref: '#/components/schemas/EmployeeBrief'
+        week_start:
+          type: string
+          format: date
+          example: '2023-10-16'
+        week_end:
+          type: string
+          format: date
+          example: '2023-10-22'
+        status:
+          type: string
+          enum:
+          - draft
+          - submitted
+          - correction_requested
+          - approved
+        regular_hours:
+          type: number
+          example: 38.5
+        overtime_hours:
+          type: number
+          example: 4.0
+        total_hours:
+          type: number
+          example: 42.5
+        billable_hours:
+          type: number
+        billable_amount:
+          type: number
+          example: 2840.0
+        submitted_at:
+          type: string
+          format: date-time
+        reviewed_by:
+          $ref: '#/components/schemas/EmployeeMini'
+        reviewed_at:
+          type: string
+          format: date-time
+          nullable: true
+    TimesheetEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        work_date:
+          type: string
+          format: date
+        project_name:
+          type: string
+          example: PRJ-Alpha Redesign
+        task_name:
+          type: string
+          example: Component Library Update
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        break_minutes:
+          type: integer
+          example: 30
+        regular_hours:
+          type: number
+          example: 8.0
+        overtime_hours:
+          type: number
+          example: 0.75
+        total_hours:
+          type: number
+          example: 8.75
+        entry_type:
+          type: string
+          enum:
+          - tracked
+          - manual
+    TimesheetEntryUpdate:
+      type: object
+      properties:
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        break_minutes:
+          type: integer
+        project_name:
+          type: string
+        task_name:
+          type: string
+    TimesheetCorrection:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        affected_entry_id:
+          type: string
+          format: uuid
+          nullable: true
+        requested_by:
+          $ref: '#/components/schemas/EmployeeMini'
+        correction_reason:
+          type: string
+        manager_comment:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+        requested_at:
+          type: string
+          format: date-time
+        resolved_at:
+          type: string
+          format: date-time
+          nullable: true
+    TimesheetCorrectionCreate:
+      type: object
+      required:
+      - correction_reason
+      properties:
+        affected_entry_id:
+          type: string
+          format: uuid
+        correction_reason:
+          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Resource is no longer in a valid state for the requested operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

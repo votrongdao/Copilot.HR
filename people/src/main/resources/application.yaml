@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: people
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hr_db
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8085
+
+springdoc:
+  api-docs:
+    path: /api-docs/v1
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    enabled: true
